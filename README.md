@@ -63,3 +63,7 @@ export class UserRepository extends SoftCrudRepository<
   }
 }
 ```
+
+## License
+
+[MIT](https://github.com/sourcefuse/loopback4-soft-delete/blob/master/LICENSE)

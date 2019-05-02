@@ -33,7 +33,7 @@
     "type": "git",
     "url": "https://github.com/sourcefuse/loopback4-soft-delete"
   },
-  "license": "",
+  "license": "MIT",
   "files": [
     "README.md",
     "index.js",
