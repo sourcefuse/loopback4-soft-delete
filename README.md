@@ -4,6 +4,8 @@
 
 [![Node version](https://img.shields.io/node/v/loopback4-soft-delete.svg?style=flat-square)](https://nodejs.org/en/download/)
 [![Dependencies Status](https://img.shields.io/david/sourcefuse/loopback4-soft-delete.svg?style=flat-square)](https://github.com/sourcefuse/loopback4-soft-delete)
+[![Loopback Core Version](https://img.shields.io/npm/dependency-version/loopback4-soft-delete/dev/@loopback/core.svg?color=dark%20green&style=flat-square)](https://github.com/strongloop/loopback-next)
+[![Loopback Build Version](https://img.shields.io/npm/dependency-version/loopback4-soft-delete/dev/@loopback/build.svg?color=dark%20green&style=flat-square)](https://github.com/strongloop/loopback-next/tree/master/packages/build)
 [![npm vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/loopback4-soft-delete.svg?label=npm%20vulnerabilities&style=flat-square)](https://www.npmjs.com/package/loopback4-soft-delete)
 
 [![Latest version](https://img.shields.io/npm/v/loopback4-soft-delete.svg?style=flat-square)](https://www.npmjs.com/package/loopback4-soft-delete)
