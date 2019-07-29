@@ -49,13 +49,14 @@
   },
   "devDependencies": {
     "@loopback/boot": "^1.4.4",
+    "@loopback/build": "^2.0.3",
     "@loopback/context": "^1.20.2",
     "@loopback/core": "^1.8.5",
     "@loopback/repository": "^1.8.2",
-    "@loopback/build": "^2.0.3",
     "@loopback/testlab": "^1.6.3",
     "@loopback/tslint-config": "^2.1.0",
     "@types/node": "^10.14.8",
+    "loopback-datasource-juggler": "^4.10.1",
     "tslint": "^5.18.0",
     "typescript": "^3.5.2"
   }
