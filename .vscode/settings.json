@@ -9,7 +9,6 @@
     "serverId": "sf_sonar",
     "projectKey": "sourcefuse_loopback4-soft-delete"
   },
-
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,
