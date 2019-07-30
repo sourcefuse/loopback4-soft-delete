@@ -54,7 +54,7 @@ export abstract class SoftCrudRepository<
     filter = filter || {};
     filter.where = filter.where || {};
     (filter.where as any).deleted = false;
-
+    debugger;
     // Now call super
     return super.findById(id, filter, options);
   }
