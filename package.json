@@ -12,9 +12,9 @@
     "node": ">=8.9"
   },
   "scripts": {
-    "build": "lb-tsc --outDir dist",
+    "build": "npm run clean && lb-tsc",
     "build:watch": "lb-tsc --watch",
-    "clean": "lb-clean dist",
+    "clean": "lb-clean dist *.tsbuildinfo",
     "lint": "npm run prettier:check && npm run eslint",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
     "prettier:cli": "lb-prettier \"**/*.ts\" \"**/*.js\"",
@@ -58,6 +58,7 @@
     "@types/node": "^10.17.5",
     "loopback-datasource-juggler": "^4.14.0",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "minimist": ">=0.2.1"
   }
 }

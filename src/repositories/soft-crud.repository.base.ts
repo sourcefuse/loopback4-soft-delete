@@ -35,7 +35,10 @@ export abstract class SoftCrudRepository<
     return super.find(filter, options);
   }
 
-  findOne(filter?: Filter<T>, options?: Options): Promise<(T & Relations) | null> {
+  findOne(
+    filter?: Filter<T>,
+    options?: Options,
+  ): Promise<(T & Relations) | null> {
     // Filter out soft deleted entries
     filter = filter || {};
     filter.where = filter.where || {};
