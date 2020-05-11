@@ -6,16 +6,16 @@ import {
   juggler,
   Where,
 } from '@loopback/repository';
-import { Count } from '@loopback/repository/src/common-types';
-import { Options } from 'loopback-datasource-juggler';
+import {Count} from '@loopback/repository/src/common-types';
+import {Options} from 'loopback-datasource-juggler';
 
-import { SoftDeleteEntity } from '../models';
+import {SoftDeleteEntity} from '../models';
 
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
   ID,
   Relations extends object = {}
-  > extends DefaultCrudRepository<T, ID, Relations> {
+> extends DefaultCrudRepository<T, ID, Relations> {
   constructor(
     entityClass: typeof SoftDeleteEntity & {
       prototype: T;
