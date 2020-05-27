@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  AndClause,
+  Condition,
   DataObject,
   DefaultCrudRepository,
   Filter,
   juggler,
+  OrClause,
   Where,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
@@ -27,9 +29,36 @@ export abstract class SoftCrudRepository<
 
   find(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
     // Filter out soft deleted entries
-    filter = filter || {};
-    filter.where = filter.where || {};
-    (filter.where as any).deleted = false;
+    if (
+      filter?.where &&
+      (filter.where as AndClause<T>).and &&
+      (filter.where as AndClause<T>).and.length > 0
+    ) {
+      (filter.where as AndClause<T>).and.push({
+        deleted: false,
+      } as Condition<T>);
+    } else if (
+      filter?.where &&
+      (filter.where as OrClause<T>).or &&
+      (filter.where as OrClause<T>).or.length > 0
+    ) {
+      filter = {
+        where: {
+          and: [
+            {
+              deleted: false,
+            } as Condition<T>,
+            {
+              or: (filter.where as OrClause<T>).or,
+            },
+          ],
+        },
+      };
+    } else {
+      filter = filter ?? {};
+      filter.where = filter.where ?? {};
+      (filter.where as Condition<T>).deleted = false;
+    }
 
     // Now call super
     return super.find(filter, options);
@@ -40,9 +69,36 @@ export abstract class SoftCrudRepository<
     options?: Options,
   ): Promise<(T & Relations) | null> {
     // Filter out soft deleted entries
-    filter = filter || {};
-    filter.where = filter.where || {};
-    (filter.where as any).deleted = false;
+    if (
+      filter?.where &&
+      (filter.where as AndClause<T>).and &&
+      (filter.where as AndClause<T>).and.length > 0
+    ) {
+      (filter.where as AndClause<T>).and.push({
+        deleted: false,
+      } as Condition<T>);
+    } else if (
+      filter?.where &&
+      (filter.where as OrClause<T>).or &&
+      (filter.where as OrClause<T>).or.length > 0
+    ) {
+      filter = {
+        where: {
+          and: [
+            {
+              deleted: false,
+            } as Condition<T>,
+            {
+              or: (filter.where as OrClause<T>).or,
+            },
+          ],
+        },
+      };
+    } else {
+      filter = filter ?? {};
+      filter.where = filter.where ?? {};
+      (filter.where as Condition<T>).deleted = false;
+    }
 
     // Now call super
     return super.findOne(filter, options);
@@ -54,9 +110,36 @@ export abstract class SoftCrudRepository<
     options?: Options,
   ): Promise<T & Relations> {
     // Filter out soft deleted entries
-    filter = filter || {};
-    filter.where = filter.where || {};
-    (filter.where as any).deleted = false;
+    if (
+      filter?.where &&
+      (filter.where as AndClause<T>).and &&
+      (filter.where as AndClause<T>).and.length > 0
+    ) {
+      (filter.where as AndClause<T>).and.push({
+        deleted: false,
+      } as Condition<T>);
+    } else if (
+      filter?.where &&
+      (filter.where as OrClause<T>).or &&
+      (filter.where as OrClause<T>).or.length > 0
+    ) {
+      filter = {
+        where: {
+          and: [
+            {
+              deleted: false,
+            } as Condition<T>,
+            {
+              or: (filter.where as OrClause<T>).or,
+            },
+          ],
+        },
+      };
+    } else {
+      filter = filter ?? {};
+      filter.where = filter.where ?? {};
+      (filter.where as Condition<T>).deleted = false;
+    }
 
     // Now call super
     return super.findById(id, filter, options);
@@ -68,8 +151,33 @@ export abstract class SoftCrudRepository<
     options?: Options,
   ): Promise<Count> {
     // Filter out soft deleted entries
-    where = where || {};
-    (where as any).deleted = false;
+    if (
+      where &&
+      (where as AndClause<T>).and &&
+      (where as AndClause<T>).and.length > 0
+    ) {
+      (where as AndClause<T>).and.push({
+        deleted: false,
+      } as Condition<T>);
+    } else if (
+      where &&
+      (where as OrClause<T>).or &&
+      (where as OrClause<T>).or.length > 0
+    ) {
+      where = {
+        and: [
+          {
+            deleted: false,
+          } as Condition<T>,
+          {
+            or: (where as OrClause<T>).or,
+          },
+        ],
+      };
+    } else {
+      where = where ?? {};
+      (where as Condition<T>).deleted = false;
+    }
 
     // Now call super
     return super.updateAll(data, where, options);
@@ -77,8 +185,33 @@ export abstract class SoftCrudRepository<
 
   count(where?: Where<T>, options?: Options): Promise<Count> {
     // Filter out soft deleted entries
-    where = where || {};
-    (where as any).deleted = false;
+    if (
+      where &&
+      (where as AndClause<T>).and &&
+      (where as AndClause<T>).and.length > 0
+    ) {
+      (where as AndClause<T>).and.push({
+        deleted: false,
+      } as Condition<T>);
+    } else if (
+      where &&
+      (where as OrClause<T>).or &&
+      (where as OrClause<T>).or.length > 0
+    ) {
+      where = {
+        and: [
+          {
+            deleted: false,
+          } as Condition<T>,
+          {
+            or: (where as OrClause<T>).or,
+          },
+        ],
+      };
+    } else {
+      where = where ?? {};
+      (where as Condition<T>).deleted = false;
+    }
 
     // Now call super
     return super.count(where, options);
@@ -86,7 +219,7 @@ export abstract class SoftCrudRepository<
 
   delete(entity: T, options?: Options): Promise<void> {
     // Do soft delete, no hard delete allowed
-    (entity as any).deleted = true;
+    (entity as SoftDeleteEntity).deleted = true;
     return super.update(entity, options);
   }
 
@@ -95,7 +228,7 @@ export abstract class SoftCrudRepository<
     return this.updateAll(
       {
         deleted: true,
-      } as any,
+      } as DataObject<T>,
       where,
       options,
     );
@@ -107,7 +240,7 @@ export abstract class SoftCrudRepository<
       id,
       {
         deleted: true,
-      } as any,
+      } as DataObject<T>,
       options,
     );
   }
