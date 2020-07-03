@@ -10,8 +10,10 @@ import {
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
 import {Options} from 'loopback-datasource-juggler';
+import {HttpErrors} from '@loopback/rest';
 
 import {SoftDeleteEntity} from '../models';
+import {ErrorKeys} from '../error-keys';
 
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -104,7 +106,7 @@ export abstract class SoftCrudRepository<
     return super.findOne(filter, options);
   }
 
-  findById(
+  async findById(
     id: ID,
     filter?: Filter<T>,
     options?: Options,
@@ -117,6 +119,7 @@ export abstract class SoftCrudRepository<
     ) {
       (filter.where as AndClause<T>).and.push({
         deleted: false,
+        id: id,
       } as Condition<T>);
     } else if (
       filter?.where &&
@@ -128,6 +131,7 @@ export abstract class SoftCrudRepository<
           and: [
             {
               deleted: false,
+              id: id,
             } as Condition<T>,
             {
               or: (filter.where as OrClause<T>).or,
@@ -137,12 +141,24 @@ export abstract class SoftCrudRepository<
       };
     } else {
       filter = filter ?? {};
-      filter.where = filter.where ?? {};
-      (filter.where as Condition<T>).deleted = false;
+      filter = {
+        where: {
+          deleted: false,
+          id: id,
+        } as Condition<T>,
+      };
     }
 
-    // Now call super
-    return super.findById(id, filter, options);
+    //As parent method findById have filter: FilterExcludingWhere<T>
+    //so we need add check here.
+    const entityToRemove = await super.findOne(filter, options);
+
+    if (entityToRemove) {
+      // Now call super
+      return super.findById(id, filter, options);
+    } else {
+      throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
+    }
   }
 
   updateAll(
