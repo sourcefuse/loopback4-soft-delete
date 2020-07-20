@@ -15,6 +15,24 @@ export abstract class SoftDeleteEntity extends Entity {
   })
   deleted?: boolean;
 
+  @property({
+    type: 'date',
+    name: 'deleted_on',
+    jsonSchema: {
+      nullable: 'YES',
+    },
+  })
+  deletedOn?: Date;
+
+  @property({
+    type: 'number',
+    name: 'deleted_by',
+    jsonSchema: {
+      nullable: 'YES',
+    },
+  })
+  deletedBy?: number;
+
   constructor(data?: Partial<SoftDeleteEntity>) {
     super(data);
   }
