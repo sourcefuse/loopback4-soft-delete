@@ -19,7 +19,7 @@ export abstract class SoftDeleteEntity extends Entity {
     type: 'date',
     name: 'deleted_on',
     jsonSchema: {
-      nullable: 'YES',
+      nullable: true,
     },
   })
   deletedOn?: Date;
@@ -28,7 +28,7 @@ export abstract class SoftDeleteEntity extends Entity {
     type: 'number',
     name: 'deleted_by',
     jsonSchema: {
-      nullable: 'YES',
+      nullable: true,
     },
   })
   deletedBy?: number;
