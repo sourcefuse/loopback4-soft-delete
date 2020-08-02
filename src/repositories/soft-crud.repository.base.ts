@@ -1,3 +1,4 @@
+import {Getter} from '@loopback/core';
 import {
   AndClause,
   Condition,
@@ -9,13 +10,12 @@ import {
   Where,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
-import {Options} from 'loopback-datasource-juggler';
 import {HttpErrors} from '@loopback/rest';
-import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
-import {inject} from '@loopback/core';
+import {Options} from 'loopback-datasource-juggler';
+import {IAuthUser} from 'loopback4-authentication';
 
-import {SoftDeleteEntity} from '../models';
 import {ErrorKeys} from '../error-keys';
+import {SoftDeleteEntity} from '../models';
 
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -27,8 +27,7 @@ export abstract class SoftCrudRepository<
       prototype: T;
     },
     dataSource: juggler.DataSource,
-    @inject(AuthenticationBindings.CURRENT_USER)
-    private readonly user: IAuthUser | undefined,
+    protected readonly getCurrentUser?: Getter<IAuthUser | undefined>,
   ) {
     super(entityClass, dataSource);
   }
@@ -237,37 +236,35 @@ export abstract class SoftCrudRepository<
     return super.count(where, options);
   }
 
-  delete(entity: T, options?: Options): Promise<void> {
+  async delete(entity: T, options?: Options): Promise<void> {
     // Do soft delete, no hard delete allowed
     (entity as SoftDeleteEntity).deleted = true;
     (entity as SoftDeleteEntity).deletedOn = new Date();
-    (entity as SoftDeleteEntity).deletedBy = this.getUserId()
-      ? this.getUserId()
-      : undefined;
+    (entity as SoftDeleteEntity).deletedBy = await this.getUserId();
     return super.update(entity, options);
   }
 
-  deleteAll(where?: Where<T>, options?: Options): Promise<Count> {
+  async deleteAll(where?: Where<T>, options?: Options): Promise<Count> {
     // Do soft delete, no hard delete allowed
     return this.updateAll(
       {
         deleted: true,
         deletedOn: new Date(),
-        deletedBy: this.getUserId() ? this.getUserId() : undefined,
+        deletedBy: await this.getUserId(),
       } as DataObject<T>,
       where,
       options,
     );
   }
 
-  deleteById(id: ID, options?: Options): Promise<void> {
+  async deleteById(id: ID, options?: Options): Promise<void> {
     // Do soft delete, no hard delete allowed
     return super.updateById(
       id,
       {
         deleted: true,
         deletedOn: new Date(),
-        deletedBy: this.getUserId() ? this.getUserId() : undefined,
+        deletedBy: await this.getUserId(),
       } as DataObject<T>,
       options,
     );
@@ -303,12 +300,15 @@ export abstract class SoftCrudRepository<
     return super.deleteById(id, options);
   }
 
-  private getUserId(): number | undefined {
-    let id: number;
-    if (this.user?.id) {
-      id = +this.user?.id;
-      return id;
+  private async getUserId(options?: Options): Promise<string | undefined> {
+    if (!this.getCurrentUser) {
+      return undefined;
     }
-    return;
+    let currentUser = await this.getCurrentUser();
+    currentUser = currentUser ?? options?.currentUser;
+    if (!currentUser || !currentUser.id) {
+      return undefined;
+    }
+    return currentUser.id.toString();
   }
 }

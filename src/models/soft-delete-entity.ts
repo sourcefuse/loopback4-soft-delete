@@ -5,7 +5,8 @@ import {Entity, property} from '@loopback/repository';
  *
  * @description
  * Base class for all soft-delete enabled models created.
- * It adds a 'deleted' attribute to the model class for handling soft-delete.
+ * It adds three attributes to the model class for handling soft-delete,
+ * namely, 'deleted', deletedOn, deletedBy
  * Its an abstract class so no repository class should be based on this.
  */
 export abstract class SoftDeleteEntity extends Entity {
@@ -25,13 +26,13 @@ export abstract class SoftDeleteEntity extends Entity {
   deletedOn?: Date;
 
   @property({
-    type: 'number',
+    type: 'string',
     name: 'deleted_by',
     jsonSchema: {
       nullable: true,
     },
   })
-  deletedBy?: number;
+  deletedBy?: string;
 
   constructor(data?: Partial<SoftDeleteEntity>) {
     super(data);

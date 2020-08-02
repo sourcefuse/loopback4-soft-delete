@@ -19,24 +19,38 @@
 npm install loopback4-soft-delete
 ```
 
+**NOTE** - With latest version 3.0.0, you also need to install [loopback4-authentication](https://github.com/sourcefuse/loopback4-authentication) for using deleted_by feature added.
+
+```sh
+npm install loopback4-soft-delete
+```
+
 ## Quick Starter
 
 For a quick starter guide, you can refer to our [loopback 4 starter](https://github.com/sourcefuse/loopback4-starter) application which utilizes this package for soft-deletes in a multi-tenant application.
 
+## Transaction support
+
+With version 3.0.0, transaction repository support has been added. In place of SoftCrudRepository, extend your repository with DefaultTransactionSoftCrudRepository. For further usage guidelines, refer below.
+
 ## Usage
 
-Right now, this extension exports two abstract classes which are actually helping with soft delete operations.
+Right now, this extension exports three abstract classes which are actually helping with soft delete operations.
 
 - **SoftDeleteEntity** -
   An abstract base class for all models which require soft delete feature.
-  This class is a wrapper over Entity class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository) adding a new attribute 'deleted' (boolean) to the model class.
-  Same column is needed to be there in DB within that table.
+  This class is a wrapper over Entity class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository) adding three attributes to the model class for handling soft-delete, namely, deleted, deletedOn, deletedBy.
+  The column names needed to be there in DB within that table are - 'deleted', 'deleted_on', 'deleted_by'.
   If you are using auto-migration of loopback 4, then, you may not need to do anything specific to add this column.
-  If not, then please add this column to the DB table.
+  If not, then please add these columns to the DB table.
 - **SoftCrudRepository** -
   An abstract base class for all repositories which require soft delete feature.
   This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses at all.
   This class is a wrapper over DefaultCrudRepository class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
+- **DefaultTransactionSoftCrudRepository** -
+  An abstract base class for all repositories which require soft delete feature with transaction support.
+  This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses at all.
+  This class is a wrapper over DefaultTransactionalRepository class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
 
 In order to use this extension in your LB4 application, please follow below steps.
 
@@ -63,18 +77,49 @@ export class User extends SoftDeleteEntity {
 2. Extend repositories with SoftCrudRepository class replacing DefaultCrudRepository. For example,
 
 ```ts
-import {inject} from '@loopback/core';
+import {Getter, inject} from '@loopback/core';
 import {SoftCrudRepository} from 'loopback4-soft-delete';
+import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
 
 import {PgdbDataSource} from '../datasources';
-import {User} from '../models';
+import {User, UserRelations} from '../models';
 
 export class UserRepository extends SoftCrudRepository<
   User,
-  typeof User.prototype.id
+  typeof User.prototype.id,
+  UserRelations
 > {
-  constructor(@inject('datasources.pgdb') dataSource: PgdbDataSource) {
-    super(User, dataSource);
+  constructor(
+    @inject('datasources.pgdb') dataSource: PgdbDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
+    protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
+  ) {
+    super(User, dataSource, getCurrentUser);
+  }
+}
+```
+
+3. For transaction support, extend repositories with DefaultTransactionSoftCrudRepository class replacing DefaultTransactionalRepository. For example,
+
+```ts
+import {Getter, inject} from '@loopback/core';
+import {SoftCrudRepository} from 'loopback4-soft-delete';
+import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+
+import {PgdbDataSource} from '../datasources';
+import {User, UserRelations} from '../models';
+
+export class UserRepository extends DefaultTransactionSoftCrudRepository<
+  User,
+  typeof User.prototype.id,
+  UserRelations
+> {
+  constructor(
+    @inject('datasources.pgdb') dataSource: PgdbDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
+    protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
+  ) {
+    super(User, dataSource, getCurrentUser);
   }
 }
 ```

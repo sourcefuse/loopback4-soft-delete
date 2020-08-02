@@ -7,10 +7,12 @@ import {
   OrClause,
   DefaultTransactionalRepository,
   Where,
+  Getter,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
 import {Options} from 'loopback-datasource-juggler';
 import {SoftDeleteEntity} from '../models';
+import {IAuthUser} from 'loopback4-authentication';
 
 export abstract class DefaultTransactionSoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -22,6 +24,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
       prototype: T;
     },
     dataSource: juggler.DataSource,
+    protected readonly getCurrentUser?: Getter<IAuthUser | undefined>,
   ) {
     super(entityClass, dataSource);
   }
@@ -205,29 +208,35 @@ export abstract class DefaultTransactionSoftCrudRepository<
     return super.count(where, options);
   }
 
-  delete(entity: T, options?: Options): Promise<void> {
+  async delete(entity: T, options?: Options): Promise<void> {
     // Do soft delete, no hard delete allowed
     (entity as SoftDeleteEntity).deleted = true;
+    (entity as SoftDeleteEntity).deletedOn = new Date();
+    (entity as SoftDeleteEntity).deletedBy = await this.getUserId();
     return super.update(entity, options);
   }
 
-  deleteAll(where?: Where<T>, options?: Options): Promise<Count> {
+  async deleteAll(where?: Where<T>, options?: Options): Promise<Count> {
     // Do soft delete, no hard delete allowed
     return this.updateAll(
       {
         deleted: true,
+        deletedOn: new Date(),
+        deletedBy: await this.getUserId(),
       } as DataObject<T>,
       where,
       options,
     );
   }
 
-  deleteById(id: ID, options?: Options): Promise<void> {
+  async deleteById(id: ID, options?: Options): Promise<void> {
     // Do soft delete, no hard delete allowed
     return super.updateById(
       id,
       {
         deleted: true,
+        deletedOn: new Date(),
+        deletedBy: await this.getUserId(),
       } as DataObject<T>,
       options,
     );
@@ -261,5 +270,17 @@ export abstract class DefaultTransactionSoftCrudRepository<
   deleteByIdHard(id: ID, options?: Options): Promise<void> {
     // Do hard delete
     return super.deleteById(id, options);
+  }
+
+  private async getUserId(options?: Options): Promise<string | undefined> {
+    if (!this.getCurrentUser) {
+      return undefined;
+    }
+    let currentUser = await this.getCurrentUser();
+    currentUser = currentUser ?? options?.currentUser;
+    if (!currentUser || !currentUser.id) {
+      return undefined;
+    }
+    return currentUser.id.toString();
   }
 }
