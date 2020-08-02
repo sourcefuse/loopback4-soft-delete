@@ -11,6 +11,8 @@ import {
 import {Count} from '@loopback/repository/src/common-types';
 import {Options} from 'loopback-datasource-juggler';
 import {HttpErrors} from '@loopback/rest';
+import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+import {inject} from '@loopback/core';
 
 import {SoftDeleteEntity} from '../models';
 import {ErrorKeys} from '../error-keys';
@@ -25,6 +27,8 @@ export abstract class SoftCrudRepository<
       prototype: T;
     },
     dataSource: juggler.DataSource,
+    @inject(AuthenticationBindings.CURRENT_USER)
+    private readonly user: IAuthUser | undefined,
   ) {
     super(entityClass, dataSource);
   }
@@ -236,6 +240,10 @@ export abstract class SoftCrudRepository<
   delete(entity: T, options?: Options): Promise<void> {
     // Do soft delete, no hard delete allowed
     (entity as SoftDeleteEntity).deleted = true;
+    (entity as SoftDeleteEntity).deletedOn = new Date();
+    (entity as SoftDeleteEntity).deletedBy = this.getUserId()
+      ? this.getUserId()
+      : undefined;
     return super.update(entity, options);
   }
 
@@ -244,6 +252,8 @@ export abstract class SoftCrudRepository<
     return this.updateAll(
       {
         deleted: true,
+        deletedOn: new Date(),
+        deletedBy: this.getUserId() ? this.getUserId() : undefined,
       } as DataObject<T>,
       where,
       options,
@@ -256,6 +266,8 @@ export abstract class SoftCrudRepository<
       id,
       {
         deleted: true,
+        deletedOn: new Date(),
+        deletedBy: this.getUserId() ? this.getUserId() : undefined,
       } as DataObject<T>,
       options,
     );
@@ -289,5 +301,14 @@ export abstract class SoftCrudRepository<
   deleteByIdHard(id: ID, options?: Options): Promise<void> {
     // Do hard delete
     return super.deleteById(id, options);
+  }
+
+  private getUserId(): number | undefined {
+    let id: number;
+    if (this.user?.id) {
+      id = +this.user?.id;
+      return id;
+    }
+    return;
   }
 }

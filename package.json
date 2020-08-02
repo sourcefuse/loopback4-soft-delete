@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "@loopback/core": "^2.7.0",
-    "@loopback/rest": "^5.2.0"
+    "@loopback/rest": "^5.2.0",
+    "loopback4-authentication": "^3.0.1"
   }
 }
