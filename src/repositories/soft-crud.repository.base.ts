@@ -47,17 +47,15 @@ export abstract class SoftCrudRepository<
       (filter.where as OrClause<T>).or &&
       (filter.where as OrClause<T>).or.length > 0
     ) {
-      filter = {
-        where: {
-          and: [
-            {
-              deleted: false,
-            } as Condition<T>,
-            {
-              or: (filter.where as OrClause<T>).or,
-            },
-          ],
-        },
+      filter.where = {
+        and: [
+          {
+            deleted: false,
+          } as Condition<T>,
+          {
+            or: (filter.where as OrClause<T>).or,
+          },
+        ],
       };
     } else {
       filter = filter ?? {};
@@ -87,17 +85,15 @@ export abstract class SoftCrudRepository<
       (filter.where as OrClause<T>).or &&
       (filter.where as OrClause<T>).or.length > 0
     ) {
-      filter = {
-        where: {
-          and: [
-            {
-              deleted: false,
-            } as Condition<T>,
-            {
-              or: (filter.where as OrClause<T>).or,
-            },
-          ],
-        },
+      filter.where = {
+        and: [
+          {
+            deleted: false,
+          } as Condition<T>,
+          {
+            or: (filter.where as OrClause<T>).or,
+          },
+        ],
       };
     } else {
       filter = filter ?? {};
@@ -129,27 +125,23 @@ export abstract class SoftCrudRepository<
       (filter.where as OrClause<T>).or &&
       (filter.where as OrClause<T>).or.length > 0
     ) {
-      filter = {
-        where: {
-          and: [
-            {
-              deleted: false,
-              id: id,
-            } as Condition<T>,
-            {
-              or: (filter.where as OrClause<T>).or,
-            },
-          ],
-        },
+      filter.where = {
+        and: [
+          {
+            deleted: false,
+            id: id,
+          } as Condition<T>,
+          {
+            or: (filter.where as OrClause<T>).or,
+          },
+        ],
       };
     } else {
       filter = filter ?? {};
-      filter = {
-        where: {
-          deleted: false,
-          id: id,
-        } as Condition<T>,
-      };
+      filter.where = {
+        deleted: false,
+        id: id,
+      } as Condition<T>;
     }
 
     //As parent method findById have filter: FilterExcludingWhere<T>
