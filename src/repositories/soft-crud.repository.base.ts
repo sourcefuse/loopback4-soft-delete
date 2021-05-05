@@ -4,6 +4,7 @@ import {
   Condition,
   DataObject,
   DefaultCrudRepository,
+  Entity,
   Filter,
   juggler,
   OrClause,
@@ -23,7 +24,7 @@ export abstract class SoftCrudRepository<
   Relations extends object = {}
 > extends DefaultCrudRepository<T, ID, Relations> {
   constructor(
-    entityClass: typeof SoftDeleteEntity & {
+    entityClass: typeof Entity & {
       prototype: T;
     },
     dataSource: juggler.DataSource,
