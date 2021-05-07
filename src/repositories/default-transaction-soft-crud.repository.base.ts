@@ -8,6 +8,7 @@ import {
   DefaultTransactionalRepository,
   Where,
   Getter,
+  Entity,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
 import {Options} from 'loopback-datasource-juggler';
@@ -20,7 +21,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
   Relations extends object = {}
 > extends DefaultTransactionalRepository<T, ID, Relations> {
   constructor(
-    entityClass: typeof SoftDeleteEntity & {
+    entityClass: typeof Entity & {
       prototype: T;
     },
     dataSource: juggler.DataSource,
