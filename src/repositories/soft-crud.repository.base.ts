@@ -68,6 +68,11 @@ export abstract class SoftCrudRepository<
     return super.find(filter, options);
   }
 
+  //find all enteries even with soft deleted records
+  findAll(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
+    return super.find(filter, options);
+  }
+
   findOne(
     filter?: Filter<T>,
     options?: Options,
@@ -100,6 +105,45 @@ export abstract class SoftCrudRepository<
       filter = filter ?? {};
       filter.where = filter.where ?? {};
       (filter.where as Condition<T>).deleted = false;
+    }
+
+    // Now call super
+    return super.findOne(filter, options);
+  }
+
+  //findOne() for soft deleted entry
+  findOneWithSoftDelete(
+    filter?: Filter<T>,
+    options?: Options,
+  ): Promise<(T & Relations) | null> {
+    // Filter out soft deleted entries
+    if (
+      filter?.where &&
+      (filter.where as AndClause<T>).and &&
+      (filter.where as AndClause<T>).and.length > 0
+    ) {
+      (filter.where as AndClause<T>).and.push({
+        deleted: true,
+      } as Condition<T>);
+    } else if (
+      filter?.where &&
+      (filter.where as OrClause<T>).or &&
+      (filter.where as OrClause<T>).or.length > 0
+    ) {
+      filter.where = {
+        and: [
+          {
+            deleted: true,
+          } as Condition<T>,
+          {
+            or: (filter.where as OrClause<T>).or,
+          },
+        ],
+      };
+    } else {
+      filter = filter ?? {};
+      filter.where = filter.where ?? {};
+      (filter.where as Condition<T>).deleted = true;
     }
 
     // Now call super
@@ -141,6 +185,57 @@ export abstract class SoftCrudRepository<
       filter = filter ?? {};
       filter.where = {
         deleted: false,
+        id: id,
+      } as Condition<T>;
+    }
+
+    //As parent method findById have filter: FilterExcludingWhere<T>
+    //so we need add check here.
+    const entityToRemove = await super.findOne(filter, options);
+
+    if (entityToRemove) {
+      // Now call super
+      return super.findById(id, filter, options);
+    } else {
+      throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
+    }
+  }
+
+  //find with Id for soft deleted record
+  async findByIdWithSoftDelete(
+    id: ID,
+    filter?: Filter<T>,
+    options?: Options,
+  ): Promise<T & Relations> {
+    if (
+      filter?.where &&
+      (filter.where as AndClause<T>).and &&
+      (filter.where as AndClause<T>).and.length > 0
+    ) {
+      (filter.where as AndClause<T>).and.push({
+        deleted: true,
+        id: id,
+      } as Condition<T>);
+    } else if (
+      filter?.where &&
+      (filter.where as OrClause<T>).or &&
+      (filter.where as OrClause<T>).or.length > 0
+    ) {
+      filter.where = {
+        and: [
+          {
+            deleted: true,
+            id: id,
+          } as Condition<T>,
+          {
+            or: (filter.where as OrClause<T>).or,
+          },
+        ],
+      };
+    } else {
+      filter = filter ?? {};
+      filter.where = {
+        deleted: true,
         id: id,
       } as Condition<T>;
     }
