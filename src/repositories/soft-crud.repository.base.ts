@@ -68,7 +68,7 @@ export abstract class SoftCrudRepository<
     return super.find(filter, options);
   }
 
-  //find all enteries even with soft deleted records
+  //find all enteries including soft deleted records
   findAll(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
     return super.find(filter, options);
   }
@@ -111,42 +111,11 @@ export abstract class SoftCrudRepository<
     return super.findOne(filter, options);
   }
 
-  //findOne() for soft deleted entry
-  findOneWithSoftDelete(
+  //findOne() including soft deleted entry
+  findOneIncludeSoftDelete(
     filter?: Filter<T>,
     options?: Options,
   ): Promise<(T & Relations) | null> {
-    // Filter out soft deleted entries
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: true,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      filter.where = {
-        and: [
-          {
-            deleted: true,
-          } as Condition<T>,
-          {
-            or: (filter.where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      filter = filter ?? {};
-      filter.where = filter.where ?? {};
-      (filter.where as Condition<T>).deleted = true;
-    }
-
-    // Now call super
     return super.findOne(filter, options);
   }
 
@@ -201,45 +170,12 @@ export abstract class SoftCrudRepository<
     }
   }
 
-  //find with Id for soft deleted record
-  async findByIdWithSoftDelete(
+  //find by Id including soft deleted record
+  async findByIdIncludeSoftDelete(
     id: ID,
     filter?: Filter<T>,
     options?: Options,
   ): Promise<T & Relations> {
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: true,
-        id: id,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      filter.where = {
-        and: [
-          {
-            deleted: true,
-            id: id,
-          } as Condition<T>,
-          {
-            or: (filter.where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      filter = filter ?? {};
-      filter.where = {
-        deleted: true,
-        id: id,
-      } as Condition<T>;
-    }
-
     //As parent method findById have filter: FilterExcludingWhere<T>
     //so we need add check here.
     const entityToRemove = await super.findOne(filter, options);
