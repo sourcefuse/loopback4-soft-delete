@@ -68,6 +68,11 @@ export abstract class SoftCrudRepository<
     return super.find(filter, options);
   }
 
+  //find all enteries including soft deleted records
+  findAll(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
+    return super.find(filter, options);
+  }
+
   findOne(
     filter?: Filter<T>,
     options?: Options,
@@ -103,6 +108,14 @@ export abstract class SoftCrudRepository<
     }
 
     // Now call super
+    return super.findOne(filter, options);
+  }
+
+  //findOne() including soft deleted entry
+  findOneIncludeSoftDelete(
+    filter?: Filter<T>,
+    options?: Options,
+  ): Promise<(T & Relations) | null> {
     return super.findOne(filter, options);
   }
 
@@ -145,6 +158,24 @@ export abstract class SoftCrudRepository<
       } as Condition<T>;
     }
 
+    //As parent method findById have filter: FilterExcludingWhere<T>
+    //so we need add check here.
+    const entityToRemove = await super.findOne(filter, options);
+
+    if (entityToRemove) {
+      // Now call super
+      return super.findById(id, filter, options);
+    } else {
+      throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
+    }
+  }
+
+  //find by Id including soft deleted record
+  async findByIdIncludeSoftDelete(
+    id: ID,
+    filter?: Filter<T>,
+    options?: Options,
+  ): Promise<T & Relations> {
     //As parent method findById have filter: FilterExcludingWhere<T>
     //so we need add check here.
     const entityToRemove = await super.findOne(filter, options);

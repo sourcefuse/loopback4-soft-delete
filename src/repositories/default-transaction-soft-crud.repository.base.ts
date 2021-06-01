@@ -64,6 +64,11 @@ export abstract class DefaultTransactionSoftCrudRepository<
     return super.find(filter, options);
   }
 
+  //find all enteries even with soft deleted records
+  findAll(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
+    return super.find(filter, options);
+  }
+
   findOne(
     filter?: Filter<T>,
     options?: Options,
@@ -98,6 +103,14 @@ export abstract class DefaultTransactionSoftCrudRepository<
     }
 
     // Now call super
+    return super.findOne(filter, options);
+  }
+
+  //findOne() including soft deleted entry
+  findOneIncludeSoftDelete(
+    filter?: Filter<T>,
+    options?: Options,
+  ): Promise<(T & Relations) | null> {
     return super.findOne(filter, options);
   }
 
@@ -136,6 +149,15 @@ export abstract class DefaultTransactionSoftCrudRepository<
     }
 
     // Now call super
+    return super.findById(id, filter, options);
+  }
+
+  //find by Id including soft deleted record
+  findByIdIncludeSoftDelete(
+    id: ID,
+    filter?: Filter<T>,
+    options?: Options,
+  ): Promise<T & Relations> {
     return super.findById(id, filter, options);
   }
 

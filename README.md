@@ -45,11 +45,11 @@ Right now, this extension exports three abstract classes which are actually help
   If not, then please add these columns to the DB table.
 - **SoftCrudRepository** -
   An abstract base class for all repositories which require soft delete feature.
-  This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses at all.
+  This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses, However if there is a need to query soft deleted entries as well,there is an options to achieve that and you can use findAll() in place of find() , findOneIncludeSoftDelete() in place of findOne() and findByIdIncludeSoftDelete() in place of findById(), these will give you the responses including soft deleted entries.
   This class is a wrapper over DefaultCrudRepository class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
 - **DefaultTransactionSoftCrudRepository** -
   An abstract base class for all repositories which require soft delete feature with transaction support.
-  This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses at all.
+  This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses, However if there is a need to query soft deleted entries as well,there is an options to achieve that and you can use findAll() in place of find() , findOneIncludeSoftDelete() in place of findOne() and findByIdIncludeSoftDelete() in place of findById(), these will give you the responses including soft deleted entries.
   This class is a wrapper over DefaultTransactionalRepository class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
 
 In order to use this extension in your LB4 application, please follow below steps.
