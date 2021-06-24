@@ -6,17 +6,18 @@ import {
   DefaultCrudRepository,
   Entity,
   Filter,
+  FilterBuilder,
   juggler,
   OrClause,
   Where,
+  WhereBuilder,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
 import {Options} from 'loopback-datasource-juggler';
 import {IAuthUser} from 'loopback4-authentication';
+import { SoftDeleteEntity } from 'loopback4-soft-delete';
 
-import {ErrorKeys} from '../error-keys';
-import {SoftDeleteEntity} from '../models';
 
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -34,89 +35,23 @@ export abstract class SoftCrudRepository<
   }
 
   find(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
-    // Filter out soft deleted entries
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      filter.where = {
-        and: [
-          {
-            deleted: false,
-          } as Condition<T>,
-          {
-            or: (filter.where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      filter = filter ?? {};
-      filter.where = filter.where ?? {};
-      (filter.where as Condition<T>).deleted = false;
-    }
+
+    let fb = new FilterBuilder<T>(filter)
+    fb.impose({deleted:false} as Where<T>)
 
     // Now call super
-    return super.find(filter, options);
-  }
-
-  //find all enteries including soft deleted records
-  findAll(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
-    return super.find(filter, options);
+    return super.find(fb.build(), options);
   }
 
   findOne(
     filter?: Filter<T>,
     options?: Options,
   ): Promise<(T & Relations) | null> {
-    // Filter out soft deleted entries
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      filter.where = {
-        and: [
-          {
-            deleted: false,
-          } as Condition<T>,
-          {
-            or: (filter.where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      filter = filter ?? {};
-      filter.where = filter.where ?? {};
-      (filter.where as Condition<T>).deleted = false;
-    }
+    let fb = new FilterBuilder<T>(filter)
+    fb.impose({deleted:false} as Where<T>)
 
     // Now call super
-    return super.findOne(filter, options);
-  }
-
-  //findOne() including soft deleted entry
-  findOneIncludeSoftDelete(
-    filter?: Filter<T>,
-    options?: Options,
-  ): Promise<(T & Relations) | null> {
-    return super.findOne(filter, options);
+    return super.findOne(fb.build(), options);
   }
 
   async findById(
@@ -124,67 +59,18 @@ export abstract class SoftCrudRepository<
     filter?: Filter<T>,
     options?: Options,
   ): Promise<T & Relations> {
-    // Filter out soft deleted entries
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: false,
-        id: id,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      filter.where = {
-        and: [
-          {
-            deleted: false,
-            id: id,
-          } as Condition<T>,
-          {
-            or: (filter.where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      filter = filter ?? {};
-      filter.where = {
-        deleted: false,
-        id: id,
-      } as Condition<T>;
-    }
+    let fb = new FilterBuilder<T>(filter)
+    fb.impose({and:[{deleted:false}, {id:id} ]} as Where<T>)
 
     //As parent method findById have filter: FilterExcludingWhere<T>
     //so we need add check here.
-    const entityToRemove = await super.findOne(filter, options);
+    const entityToRemove = await super.findOne(fb.build(), options);
 
     if (entityToRemove) {
       // Now call super
-      return super.findById(id, filter, options);
+      return super.findById(id, fb.build(), options);
     } else {
-      throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
-    }
-  }
-
-  //find by Id including soft deleted record
-  async findByIdIncludeSoftDelete(
-    id: ID,
-    filter?: Filter<T>,
-    options?: Options,
-  ): Promise<T & Relations> {
-    //As parent method findById have filter: FilterExcludingWhere<T>
-    //so we need add check here.
-    const entityToRemove = await super.findOne(filter, options);
-
-    if (entityToRemove) {
-      // Now call super
-      return super.findById(id, filter, options);
-    } else {
-      throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
+      throw new HttpErrors.NotFound();
     }
   }
 
@@ -193,71 +79,19 @@ export abstract class SoftCrudRepository<
     where?: Where<T>,
     options?: Options,
   ): Promise<Count> {
-    // Filter out soft deleted entries
-    if (
-      where &&
-      (where as AndClause<T>).and &&
-      (where as AndClause<T>).and.length > 0
-    ) {
-      (where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      where &&
-      (where as OrClause<T>).or &&
-      (where as OrClause<T>).or.length > 0
-    ) {
-      where = {
-        and: [
-          {
-            deleted: false,
-          } as Condition<T>,
-          {
-            or: (where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      where = where ?? {};
-      (where as Condition<T>).deleted = false;
-    }
+    let wb = new WhereBuilder<T>(where)
+    wb.impose({deleted:false} as Where<T>)
 
     // Now call super
-    return super.updateAll(data, where, options);
+    return super.updateAll(data, wb.build(), options);
   }
 
   count(where?: Where<T>, options?: Options): Promise<Count> {
-    // Filter out soft deleted entries
-    if (
-      where &&
-      (where as AndClause<T>).and &&
-      (where as AndClause<T>).and.length > 0
-    ) {
-      (where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      where &&
-      (where as OrClause<T>).or &&
-      (where as OrClause<T>).or.length > 0
-    ) {
-      where = {
-        and: [
-          {
-            deleted: false,
-          } as Condition<T>,
-          {
-            or: (where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      where = where ?? {};
-      (where as Condition<T>).deleted = false;
-    }
+    let wb = new WhereBuilder<T>(where)
+    wb.impose({deleted:false} as Where<T>)
 
     // Now call super
-    return super.count(where, options);
+    return super.count(wb.build(), options);
   }
 
   async delete(entity: T, options?: Options): Promise<void> {
