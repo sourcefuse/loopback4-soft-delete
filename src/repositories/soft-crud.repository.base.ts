@@ -119,11 +119,29 @@ export abstract class SoftCrudRepository<
     return super.findOne(filter, options);
   }
 
+  //To find the primary key/Unique Id field name
+  getPkFieldName() {
+    const data = this.entityClass.definition.properties;
+    let pk = 'id';
+    for (const key in data) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (data.hasOwnProperty(key)) {
+        const value = data[key];
+        if (value.id) {
+          pk = key;
+          break;
+        }
+      }
+    }
+    return pk;
+  }
+
   async findById(
     id: ID,
     filter?: Filter<T>,
     options?: Options,
   ): Promise<T & Relations> {
+    const pk = this.getPkFieldName();
     // Filter out soft deleted entries
     if (
       filter?.where &&
@@ -132,7 +150,7 @@ export abstract class SoftCrudRepository<
     ) {
       (filter.where as AndClause<T>).and.push({
         deleted: false,
-        id: id,
+        [pk]: id,
       } as Condition<T>);
     } else if (
       filter?.where &&
@@ -143,7 +161,7 @@ export abstract class SoftCrudRepository<
         and: [
           {
             deleted: false,
-            id: id,
+            [pk]: id,
           } as Condition<T>,
           {
             or: (filter.where as OrClause<T>).or,
@@ -154,7 +172,7 @@ export abstract class SoftCrudRepository<
       filter = filter ?? {};
       filter.where = {
         deleted: false,
-        id: id,
+        [pk]: id,
       } as Condition<T>;
     }
 
