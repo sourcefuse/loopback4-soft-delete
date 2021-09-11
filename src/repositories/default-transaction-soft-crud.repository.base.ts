@@ -231,7 +231,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
     return super.count(where, options);
   }
 
-  countAll(where?: Where<T>, options?: Options): Promise<Count> {
+  async countAll(where?: Where<T>, options?: Options): Promise<Count> {
     // Get count for non soft deleted entries
     const notDeletedItems = this.count(where, options);
 
@@ -282,9 +282,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
       count: result,
     };
 
-    return new Promise((resolve, reject) => {
-      resolve(countResult);
-    });
+    return countResult;
   }
 
   async delete(entity: T, options?: Options): Promise<void> {
