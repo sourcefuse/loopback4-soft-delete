@@ -301,7 +301,7 @@ export abstract class SoftCrudRepository<
    */
   deleteHard(entity: T, options?: Options): Promise<void> {
     // Do hard delete
-    return super.delete(entity, options);
+    return super.deleteById(entity.getId(), options);
   }
 
   /**

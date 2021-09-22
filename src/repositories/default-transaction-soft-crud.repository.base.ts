@@ -14,6 +14,8 @@ import {Count} from '@loopback/repository/src/common-types';
 import {Options} from 'loopback-datasource-juggler';
 import {SoftDeleteEntity} from '../models';
 import {IAuthUser} from 'loopback4-authentication';
+import {HttpErrors} from '@loopback/rest';
+import {ErrorKeys} from '../error-keys';
 
 export abstract class DefaultTransactionSoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -114,11 +116,12 @@ export abstract class DefaultTransactionSoftCrudRepository<
     return super.findOne(filter, options);
   }
 
-  findById(
+  async findById(
     id: ID,
     filter?: Filter<T>,
     options?: Options,
   ): Promise<T & Relations> {
+    // Filter out soft deleted entries
     // Filter out soft deleted entries
     if (
       filter?.where &&
@@ -127,29 +130,41 @@ export abstract class DefaultTransactionSoftCrudRepository<
     ) {
       (filter.where as AndClause<T>).and.push({
         deleted: false,
+        id: id,
       } as Condition<T>);
     } else if (
       filter?.where &&
       (filter.where as OrClause<T>).or &&
       (filter.where as OrClause<T>).or.length > 0
     ) {
-      (filter.where as AndClause<T>).and = [];
-      (filter.where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (filter.where as OrClause<T>).or,
-        },
-      );
+      filter.where = {
+        and: [
+          {
+            deleted: false,
+            id: id,
+          } as Condition<T>,
+          {
+            or: (filter.where as OrClause<T>).or,
+          },
+        ],
+      };
     } else {
       filter = filter ?? {};
-      filter.where = filter.where ?? {};
-      (filter.where as Condition<T>).deleted = false;
+      filter.where = {
+        deleted: false,
+        id: id,
+      } as Condition<T>;
     }
 
-    // Now call super
-    return super.findById(id, filter, options);
+    //As parent method findById have filter: FilterExcludingWhere<T>
+    //so we need add check here.
+    const entityToRemove = await super.findOne(filter, options);
+    if (entityToRemove) {
+      // Now call super
+      return super.findById(id, filter, options);
+    } else {
+      throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
+    }
   }
 
   //find by Id including soft deleted record
@@ -272,7 +287,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
    */
   deleteHard(entity: T, options?: Options): Promise<void> {
     // Do hard delete
-    return super.delete(entity, options);
+    return super.deleteById(entity.getId(), options);
   }
 
   /**
