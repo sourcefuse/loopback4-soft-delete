@@ -20,7 +20,7 @@ import {ErrorKeys} from '../error-keys';
 export abstract class DefaultTransactionSoftCrudRepository<
   T extends SoftDeleteEntity,
   ID,
-  Relations extends object = {}
+  Relations extends object = {},
 > extends DefaultTransactionalRepository<T, ID, Relations> {
   constructor(
     entityClass: typeof Entity & {
