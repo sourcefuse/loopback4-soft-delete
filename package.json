@@ -46,7 +46,7 @@
   "peerDependencies": {
     "@loopback/boot": "^3.4.0",
     "@loopback/context": "^3.16.0",
-    "@loopback/repository": "^3.16.0"
+    "@loopback/repository": "^3.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
@@ -61,7 +61,7 @@
     "@types/node": "^10.17.59",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
-    "commitizen": "^4.2.2",
+    "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.2.0",
     "cz-customizable": "^6.2.1",
     "eslint": "^7.25.0",
