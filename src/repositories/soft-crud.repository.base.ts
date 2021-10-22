@@ -21,7 +21,7 @@ import {SoftDeleteEntity} from '../models';
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
   ID,
-  Relations extends object = {}
+  Relations extends object = {},
 > extends DefaultCrudRepository<T, ID, Relations> {
   constructor(
     entityClass: typeof Entity & {
