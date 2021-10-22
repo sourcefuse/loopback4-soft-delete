@@ -21,7 +21,7 @@ import {SoftDeleteEntity} from '../models';
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
   ID,
-  Relations extends object = {}
+  Relations extends object = {},
 > extends DefaultCrudRepository<T, ID, Relations> {
   constructor(
     entityClass: typeof Entity & {
@@ -301,7 +301,7 @@ export abstract class SoftCrudRepository<
    */
   deleteHard(entity: T, options?: Options): Promise<void> {
     // Do hard delete
-    return super.delete(entity, options);
+    return super.deleteById(entity.getId(), options);
   }
 
   /**
