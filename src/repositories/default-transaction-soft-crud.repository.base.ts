@@ -1,10 +1,7 @@
 import {
-  AndClause,
-  Condition,
   DataObject,
   Filter,
   juggler,
-  OrClause,
   DefaultTransactionalRepository,
   Where,
   Getter,
@@ -16,6 +13,7 @@ import {SoftDeleteEntity} from '../models';
 import {IAuthUser} from 'loopback4-authentication';
 import {HttpErrors} from '@loopback/rest';
 import {ErrorKeys} from '../error-keys';
+import {produceSoftDeleteFilter, produceSoftDeleteWhere} from './repo-utils';
 
 export abstract class DefaultTransactionSoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -34,33 +32,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
 
   find(filter?: Filter<T>, options?: Options): Promise<(T & Relations)[]> {
     // Filter out soft deleted entries
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      (filter.where as AndClause<T>).and = [];
-      (filter.where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (filter.where as OrClause<T>).or,
-        },
-      );
-    } else {
-      filter = filter ?? {};
-      filter.where = filter.where ?? {};
-      (filter.where as Condition<T>).deleted = false;
-    }
+    filter = produceSoftDeleteFilter(filter);
 
     // Now call super
     return super.find(filter, options);
@@ -75,34 +47,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
     filter?: Filter<T>,
     options?: Options,
   ): Promise<(T & Relations) | null> {
-    // Filter out soft deleted entries
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      (filter.where as AndClause<T>).and = [];
-      (filter.where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (filter.where as OrClause<T>).or,
-        },
-      );
-    } else {
-      filter = filter ?? {};
-      filter.where = filter.where ?? {};
-      (filter.where as Condition<T>).deleted = false;
-    }
+    filter = produceSoftDeleteFilter(filter);
 
     // Now call super
     return super.findOne(filter, options);
@@ -121,40 +66,9 @@ export abstract class DefaultTransactionSoftCrudRepository<
     filter?: Filter<T>,
     options?: Options,
   ): Promise<T & Relations> {
-    // Filter out soft deleted entries
-    // Filter out soft deleted entries
-    if (
-      filter?.where &&
-      (filter.where as AndClause<T>).and &&
-      (filter.where as AndClause<T>).and.length > 0
-    ) {
-      (filter.where as AndClause<T>).and.push({
-        deleted: false,
-        id: id,
-      } as Condition<T>);
-    } else if (
-      filter?.where &&
-      (filter.where as OrClause<T>).or &&
-      (filter.where as OrClause<T>).or.length > 0
-    ) {
-      filter.where = {
-        and: [
-          {
-            deleted: false,
-            id: id,
-          } as Condition<T>,
-          {
-            or: (filter.where as OrClause<T>).or,
-          },
-        ],
-      };
-    } else {
-      filter = filter ?? {};
-      filter.where = {
-        deleted: false,
-        id: id,
-      } as Condition<T>;
-    }
+    filter = produceSoftDeleteFilter(filter, {
+      id,
+    });
 
     //As parent method findById have filter: FilterExcludingWhere<T>
     //so we need add check here.
@@ -181,33 +95,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
     where?: Where<T>,
     options?: Options,
   ): Promise<Count> {
-    // Filter out soft deleted entries
-    if (
-      where &&
-      (where as AndClause<T>).and &&
-      (where as AndClause<T>).and.length > 0
-    ) {
-      (where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      where &&
-      (where as OrClause<T>).or &&
-      (where as OrClause<T>).or.length > 0
-    ) {
-      (where as AndClause<T>).and = [];
-      (where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (where as OrClause<T>).or,
-        },
-      );
-    } else {
-      where = where ?? {};
-      (where as Condition<T>).deleted = false;
-    }
+    where = produceSoftDeleteWhere(where);
 
     // Now call super
     return super.updateAll(data, where, options);
@@ -215,32 +103,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
 
   count(where?: Where<T>, options?: Options): Promise<Count> {
     // Filter out soft deleted entries
-    if (
-      where &&
-      (where as AndClause<T>).and &&
-      (where as AndClause<T>).and.length > 0
-    ) {
-      (where as AndClause<T>).and.push({
-        deleted: false,
-      } as Condition<T>);
-    } else if (
-      where &&
-      (where as OrClause<T>).or &&
-      (where as OrClause<T>).or.length > 0
-    ) {
-      (where as AndClause<T>).and = [];
-      (where as AndClause<T>).and.push(
-        {
-          deleted: false,
-        } as Condition<T>,
-        {
-          or: (where as OrClause<T>).or,
-        },
-      );
-    } else {
-      where = where ?? {};
-      (where as Condition<T>).deleted = false;
-    }
+    where = produceSoftDeleteWhere(where);
 
     // Now call super
     return super.count(where, options);
