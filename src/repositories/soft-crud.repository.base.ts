@@ -261,57 +261,7 @@ export abstract class SoftCrudRepository<
   }
 
   async countAll(where?: Where<T>, options?: Options): Promise<Count> {
-    // Get count for non soft deleted entries
-    const notDeletedItems = this.count(where, options);
-
-    // Filter out not soft deleted entries
-    if (
-      where &&
-      (where as AndClause<T>).and &&
-      (where as AndClause<T>).and.length > 0
-    ) {
-      (where as AndClause<T>).and.push({
-        deleted: true,
-      } as Condition<T>);
-    } else if (
-      where &&
-      (where as OrClause<T>).or &&
-      (where as OrClause<T>).or.length > 0
-    ) {
-      (where as AndClause<T>).and = [];
-      (where as AndClause<T>).and.push(
-        {
-          deleted: true,
-        } as Condition<T>,
-        {
-          or: (where as OrClause<T>).or,
-        },
-      );
-    } else {
-      where = where ?? {};
-      (where as Condition<T>).deleted = true;
-    }
-
-    // Now call super
-    const deletedItems = super.count(where, options);
-
-    let result = 0;
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    notDeletedItems.then((value) => {
-      result += value.count;
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    deletedItems.then((value) => {
-      result += value.count;
-    });
-
-    const countResult: Count = {
-      count: result,
-    };
-
-    return countResult;
+    return super.count(where, options);
   }
 
   async delete(entity: T, options?: Options): Promise<void> {
