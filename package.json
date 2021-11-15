@@ -28,7 +28,8 @@
     "coverage:ci": "lb-nyc report --reporter=text-lcov | coveralls",
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
-    "prepublishOnly": "npm run test"
+    "prepublishOnly": "npm run test",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -50,8 +51,8 @@
     "loopback-datasource-juggler": "^4.26.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^12.1.2",
+    "@commitlint/cli": "^14.1.0",
+    "@commitlint/config-conventional": "^14.1.0",
     "@loopback/boot": "^3.4.4",
     "@loopback/build": "^7.0.2",
     "@loopback/context": "^3.18.0",
@@ -83,12 +84,6 @@
     "@loopback/rest": "^10.1.0",
     "lodash": "^4.17.21",
     "loopback4-authentication": "^5.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "config": {
     "commitizen": {
