@@ -512,9 +512,8 @@ describe('DefaultTransactionSoftCrudRepository', () => {
       } catch (e) {
         expect(e.message).to.be.equal('EntityNotFound');
       }
-      const afterDeleteIncludeSoftDeleted = await repo.findByIdIncludeSoftDelete(
-        1,
-      );
+      const afterDeleteIncludeSoftDeleted =
+        await repo.findByIdIncludeSoftDelete(1);
       expect(afterDeleteIncludeSoftDeleted)
         .to.have.property('email')
         .equal('john@example.com');
