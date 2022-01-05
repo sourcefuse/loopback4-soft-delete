@@ -108,5 +108,29 @@
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "dist/",
+            "package.json",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} semantic"
+        }
+      ],
+      "@semantic-release/github"
+    ],
+    "repositoryUrl": "git@github.com:sourcefuse/loopback4-soft-delete.git"
   }
 }
