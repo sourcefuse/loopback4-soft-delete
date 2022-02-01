@@ -82,7 +82,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@loopback/core": "^3.0.0",
+    "@loopback/core": "^3.0.1",
     "@loopback/rest": "^11.0.0",
     "lodash": "^4.17.21"
   },
