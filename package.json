@@ -60,9 +60,14 @@
     "@loopback/repository": "^5.0.0",
     "@loopback/testlab": "^5.0.0",
     "@loopback/tslint-config": "^2.1.0",
-    "@types/node": "^12.20.50",
-    "@typescript-eslint/eslint-plugin": "^5.22.0",
-    "@typescript-eslint/parser": "^5.22.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/node": "^12.20.47",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
@@ -75,6 +80,8 @@
     "loopback-datasource-juggler": "^4.27.1",
     "loopback4-authentication": "^6.1.2",
     "minimist": ">=1.2.6",
+    "patch-package": "^6.4.7",
+    "semantic-release": "^19.0.2",
     "source-map-support": "^0.5.21",
     "typescript": "~4.6.4"
   },
@@ -96,5 +103,28 @@
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} semantic"
+        }
+      ],
+      "@semantic-release/github"
+    ],
+    "repositoryUrl": "git@github.com:sourcefuse/loopback4-soft-delete.git"
   }
 }
