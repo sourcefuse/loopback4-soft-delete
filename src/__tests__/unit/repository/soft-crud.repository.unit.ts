@@ -12,10 +12,10 @@ import {
   model,
   EntityNotFoundError,
 } from '@loopback/repository';
-import {DefaultTransactionSoftCrudRepository} from '../../repositories';
+import {SoftCrudRepository} from '../../../repositories';
 import {Getter} from '@loopback/context';
 import {IAuthUser} from 'loopback4-authentication';
-import {SoftDeleteEntity} from '../../models';
+import {SoftDeleteEntity} from '../../../models';
 import {fail} from 'assert';
 
 /**
@@ -31,10 +31,7 @@ class Customer extends SoftDeleteEntity {
   email: string;
 }
 
-class CustomerCrudRepo extends DefaultTransactionSoftCrudRepository<
-  Customer,
-  number
-> {
+class CustomerCrudRepo extends SoftCrudRepository<Customer, number> {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
@@ -46,7 +43,7 @@ class CustomerCrudRepo extends DefaultTransactionSoftCrudRepository<
   }
 }
 
-describe('DefaultTransactionSoftCrudRepository', () => {
+describe('SoftCrudRepository', () => {
   let repo: CustomerCrudRepo;
 
   before(() => {

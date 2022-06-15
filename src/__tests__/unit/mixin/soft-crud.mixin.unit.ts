@@ -11,12 +11,13 @@ import {
   property,
   model,
   EntityNotFoundError,
+  DefaultTransactionalRepository,
 } from '@loopback/repository';
-import {SoftCrudRepository} from '../../repositories';
-import {Getter} from '@loopback/context';
+import {Constructor, Getter} from '@loopback/context';
 import {IAuthUser} from 'loopback4-authentication';
-import {SoftDeleteEntity} from '../../models';
+import {SoftDeleteEntity} from '../../../models';
 import {fail} from 'assert';
+import {SoftCrudRepositoryMixin} from '../../..';
 
 /**
  * A mock up model class
@@ -31,19 +32,26 @@ class Customer extends SoftDeleteEntity {
   email: string;
 }
 
-class CustomerCrudRepo extends SoftCrudRepository<Customer, number> {
+class CustomerCrudRepo extends SoftCrudRepositoryMixin<
+  Customer,
+  typeof Customer.prototype.id,
+  Constructor<
+    DefaultTransactionalRepository<Customer, typeof Customer.prototype.id, {}>
+  >,
+  {}
+>(DefaultTransactionalRepository) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
     },
     dataSource: juggler.DataSource,
-    protected readonly getCurrentUser?: Getter<IAuthUser | undefined>,
+    readonly getCurrentUser: Getter<IAuthUser | undefined>,
   ) {
     super(entityClass, dataSource, getCurrentUser);
   }
 }
 
-describe('SoftCrudRepository', () => {
+describe('SoftCrudRepositoryMixin', () => {
   let repo: CustomerCrudRepo;
 
   before(() => {
@@ -222,7 +230,6 @@ describe('SoftCrudRepository', () => {
           email: 'alice@example.com',
         },
       });
-
       expect(customer).to.have.property('email').equal('alice@example.com');
     });
   });
