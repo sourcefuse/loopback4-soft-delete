@@ -1,6 +1,6 @@
 {
   "name": "loopback4-soft-delete",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "author": "Sourcefuse",
   "description": "A loopback-next extension for soft delete feature",
   "keywords": [
@@ -108,12 +108,19 @@
       "master"
     ],
     "plugins": [
-      ["@semantic-release/commit-analyzer", {
-        "preset":"angular",
-        "releaseRules" : [
-          {"type": "chore", "scope":"deps","release":"patch"}
-        ]
-      }],
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "type": "chore",
+              "scope": "deps",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
       "@semantic-release/release-notes-generator",
       "@semantic-release/changelog",
       "@semantic-release/npm",
