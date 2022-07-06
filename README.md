@@ -3,10 +3,9 @@
 [![LoopBack](<https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png>)](http://loopback.io/)
 
 [![Node version](https://img.shields.io/node/v/loopback4-soft-delete.svg?style=flat-square)](https://nodejs.org/en/download/)
-[![Dependencies Status](https://img.shields.io/david/sourcefuse/loopback4-soft-delete.svg?style=flat-square)](https://github.com/sourcefuse/loopback4-soft-delete)
 [![Loopback Core Version](https://img.shields.io/npm/dependency-version/loopback4-soft-delete/@loopback/core?style=flat-square)](https://github.com/strongloop/loopback-next)
 [![Loopback Build Version](https://img.shields.io/npm/dependency-version/loopback4-soft-delete/dev/@loopback/build.svg?color=dark%20green&style=flat-square)](https://github.com/strongloop/loopback-next/tree/master/packages/build)
-[![npm vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/loopback4-soft-delete.svg?label=npm%20vulnerabilities&style=flat-square)](https://www.npmjs.com/package/loopback4-soft-delete)
+[![npm vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/loopback4-soft-delete.svg?style=flat-square)](https://www.npmjs.com/package/loopback4-soft-delete)
 
 [![Latest version](https://img.shields.io/npm/v/loopback4-soft-delete.svg?style=flat-square)](https://www.npmjs.com/package/loopback4-soft-delete)
 [![License](https://img.shields.io/github/license/sourcefuse/loopback4-soft-delete.svg?color=blue&label=License&style=flat-square)](https://github.com/sourcefuse/loopback4-soft-delete/blob/master/LICENSE)
@@ -120,6 +119,80 @@ export class UserRepository extends DefaultTransactionSoftCrudRepository<
     protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
   ) {
     super(User, dataSource, getCurrentUser);
+  }
+}
+```
+
+The package also provides the following mixins which can be used for soft delete functionality:
+
+- **SoftDeleteEntityMixin**: This mixin adds the soft delete properties to your model. The properties added are represented by the IBaseEntity interface:
+
+```ts
+interface IBaseEntity {
+  deleted?: boolean;
+  deletedOn?: Date;
+  deletedBy?: string;
+}
+```
+
+There is also an option to provide config for the @property decorator for all these properties.
+Usage of SoftDeleteEntityMixin is as follows:
+
+```ts
+class Item extends Entity {
+  @property({
+    type: 'number',
+    id: true,
+    generated: true,
+  })
+  id?: number;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  name: string;
+
+  constructor(data?: Partial<Item>) {
+    super(data);
+  }
+}
+
+@model()
+export class ItemSoftDelete extends SoftDeleteEntityMixin(Item, {
+  deletedBy: {name: 'deleted_by_userid'},
+}) {}
+```
+
+- **SoftCrudRepositoryMixin**: You can make use of this mixin to get the soft delete functionality for DefaultCrudRepository or any respository that extends the DefaultCrudRepository. You need to extend your repository with this mixin and provide DefaultCrudRepository (or any repository that extends DefaultCrudRepository) as input. This means that this same mixin can also be used to provide soft delete functionality for DefaultTransactionSoftCrudRepository ( as DefaultTransactionSoftCrudRepository extends DefaultCrudRepository).You will have to inject the getter for IAuthUser in the contructor of your repository.
+  Example:
+
+```ts
+import {Constructor, Getter, inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
+import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+import {SoftCrudRepositoryMixin} from 'loopback4-soft-delete';
+import {TestDataSource} from '../datasources';
+import {ItemSoftDelete, ItemSoftDeleteRelations} from '../models';
+
+export class ItemRepository extends SoftCrudRepositoryMixin<
+  ItemSoftDelete,
+  typeof ItemSoftDelete.prototype.id,
+  Constructor<
+    DefaultCrudRepository<
+      ItemSoftDelete,
+      typeof ItemSoftDelete.prototype.id,
+      ItemSoftDeleteRelations
+    >
+  >,
+  ItemSoftDeleteRelations
+>(DefaultCrudRepository) {
+  constructor(
+    @inject('datasources.test') dataSource: TestDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER)
+    public getCurrentUser: Getter<IAuthUser>,
+  ) {
+    super(ItemSoftDelete, dataSource);
   }
 }
 ```

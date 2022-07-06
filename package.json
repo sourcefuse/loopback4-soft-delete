@@ -1,6 +1,6 @@
 {
   "name": "loopback4-soft-delete",
-  "version": "4.0.0",
+  "version": "5.1.1",
   "author": "Sourcefuse",
   "description": "A loopback-next extension for soft delete feature",
   "keywords": [
@@ -45,49 +45,97 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/boot": "^3.4.0",
-    "@loopback/context": "^3.16.0",
-    "@loopback/repository": "^3.6.0",
-    "loopback-datasource-juggler": "^4.26.0"
+    "@loopback/boot": "^5.0.1",
+    "@loopback/context": "^5.0.1",
+    "@loopback/repository": "^5.0.1",
+    "loopback-datasource-juggler": "^4.27.1",
+    "loopback4-authentication": "^6.1.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^14.1.0",
-    "@commitlint/config-conventional": "^14.1.0",
-    "@loopback/boot": "^3.4.4",
-    "@loopback/build": "^7.0.2",
-    "@loopback/context": "^3.18.0",
-    "@loopback/repository": "^3.7.3",
-    "@loopback/testlab": "^3.4.4",
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "@loopback/boot": "^5.0.1",
+    "@loopback/build": "^9.0.1",
+    "@loopback/context": "^5.0.1",
+    "@loopback/repository": "^5.0.1",
+    "@loopback/testlab": "^5.0.1",
     "@loopback/tslint-config": "^2.1.0",
-    "@types/node": "^10.17.60",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/node": "^14.18.21",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
     "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.2.0",
-    "cz-customizable": "^6.2.1",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-eslint-plugin": "^3.6.1",
-    "eslint-plugin-mocha": "^9.0.0",
-    "fs-extra": "^10.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^6.3.0",
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-eslint-plugin": "^4.2.0",
+    "eslint-plugin-mocha": "^10.0.5",
+    "fs-extra": "^10.1.0",
     "husky": "^7.0.4",
-    "loopback-datasource-juggler": "^4.26.0",
-    "minimist": ">=0.2.1",
-    "source-map-support": "^0.5.20",
-    "typescript": "~4.4.4"
+    "loopback-datasource-juggler": "^4.27.1",
+    "loopback4-authentication": "^6.1.4",
+    "minimist": ">=1.2.6",
+    "semantic-release": "^19.0.3",
+    "source-map-support": "^0.5.21",
+    "typescript": "~4.7.3"
+  },
+  "overrides": {
+    "commitizen": {
+      "minimist": "^1.2.6",
+      "cz-conventional-changelog": "^3.3.0"
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@loopback/core": "^2.18.0",
-    "@loopback/rest": "^10.1.0",
-    "lodash": "^4.17.21",
-    "loopback4-authentication": "^5.0.2"
+    "@loopback/core": "^4.0.1",
+    "@loopback/rest": "^12.0.1",
+    "lodash": "^4.17.21"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-customizable"
     }
+  },
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "type": "chore",
+              "scope": "deps",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} semantic"
+        }
+      ],
+      "@semantic-release/github"
+    ],
+    "repositoryUrl": "git@github.com:sourcefuse/loopback4-soft-delete.git"
   }
 }
