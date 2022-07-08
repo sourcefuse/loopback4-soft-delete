@@ -78,7 +78,7 @@
     "fs-extra": "^10.1.0",
     "husky": "^7.0.4",
     "loopback-datasource-juggler": "^4.27.1",
-    "loopback4-authentication": "^6.1.4",
+    "loopback4-authentication": "^6.1.5",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "source-map-support": "^0.5.21",
