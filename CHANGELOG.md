@@ -1,3 +1,15 @@
+# [5.2.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.1.1...v5.2.0) (2022-07-21)
+
+
+### Bug Fixes
+
+* **repository): fix(repository:** fixed entitytoremove=null with mongodb ([#48](https://github.com/sourcefuse/loopback4-soft-delete/issues/48)) ([277142d](https://github.com/sourcefuse/loopback4-soft-delete/commit/277142d65e476ee1d3db0559dffc61e772e34ad9))
+
+
+### Features
+
+* **entity:** add mixin for SoftDeleteEntity and  DefaultCrudRepository ([#80](https://github.com/sourcefuse/loopback4-soft-delete/issues/80)) ([4cf6b9c](https://github.com/sourcefuse/loopback4-soft-delete/commit/4cf6b9c6254d508f6bbf564815b9cad6dc8c522f))
+
 ## [5.1.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.1.0...v5.1.1) (2022-06-21)
 
 # [5.1.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.0.4...v5.1.0) (2022-05-25)

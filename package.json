@@ -1,6 +1,6 @@
 {
   "name": "loopback4-soft-delete",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "author": "Sourcefuse",
   "description": "A loopback-next extension for soft delete feature",
   "keywords": [
