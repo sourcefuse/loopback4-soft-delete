@@ -1,3 +1,5 @@
+## [5.2.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.2.0...v5.2.1) (2022-07-28)
+
 # [5.2.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.1.1...v5.2.0) (2022-07-21)
 
 
