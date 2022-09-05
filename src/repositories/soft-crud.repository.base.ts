@@ -175,14 +175,9 @@ export abstract class SoftCrudRepository<
         [pk]: id,
       } as Condition<T>;
     }
-
-    //As parent method findById have filter: FilterExcludingWhere<T>
-    //so we need add check here.
-    const entityToRemove = await super.findOne(filter, options);
-
-    if (entityToRemove) {
-      // Now call super
-      return super.findById(id, filter, options);
+    const entity = await super.findById(id, filter, options);
+    if (entity && !entity.deleted) {
+      return entity;
     } else {
       throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
     }
@@ -194,13 +189,9 @@ export abstract class SoftCrudRepository<
     filter?: Filter<T>,
     options?: Options,
   ): Promise<T & Relations> {
-    //As parent method findById have filter: FilterExcludingWhere<T>
-    //so we need add check here.
-    const entityToRemove = await super.findOne(filter, options);
-
-    if (entityToRemove) {
-      // Now call super
-      return super.findById(id, filter, options);
+    const entity = await super.findById(id, filter, options);
+    if (entity) {
+      return entity;
     } else {
       throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
     }
