@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.2.1...v5.3.0) (2022-09-05)
+
+
+### Features
+
+* **repository:** remove multiple db calls for find by id ([#88](https://github.com/sourcefuse/loopback4-soft-delete/issues/88)) ([bbc9803](https://github.com/sourcefuse/loopback4-soft-delete/commit/bbc9803d90e6768f72e16eb24adee0a859890f25)), closes [#87](https://github.com/sourcefuse/loopback4-soft-delete/issues/87)
+
 ## [5.2.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.2.0...v5.2.1) (2022-07-28)
 
 # [5.2.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.1.1...v5.2.0) (2022-07-21)
