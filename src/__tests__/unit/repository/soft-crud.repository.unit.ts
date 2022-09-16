@@ -288,6 +288,38 @@ describe('SoftCrudRepository', () => {
         expect(e.message).to.be.equal('EntityNotFound');
       }
     });
+    it('should not return soft deleted entry by id, without using deleted in fields filter', async () => {
+      try {
+        await repo.findById(3, {
+          fields: {
+            id: true,
+            email: true,
+          },
+        });
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+    });
+    it('should return requested fields only when not using deleted in fields filter', async () => {
+      const customer = await repo.findById(4, {
+        fields: {
+          id: true,
+          email: true,
+        },
+      });
+      expect(customer).to.not.have.property('deleted');
+    });
+    it('should return requested fields matched with fields filter', async () => {
+      const customer = await repo.findById(4, {
+        fields: {
+          id: true,
+          email: true,
+          deleted: true,
+        },
+      });
+      expect(customer).to.have.property('deleted');
+    });
   });
 
   describe('findByIdIncludeSoftDelete', () => {
