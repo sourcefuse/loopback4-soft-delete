@@ -12,7 +12,7 @@ import {
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
-import {Options} from 'loopback-datasource-juggler';
+import {AnyObject, Options} from 'loopback-datasource-juggler';
 import {IAuthUser} from 'loopback4-authentication';
 
 import {ErrorKeys} from '../error-keys';
@@ -175,8 +175,19 @@ export abstract class SoftCrudRepository<
         [pk]: id,
       } as Condition<T>;
     }
-    const entity = await super.findById(id, filter, options);
+    const finalFilter: Filter<T> = {};
+    Object.assign(filter, finalFilter);
+    if (finalFilter.fields) {
+      finalFilter.fields = {
+        ...finalFilter.fields,
+        deleted: true,
+      };
+    }
+    const entity = await super.findById(id, finalFilter, options);
     if (entity && !entity.deleted) {
+      if (filter.fields && !(filter.fields as AnyObject).deleted) {
+        delete entity.deleted;
+      }
       return entity;
     } else {
       throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
