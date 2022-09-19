@@ -1,3 +1,10 @@
+## [5.3.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.1...v5.3.2) (2022-09-19)
+
+
+### Bug Fixes
+
+* **repository:** add deleted property in fields filter ([#92](https://github.com/sourcefuse/loopback4-soft-delete/issues/92)) ([142179c](https://github.com/sourcefuse/loopback4-soft-delete/commit/142179cff96122388019945845a792a6898d614e)), closes [#91](https://github.com/sourcefuse/loopback4-soft-delete/issues/91)
+
 ## [5.3.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.0...v5.3.1) (2022-09-09)
 
 # [5.3.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.2.1...v5.3.0) (2022-09-05)
