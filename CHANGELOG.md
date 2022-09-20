@@ -1,3 +1,10 @@
+## [5.3.3](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.2...v5.3.3) (2022-09-20)
+
+
+### Bug Fixes
+
+* **repository:** fixed object assignment for filters ([#93](https://github.com/sourcefuse/loopback4-soft-delete/issues/93)) ([740da07](https://github.com/sourcefuse/loopback4-soft-delete/commit/740da07a509687e09f95e44af579fb895cf43796)), closes [#91](https://github.com/sourcefuse/loopback4-soft-delete/issues/91)
+
 ## [5.3.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.1...v5.3.2) (2022-09-19)
 
 
