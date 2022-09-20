@@ -176,7 +176,7 @@ export abstract class SoftCrudRepository<
       } as Condition<T>;
     }
     const finalFilter: Filter<T> = {};
-    Object.assign(filter, finalFilter);
+    Object.assign(finalFilter, filter);
     if (finalFilter.fields) {
       finalFilter.fields = {
         ...finalFilter.fields,
