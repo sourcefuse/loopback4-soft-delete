@@ -5,19 +5,19 @@
 
 import {expect} from '@loopback/testlab';
 
-import {
-  Entity,
-  juggler,
-  property,
-  model,
-  EntityNotFoundError,
-  DefaultTransactionalRepository,
-} from '@loopback/repository';
 import {Constructor, Getter} from '@loopback/context';
-import {IAuthUser} from 'loopback4-authentication';
-import {SoftDeleteEntity} from '../../../models';
+import {
+  DefaultTransactionalRepository,
+  Entity,
+  EntityNotFoundError,
+  juggler,
+  model,
+  property,
+} from '@loopback/repository';
 import {fail} from 'assert';
 import {SoftCrudRepositoryMixin} from '../../..';
+import {SoftDeleteEntity} from '../../../models';
+import {IAuthUser} from '../../../types';
 
 /**
  * A mock up model class

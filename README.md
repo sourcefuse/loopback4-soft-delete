@@ -18,12 +18,6 @@
 npm install loopback4-soft-delete
 ```
 
-**NOTE** - With latest version 3.0.0, you also need to install [loopback4-authentication](https://github.com/sourcefuse/loopback4-authentication) for using deleted_by feature added.
-
-```sh
-npm install loopback4-soft-delete
-```
-
 ## Quick Starter
 
 For a quick starter guide, you can refer to our [loopback 4 starter](https://github.com/sourcefuse/loopback4-starter) application which utilizes this package for soft-deletes in a multi-tenant application.
@@ -193,6 +187,51 @@ export class ItemRepository extends SoftCrudRepositoryMixin<
     public getCurrentUser: Getter<IAuthUser>,
   ) {
     super(ItemSoftDelete, dataSource);
+  }
+}
+```
+
+### deletedBy
+
+Whenever any entry is deleted using deleteById, delete and deleteAll repository methods, it also sets deletedBy column with a value with user id whoever is logged in currently. Hence it uses a Getter function of IAuthUser type. However, if you want to use some other attribute of user model other than id, you can do it by sending extra options to repository methods - deleteById, delete and deleteAll. Here is an example.
+
+```ts
+import {Getter, inject} from '@loopback/core';
+import {SoftCrudRepository} from 'loopback4-soft-delete';
+import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+
+import {PgdbDataSource} from '../datasources';
+import {User, UserRelations} from '../models';
+
+export class UserRepository extends SoftCrudRepository<
+  User,
+  typeof User.prototype.id,
+  UserRelations
+> {
+  constructor(
+    @inject('datasources.pgdb') dataSource: PgdbDataSource,
+    @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
+    protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
+  ) {
+    super(User, dataSource, getCurrentUser);
+  }
+
+  async delete(entity: User, options?: Options): Promise<void> {
+    return super.delete(entity, {
+      userIdentifierKey: 'userTenantId',
+    });
+  }
+
+  async deleteAll(where?: Where<User>, options?: Options): Promise<Count> {
+    return super.deleteAll(where, {
+      userIdentifierKey: 'userTenantId',
+    });
+  }
+
+  async deleteById(id: string, options?: Options): Promise<void> {
+    return super.deleteById(id, {
+      userIdentifierKey: 'userTenantId',
+    });
   }
 }
 ```
