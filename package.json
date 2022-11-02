@@ -48,8 +48,7 @@
     "@loopback/boot": "^5.0.3",
     "@loopback/context": "^5.0.3",
     "@loopback/repository": "^5.0.3",
-    "loopback-datasource-juggler": "^4.27.1",
-    "loopback4-authentication": "^7.0.0"
+    "loopback-datasource-juggler": "^4.27.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
@@ -78,7 +77,6 @@
     "fs-extra": "^10.1.0",
     "husky": "^7.0.4",
     "loopback-datasource-juggler": "^4.27.1",
-    "loopback4-authentication": "^7.0.0",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "source-map-support": "^0.5.21",

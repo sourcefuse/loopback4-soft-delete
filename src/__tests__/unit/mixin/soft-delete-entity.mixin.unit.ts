@@ -1,23 +1,23 @@
 import {expect} from '@loopback/testlab';
 
 import {
-  Entity,
-  juggler,
-  property,
-  model,
-  DefaultTransactionalRepository,
-  MODEL_PROPERTIES_KEY,
-} from '@loopback/repository';
-import {
   Constructor,
   Getter,
   MetadataInspector,
   MetadataMap,
 } from '@loopback/context';
-import {IAuthUser} from 'loopback4-authentication';
+import {
+  DefaultTransactionalRepository,
+  Entity,
+  juggler,
+  model,
+  MODEL_PROPERTIES_KEY,
+  property,
+} from '@loopback/repository';
 
-import {SoftCrudRepositoryMixin, SoftDeleteEntityMixin} from '../../..';
 import {PropertyDefinition} from 'loopback-datasource-juggler';
+import {SoftCrudRepositoryMixin, SoftDeleteEntityMixin} from '../../..';
+import {IAuthUser} from '../../../types';
 /**
  * A mock up model class
  */

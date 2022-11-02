@@ -13,10 +13,10 @@ import {
 import {Count} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
 import {AnyObject, Options} from 'loopback-datasource-juggler';
-import {IAuthUser} from 'loopback4-authentication';
 
 import {ErrorKeys} from '../error-keys';
 import {SoftDeleteEntity} from '../models';
+import {IAuthUser} from '../types';
 
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -284,7 +284,7 @@ export abstract class SoftCrudRepository<
     // Do soft delete, no hard delete allowed
     (entity as SoftDeleteEntity).deleted = true;
     (entity as SoftDeleteEntity).deletedOn = new Date();
-    (entity as SoftDeleteEntity).deletedBy = await this.getUserId();
+    (entity as SoftDeleteEntity).deletedBy = await this.getUserId(options);
     return super.update(entity, options);
   }
 
@@ -294,7 +294,7 @@ export abstract class SoftCrudRepository<
       {
         deleted: true,
         deletedOn: new Date(),
-        deletedBy: await this.getUserId(),
+        deletedBy: await this.getUserId(options),
       } as DataObject<T>,
       where,
       options,
@@ -308,7 +308,7 @@ export abstract class SoftCrudRepository<
       {
         deleted: true,
         deletedOn: new Date(),
-        deletedBy: await this.getUserId(),
+        deletedBy: await this.getUserId(options),
       } as DataObject<T>,
       options,
     );
@@ -350,9 +350,10 @@ export abstract class SoftCrudRepository<
     }
     let currentUser = await this.getCurrentUser();
     currentUser = currentUser ?? options?.currentUser;
-    if (!currentUser || !currentUser.id) {
+    const userIdentifierKey: string = options?.userIdentifierKey ?? 'id';
+    if (!currentUser) {
       return undefined;
     }
-    return currentUser.id.toString();
+    return currentUser[userIdentifierKey]?.toString();
   }
 }

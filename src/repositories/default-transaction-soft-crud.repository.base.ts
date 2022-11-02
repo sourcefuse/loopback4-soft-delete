@@ -2,20 +2,20 @@ import {
   AndClause,
   Condition,
   DataObject,
+  DefaultTransactionalRepository,
+  Entity,
   Filter,
+  Getter,
   juggler,
   OrClause,
-  DefaultTransactionalRepository,
   Where,
-  Getter,
-  Entity,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
-import {Options} from 'loopback-datasource-juggler';
-import {SoftDeleteEntity} from '../models';
-import {IAuthUser} from 'loopback4-authentication';
 import {HttpErrors} from '@loopback/rest';
+import {Options} from 'loopback-datasource-juggler';
 import {ErrorKeys} from '../error-keys';
+import {SoftDeleteEntity} from '../models';
+import {IAuthUser} from '../types';
 
 export abstract class DefaultTransactionSoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -316,9 +316,10 @@ export abstract class DefaultTransactionSoftCrudRepository<
     }
     let currentUser = await this.getCurrentUser();
     currentUser = currentUser ?? options?.currentUser;
-    if (!currentUser || !currentUser.id) {
+    const userIdentifierKey: string = options?.userIdentifierKey ?? 'id';
+    if (!currentUser) {
       return undefined;
     }
-    return currentUser.id.toString();
+    return currentUser[userIdentifierKey]?.toString();
   }
 }
