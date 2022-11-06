@@ -28,6 +28,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
     },
     dataSource: juggler.DataSource,
     protected readonly getCurrentUser?: Getter<IAuthUser | undefined>,
+    protected readonly deletedByIdKey: string = 'id',
   ) {
     super(entityClass, dataSource);
   }
@@ -316,10 +317,9 @@ export abstract class DefaultTransactionSoftCrudRepository<
     }
     let currentUser = await this.getCurrentUser();
     currentUser = currentUser ?? options?.currentUser;
-    const userIdentifierKey: string = options?.userIdentifierKey ?? 'id';
     if (!currentUser) {
       return undefined;
     }
-    return currentUser[userIdentifierKey]?.toString();
+    return currentUser[this.deletedByIdKey]?.toString();
   }
 }

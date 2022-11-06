@@ -193,7 +193,7 @@ export class ItemRepository extends SoftCrudRepositoryMixin<
 
 ### deletedBy
 
-Whenever any entry is deleted using deleteById, delete and deleteAll repository methods, it also sets deletedBy column with a value with user id whoever is logged in currently. Hence it uses a Getter function of IAuthUser type. However, if you want to use some other attribute of user model other than id, you can do it by sending extra options to repository methods - deleteById, delete and deleteAll. Here is an example.
+Whenever any entry is deleted using deleteById, delete and deleteAll repository methods, it also sets deletedBy column with a value with user id whoever is logged in currently. Hence it uses a Getter function of IAuthUser type. However, if you want to use some other attribute of user model other than id, you can do it by overriding deletedByIdKey. Here is an example.
 
 ```ts
 import {Getter, inject} from '@loopback/core';
@@ -212,26 +212,9 @@ export class UserRepository extends SoftCrudRepository<
     @inject('datasources.pgdb') dataSource: PgdbDataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
     protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
+    protected readonly deletedByIdKey: string = 'userTenantId',
   ) {
     super(User, dataSource, getCurrentUser);
-  }
-
-  async delete(entity: User, options?: Options): Promise<void> {
-    return super.delete(entity, {
-      userIdentifierKey: 'userTenantId',
-    });
-  }
-
-  async deleteAll(where?: Where<User>, options?: Options): Promise<Count> {
-    return super.deleteAll(where, {
-      userIdentifierKey: 'userTenantId',
-    });
-  }
-
-  async deleteById(id: string, options?: Options): Promise<void> {
-    return super.deleteById(id, {
-      userIdentifierKey: 'userTenantId',
-    });
   }
 }
 ```

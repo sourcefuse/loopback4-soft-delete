@@ -31,6 +31,16 @@ class Customer extends SoftDeleteEntity {
   email: string;
 }
 
+@model()
+class Customer2 extends SoftDeleteEntity {
+  @property({
+    id: true,
+  })
+  id: number;
+  @property()
+  email: string;
+}
+
 class CustomerCrudRepo extends SoftCrudRepository<Customer, number> {
   constructor(
     entityClass: typeof Entity & {
@@ -43,19 +53,38 @@ class CustomerCrudRepo extends SoftCrudRepository<Customer, number> {
   }
 }
 
+class Customer2CrudRepo extends SoftCrudRepository<Customer2, number> {
+  constructor(
+    entityClass: typeof Entity & {
+      prototype: Customer;
+    },
+    dataSource: juggler.DataSource,
+    protected readonly getCurrentUser?: Getter<IAuthUser | undefined>,
+    protected readonly deletedByIdKey: string = 'id',
+  ) {
+    super(entityClass, dataSource, getCurrentUser);
+  }
+}
+
 describe('SoftCrudRepository', () => {
   let repo: CustomerCrudRepo;
+  let repoWithCustomDeletedByKey: Customer2CrudRepo;
+  const userData = {
+    id: '1',
+    username: 'test',
+  };
 
   before(() => {
     const ds: juggler.DataSource = new juggler.DataSource({
       name: 'db',
       connector: 'memory',
     });
-    repo = new CustomerCrudRepo(Customer, ds, () =>
-      Promise.resolve({
-        id: '1',
-        username: 'test',
-      }),
+    repo = new CustomerCrudRepo(Customer, ds, () => Promise.resolve(userData));
+    repoWithCustomDeletedByKey = new Customer2CrudRepo(
+      Customer2,
+      ds,
+      () => Promise.resolve(userData),
+      'username',
     );
   });
 
@@ -529,9 +558,60 @@ describe('SoftCrudRepository', () => {
     });
   });
 
+  describe('deleteById', () => {
+    beforeEach(setupTestData);
+    afterEach(clearTestData);
+
+    it('should soft delete entries', async () => {
+      await repo.deleteById(1);
+      try {
+        await repo.findById(1);
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+      const afterDeleteIncludeSoftDeleted =
+        await repo.findByIdIncludeSoftDelete(1);
+      expect(afterDeleteIncludeSoftDeleted)
+        .to.have.property('email')
+        .equal('john@example.com');
+    });
+
+    it('should soft delete entries with deletedBy set to id', async () => {
+      await repo.deleteById(1);
+      try {
+        await repo.findById(1);
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+      const afterDeleteIncludeSoftDeleted =
+        await repo.findByIdIncludeSoftDelete(1);
+      expect(afterDeleteIncludeSoftDeleted)
+        .to.have.property('deletedBy')
+        .equal(userData.id);
+    });
+
+    it('should soft delete entries with deletedBy set to custom key provided', async () => {
+      await repoWithCustomDeletedByKey.deleteById(1);
+      try {
+        await repoWithCustomDeletedByKey.findById(1);
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+      const afterDeleteIncludeSoftDeleted =
+        await repoWithCustomDeletedByKey.findByIdIncludeSoftDelete(1);
+      expect(afterDeleteIncludeSoftDeleted)
+        .to.have.property('deletedBy')
+        .equal(userData.username);
+    });
+  });
+
   describe('delete', () => {
     beforeEach(setupTestData);
     afterEach(clearTestData);
+
     it('should soft delete entries', async () => {
       const entity = await repo.findById(1);
       await repo.delete(entity);
@@ -547,17 +627,72 @@ describe('SoftCrudRepository', () => {
         .to.have.property('email')
         .equal('john@example.com');
     });
+
+    it('should soft delete entries with deletedBy set to id', async () => {
+      const entity = await repo.findById(1);
+      await repo.delete(entity);
+      try {
+        await repo.findById(1);
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+      const afterDeleteIncludeSoftDeleted =
+        await repo.findByIdIncludeSoftDelete(1);
+      expect(afterDeleteIncludeSoftDeleted)
+        .to.have.property('deletedBy')
+        .equal(userData.id);
+    });
+
+    it('should soft delete entries with deletedBy set to custom key provided', async () => {
+      const entity = await repoWithCustomDeletedByKey.findById(1);
+      await repoWithCustomDeletedByKey.delete(entity);
+      try {
+        await repoWithCustomDeletedByKey.findById(1);
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+      const afterDeleteIncludeSoftDeleted =
+        await repoWithCustomDeletedByKey.findByIdIncludeSoftDelete(1);
+      expect(afterDeleteIncludeSoftDeleted)
+        .to.have.property('deletedBy')
+        .equal(userData.username);
+    });
   });
 
   describe('deleteAll', () => {
     beforeEach(setupTestData);
     afterEach(clearTestData);
+
     it('should soft delete all entries', async () => {
       await repo.deleteAll();
       const customers = await repo.find();
       expect(customers).to.have.length(0);
       const afterDeleteAll = await repo.findAll();
       expect(afterDeleteAll).to.have.length(4);
+    });
+
+    it('should soft delete entries with deletedBy set to id', async () => {
+      await repo.deleteAll();
+      const customers = await repo.find();
+      expect(customers).to.have.length(0);
+      const afterDeleteAll = await repo.findAll();
+      expect(afterDeleteAll).to.have.length(4);
+      afterDeleteAll.forEach((rec) => {
+        expect(rec).to.have.property('deletedBy').equal(userData.id);
+      });
+    });
+
+    it('should soft delete entries with deletedBy set to custom key provided', async () => {
+      await repoWithCustomDeletedByKey.deleteAll();
+      const customers = await repoWithCustomDeletedByKey.find();
+      expect(customers).to.have.length(0);
+      const afterDeleteAll = await repoWithCustomDeletedByKey.findAll();
+      expect(afterDeleteAll).to.have.length(4);
+      afterDeleteAll.forEach((rec) => {
+        expect(rec).to.have.property('deletedBy').equal(userData.username);
+      });
     });
   });
 
@@ -596,9 +731,19 @@ describe('SoftCrudRepository', () => {
     await repo.create({id: 3, email: 'alice@example.com'});
     await repo.create({id: 4, email: 'bob@example.com'});
     await repo.deleteById(3);
+
+    await repoWithCustomDeletedByKey.create({id: 1, email: 'john@example.com'});
+    await repoWithCustomDeletedByKey.create({id: 2, email: 'mary@example.com'});
+    await repoWithCustomDeletedByKey.create({
+      id: 3,
+      email: 'alice@example.com',
+    });
+    await repoWithCustomDeletedByKey.create({id: 4, email: 'bob@example.com'});
+    await repoWithCustomDeletedByKey.deleteById(3);
   }
 
   async function clearTestData() {
     await repo.deleteAllHard();
+    await repoWithCustomDeletedByKey.deleteAllHard();
   }
 });
