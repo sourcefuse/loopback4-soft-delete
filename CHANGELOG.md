@@ -1,3 +1,17 @@
+# [6.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.5...v6.0.0) (2022-11-07)
+
+
+### Features
+
+* **repository:** allow deletedBy id to be configurable ([#100](https://github.com/sourcefuse/loopback4-soft-delete/issues/100)) ([1be1dc4](https://github.com/sourcefuse/loopback4-soft-delete/commit/1be1dc4245491086633d90eee9df930a45ea9bbd)), closes [#99](https://github.com/sourcefuse/loopback4-soft-delete/issues/99)
+* **repository:** allow deletedBy id to be configurable using class protected property ([28de1cd](https://github.com/sourcefuse/loopback4-soft-delete/commit/28de1cd0f33d5f159bf25fb93b96c943a0b877d9)), closes [#99](https://github.com/sourcefuse/loopback4-soft-delete/issues/99)
+
+
+### BREAKING CHANGES
+
+* **repository:** change approach of deletedById key provider
+* **repository:** remove dependency of loopback4-authentication
+
 ## [5.3.5](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.4...v5.3.5) (2022-10-31)
 
 ## [5.3.4](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.3...v5.3.4) (2022-10-14)
