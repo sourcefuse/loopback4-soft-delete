@@ -197,7 +197,7 @@ Whenever any entry is deleted using deleteById, delete and deleteAll repository 
 
 ```ts
 import {Getter, inject} from '@loopback/core';
-import {SoftCrudRepository} from 'loopback4-soft-delete';
+import {SoftCrudRepository, IUser} from 'loopback4-soft-delete';
 import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
 
 import {PgdbDataSource} from '../datasources';
@@ -211,10 +211,10 @@ export class UserRepository extends SoftCrudRepository<
   constructor(
     @inject('datasources.pgdb') dataSource: PgdbDataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
-    protected readonly getCurrentUser: Getter<IAuthUser | undefined>,
+    protected readonly getCurrentUser: Getter<(IAuthUser & IUser) | undefined>,
     protected readonly deletedByIdKey: string = 'userTenantId',
   ) {
-    super(User, dataSource, getCurrentUser);
+    super(User, dataSource, getCurrentUser, deletedByIdKey);
   }
 }
 ```

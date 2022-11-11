@@ -17,9 +17,9 @@ import {ErrorKeys} from '../error-keys';
 import {SoftDeleteEntity} from '../models';
 import {
   AbstractConstructor,
-  IAuthUser,
   IBaseEntity,
   ISoftCrudRepositoryMixin,
+  IUser,
 } from '../types';
 
 export function SoftCrudRepositoryMixin<
@@ -34,7 +34,7 @@ export function SoftCrudRepositoryMixin<
     extends base
     implements ISoftCrudRepositoryMixin<E, ID, R>
   {
-    getCurrentUser: Getter<IAuthUser | undefined>;
+    getCurrentUser: Getter<IUser | undefined>;
     deletedByIdKey = 'id';
 
     find(filter?: Filter<E>, options?: Options): Promise<(E & R)[]> {
@@ -335,7 +335,7 @@ export function SoftCrudRepositoryMixin<
       if (!currentUser) {
         return undefined;
       }
-      return currentUser[this.deletedByIdKey]?.toString();
+      return currentUser[this.deletedByIdKey] as string;
     }
   }
   return SoftCrudRepository;

@@ -12,9 +12,9 @@ import {
 export type AbstractConstructor<T> = abstract new (...args: any[]) => T;
 // sonarignore:end
 
-export interface IAuthUser {
+export interface IUser {
   id?: number | string;
-  [key: string]: number | string | undefined;
+  [key: string]: unknown;
 }
 
 export interface IBaseEntityConfig {
@@ -30,7 +30,7 @@ export interface IBaseEntity {
 }
 
 export interface ISoftCrudRepositoryMixin<E extends object, ID, R> {
-  getCurrentUser: Getter<IAuthUser | undefined>;
+  getCurrentUser: Getter<IUser | undefined>;
   findAll(filter?: Filter<E>, options?: Options): Promise<(E & R)[]>;
   deleteHard(entity: E, options?: Options): Promise<void>;
   deleteByIdHard(id: ID, options?: Options): Promise<void>;

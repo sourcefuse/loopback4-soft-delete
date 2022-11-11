@@ -17,7 +17,7 @@ import {
 
 import {PropertyDefinition} from 'loopback-datasource-juggler';
 import {SoftCrudRepositoryMixin, SoftDeleteEntityMixin} from '../../..';
-import {IAuthUser} from '../../../types';
+import {IUser} from '../../../types';
 /**
  * A mock up model class
  */
@@ -80,7 +80,7 @@ class CustomerCrudRepo extends SoftCrudRepositoryMixin<
 >(DefaultTransactionalRepository) {
   constructor(
     dataSource: juggler.DataSource,
-    readonly getCurrentUser: Getter<IAuthUser | undefined>,
+    readonly getCurrentUser: Getter<IUser | undefined>,
   ) {
     super(CustomerSoftDelete, dataSource);
   }

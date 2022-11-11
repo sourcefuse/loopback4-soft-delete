@@ -15,7 +15,7 @@ import {HttpErrors} from '@loopback/rest';
 import {Options} from 'loopback-datasource-juggler';
 import {ErrorKeys} from '../error-keys';
 import {SoftDeleteEntity} from '../models';
-import {IAuthUser} from '../types';
+import {IUser} from '../types';
 
 export abstract class DefaultTransactionSoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -27,7 +27,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
       prototype: T;
     },
     dataSource: juggler.DataSource,
-    protected readonly getCurrentUser?: Getter<IAuthUser | undefined>,
+    protected readonly getCurrentUser?: Getter<IUser | undefined>,
     protected readonly deletedByIdKey: string = 'id',
   ) {
     super(entityClass, dataSource);
@@ -320,6 +320,6 @@ export abstract class DefaultTransactionSoftCrudRepository<
     if (!currentUser) {
       return undefined;
     }
-    return currentUser[this.deletedByIdKey]?.toString();
+    return currentUser[this.deletedByIdKey] as string;
   }
 }

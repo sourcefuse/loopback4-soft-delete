@@ -16,7 +16,7 @@ import {AnyObject, Options} from 'loopback-datasource-juggler';
 
 import {ErrorKeys} from '../error-keys';
 import {SoftDeleteEntity} from '../models';
-import {IAuthUser} from '../types';
+import {IUser} from '../types';
 
 export abstract class SoftCrudRepository<
   T extends SoftDeleteEntity,
@@ -28,7 +28,7 @@ export abstract class SoftCrudRepository<
       prototype: T;
     },
     dataSource: juggler.DataSource,
-    protected readonly getCurrentUser?: Getter<IAuthUser | undefined>,
+    protected readonly getCurrentUser?: Getter<IUser | undefined>,
     protected readonly deletedByIdKey: string = 'id',
   ) {
     super(entityClass, dataSource);
@@ -354,6 +354,6 @@ export abstract class SoftCrudRepository<
     if (!currentUser) {
       return undefined;
     }
-    return currentUser[this.deletedByIdKey]?.toString();
+    return currentUser[this.deletedByIdKey] as string;
   }
 }

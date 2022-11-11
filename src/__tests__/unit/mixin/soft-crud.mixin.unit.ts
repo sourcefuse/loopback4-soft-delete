@@ -18,7 +18,7 @@ import {
 import {fail} from 'assert';
 import {SoftCrudRepositoryMixin} from '../../..';
 import {SoftDeleteEntity} from '../../../models';
-import {IAuthUser} from '../../../types';
+import {IUser} from '../../../types';
 
 /**
  * A mock up model class
@@ -56,7 +56,7 @@ class CustomerCrudRepo extends SoftCrudRepositoryMixin<
       prototype: Customer;
     },
     dataSource: juggler.DataSource,
-    readonly getCurrentUser: Getter<IAuthUser | undefined>,
+    readonly getCurrentUser: Getter<IUser | undefined>,
   ) {
     super(entityClass, dataSource, getCurrentUser);
   }
@@ -75,7 +75,7 @@ class Customer2CrudRepo extends SoftCrudRepositoryMixin<
       prototype: Customer;
     },
     dataSource: juggler.DataSource,
-    readonly getCurrentUser: Getter<IAuthUser | undefined>,
+    readonly getCurrentUser: Getter<IUser | undefined>,
     readonly deletedByIdKey: string = 'id',
   ) {
     super(entityClass, dataSource, getCurrentUser);
