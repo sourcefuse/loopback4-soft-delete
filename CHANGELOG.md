@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v6.0.0...v6.0.1) (2022-11-11)
+
+
+### Bug Fixes
+
+* **repository:** type mismatch for Iauthuser ([e0c5464](https://github.com/sourcefuse/loopback4-soft-delete/commit/e0c54640f3ef2c1fad119afa9ae8f42e92c1048d)), closes [#0](https://github.com/sourcefuse/loopback4-soft-delete/issues/0)
+
 # [6.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v5.3.5...v6.0.0) (2022-11-07)
 
 
