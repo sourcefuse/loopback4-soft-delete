@@ -1,3 +1,15 @@
+# [7.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v6.0.1...v7.0.0) (2022-11-16)
+
+
+### Features
+
+* **repository:** add new method to provide user identifier for deletedbyid ([aaeb150](https://github.com/sourcefuse/loopback4-soft-delete/commit/aaeb15023056b61c7048311f40ab254ab261ad6b)), closes [#0](https://github.com/sourcefuse/loopback4-soft-delete/issues/0)
+
+
+### BREAKING CHANGES
+
+* **repository:** change approach for custom identifier for deletedbyid
+
 ## [6.0.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v6.0.0...v6.0.1) (2022-11-11)
 
 
