@@ -1,4 +1,5 @@
 {
   "recursive": true,
+  "reporter": ["dot"],
   "require": "source-map-support/register"
 }

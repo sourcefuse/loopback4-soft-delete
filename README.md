@@ -193,12 +193,12 @@ export class ItemRepository extends SoftCrudRepositoryMixin<
 
 ### deletedBy
 
-Whenever any entry is deleted using deleteById, delete and deleteAll repository methods, it also sets deletedBy column with a value with user id whoever is logged in currently. Hence it uses a Getter function of IAuthUser type. However, if you want to use some other attribute of user model other than id, you can do it by overriding deletedByIdKey. Here is an example.
+Whenever any entry is deleted using deleteById, delete and deleteAll repository methods, it also sets deletedBy column with a value with user id whoever is logged in currently. Hence it uses a Getter function of IUser type. However, if you want to use some other attribute of user model other than id, you can do it by overriding deletedByIdKey. Here is an example.
 
 ```ts
 import {Getter, inject} from '@loopback/core';
 import {SoftCrudRepository, IUser} from 'loopback4-soft-delete';
-import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
+import {AuthenticationBindings} from 'loopback4-authentication';
 
 import {PgdbDataSource} from '../datasources';
 import {User, UserRelations} from '../models';
@@ -211,10 +211,32 @@ export class UserRepository extends SoftCrudRepository<
   constructor(
     @inject('datasources.pgdb') dataSource: PgdbDataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
-    protected readonly getCurrentUser: Getter<(IAuthUser & IUser) | undefined>,
-    protected readonly deletedByIdKey: string = 'userTenantId',
+    protected readonly getCurrentUser: Getter<User | undefined>,
   ) {
-    super(User, dataSource, getCurrentUser, deletedByIdKey);
+    super(User, dataSource, getCurrentUser);
+  }
+}
+```
+
+Model class for custom identifier case. Notice the `getIdentifier() method` and `IUser` interface implemented.
+
+```ts
+@model()
+class User extends SoftDeleteEntity implements IUser {
+  @property({
+    id: true,
+  })
+  id: string;
+
+  @property()
+  username: string;
+
+  getIdentifier() {
+    return this.username;
+  }
+
+  constructor(data?: Partial<User>) {
+    super(data);
   }
 }
 ```

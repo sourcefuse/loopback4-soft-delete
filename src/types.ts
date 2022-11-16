@@ -14,7 +14,7 @@ export type AbstractConstructor<T> = abstract new (...args: any[]) => T;
 
 export interface IUser {
   id?: number | string;
-  [key: string]: unknown;
+  getIdentifier?(): number | string | undefined;
 }
 
 export interface IBaseEntityConfig {

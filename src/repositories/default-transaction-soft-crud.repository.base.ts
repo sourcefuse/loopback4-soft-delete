@@ -28,7 +28,6 @@ export abstract class DefaultTransactionSoftCrudRepository<
     },
     dataSource: juggler.DataSource,
     protected readonly getCurrentUser?: Getter<IUser | undefined>,
-    protected readonly deletedByIdKey: string = 'id',
   ) {
     super(entityClass, dataSource);
   }
@@ -320,6 +319,7 @@ export abstract class DefaultTransactionSoftCrudRepository<
     if (!currentUser) {
       return undefined;
     }
-    return currentUser[this.deletedByIdKey] as string;
+    const userId = currentUser.getIdentifier?.() ?? currentUser.id;
+    return userId?.toString();
   }
 }

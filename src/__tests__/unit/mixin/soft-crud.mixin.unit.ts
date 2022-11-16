@@ -12,6 +12,7 @@ import {
   Entity,
   EntityNotFoundError,
   juggler,
+  Model,
   model,
   property,
 } from '@loopback/repository';
@@ -41,6 +42,40 @@ class Customer2 extends SoftDeleteEntity {
   id: number;
   @property()
   email: string;
+}
+
+@model()
+class User extends Model implements IUser {
+  @property({
+    id: true,
+  })
+  id: string;
+
+  @property()
+  username: string;
+
+  constructor(data?: Partial<User>) {
+    super(data);
+  }
+}
+
+@model()
+class UserWithCustomId extends Model implements IUser {
+  @property({
+    id: true,
+  })
+  id: string;
+
+  @property()
+  username: string;
+
+  getIdentifier() {
+    return this.username;
+  }
+
+  constructor(data?: Partial<UserWithCustomId>) {
+    super(data);
+  }
 }
 
 class CustomerCrudRepo extends SoftCrudRepositoryMixin<
@@ -76,7 +111,6 @@ class Customer2CrudRepo extends SoftCrudRepositoryMixin<
     },
     dataSource: juggler.DataSource,
     readonly getCurrentUser: Getter<IUser | undefined>,
-    readonly deletedByIdKey: string = 'id',
   ) {
     super(entityClass, dataSource, getCurrentUser);
   }
@@ -85,10 +119,15 @@ class Customer2CrudRepo extends SoftCrudRepositoryMixin<
 describe('SoftCrudRepositoryMixin', () => {
   let repo: CustomerCrudRepo;
   let repoWithCustomDeletedByKey: Customer2CrudRepo;
-  const userData = {
+  const userData: User = new User({
     id: '1',
     username: 'test',
-  };
+  });
+
+  const userData2: UserWithCustomId = new UserWithCustomId({
+    id: '2',
+    username: 'test2',
+  });
 
   before(() => {
     const ds: juggler.DataSource = new juggler.DataSource({
@@ -96,11 +135,8 @@ describe('SoftCrudRepositoryMixin', () => {
       connector: 'memory',
     });
     repo = new CustomerCrudRepo(Customer, ds, () => Promise.resolve(userData));
-    repoWithCustomDeletedByKey = new Customer2CrudRepo(
-      Customer2,
-      ds,
-      () => Promise.resolve(userData),
-      'username',
+    repoWithCustomDeletedByKey = new Customer2CrudRepo(Customer2, ds, () =>
+      Promise.resolve(userData2),
     );
   });
 
@@ -587,7 +623,7 @@ describe('SoftCrudRepositoryMixin', () => {
         await repoWithCustomDeletedByKey.findByIdIncludeSoftDelete(1);
       expect(afterDeleteIncludeSoftDeleted)
         .to.have.property('deletedBy')
-        .equal(userData.username);
+        .equal(userData2.username);
     });
   });
 
@@ -639,7 +675,7 @@ describe('SoftCrudRepositoryMixin', () => {
         await repoWithCustomDeletedByKey.findByIdIncludeSoftDelete(1);
       expect(afterDeleteIncludeSoftDeleted)
         .to.have.property('deletedBy')
-        .equal(userData.username);
+        .equal(userData2.username);
     });
   });
 
@@ -673,7 +709,7 @@ describe('SoftCrudRepositoryMixin', () => {
       const afterDeleteAll = await repoWithCustomDeletedByKey.findAll();
       expect(afterDeleteAll).to.have.length(4);
       afterDeleteAll.forEach((rec) => {
-        expect(rec).to.have.property('deletedBy').equal(userData.username);
+        expect(rec).to.have.property('deletedBy').equal(userData2.username);
       });
     });
   });

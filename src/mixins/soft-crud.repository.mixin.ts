@@ -35,7 +35,6 @@ export function SoftCrudRepositoryMixin<
     implements ISoftCrudRepositoryMixin<E, ID, R>
   {
     getCurrentUser: Getter<IUser | undefined>;
-    deletedByIdKey = 'id';
 
     find(filter?: Filter<E>, options?: Options): Promise<(E & R)[]> {
       // Filter out soft deleted entries
@@ -335,7 +334,8 @@ export function SoftCrudRepositoryMixin<
       if (!currentUser) {
         return undefined;
       }
-      return currentUser[this.deletedByIdKey] as string;
+      const userId = currentUser.getIdentifier?.() ?? currentUser.id;
+      return userId?.toString();
     }
   }
   return SoftCrudRepository;
