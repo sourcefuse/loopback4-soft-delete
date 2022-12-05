@@ -45,14 +45,14 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/boot": "^5.0.3",
-    "@loopback/context": "^5.0.3",
-    "@loopback/repository": "^5.0.3",
-    "loopback-datasource-juggler": "^4.27.1"
+    "@loopback/boot": "^5.0.5",
+    "@loopback/context": "^5.0.5",
+    "@loopback/repository": "^5.0.5",
+    "loopback-datasource-juggler": "^4.28.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.3",
-    "@commitlint/config-conventional": "^16.2.1",
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "@loopback/boot": "^5.0.5",
     "@loopback/build": "^9.0.5",
     "@loopback/context": "^5.0.5",
@@ -76,7 +76,7 @@
     "eslint-plugin-mocha": "^10.1.0",
     "fs-extra": "^10.1.0",
     "husky": "^7.0.4",
-    "loopback-datasource-juggler": "^4.27.1",
+    "loopback-datasource-juggler": "^4.28.0",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "source-map-support": "^0.5.21",
