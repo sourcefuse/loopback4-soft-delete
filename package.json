@@ -55,7 +55,7 @@
     "@commitlint/config-conventional": "^17.3.0",
     "@loopback/boot": "^5.0.5",
     "@loopback/build": "^9.0.5",
-    "@loopback/context": "^5.0.5",
+    "@loopback/context": "^5.0.6",
     "@loopback/repository": "^5.1.0",
     "@loopback/testlab": "^5.0.5",
     "@loopback/tslint-config": "^2.1.0",
