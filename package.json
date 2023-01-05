@@ -56,7 +56,7 @@
     "@loopback/boot": "^5.0.5",
     "@loopback/build": "^9.0.5",
     "@loopback/context": "^5.0.5",
-    "@loopback/repository": "^5.1.0",
+    "@loopback/repository": "^5.1.1",
     "@loopback/testlab": "^5.0.5",
     "@loopback/tslint-config": "^2.1.0",
     "@semantic-release/changelog": "^6.0.1",
