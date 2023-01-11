@@ -48,7 +48,7 @@
     "@loopback/boot": "^5.0.7",
     "@loopback/context": "^5.0.7",
     "@loopback/repository": "^5.1.2",
-    "loopback-datasource-juggler": "^4.28.0"
+    "loopback-datasource-juggler": "^4.28.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
@@ -76,7 +76,7 @@
     "eslint-plugin-mocha": "^10.1.0",
     "fs-extra": "^10.1.0",
     "husky": "^7.0.4",
-    "loopback-datasource-juggler": "^4.28.0",
+    "loopback-datasource-juggler": "^4.28.1",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "source-map-support": "^0.5.21",
