@@ -1,3 +1,30 @@
+## Release [v7.1.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.0.2..v7.1.0) January 11, 2023
+Welcome to the January 11, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/-115) :- [feat(chore): generate detailed and informative changelog ](https://github.com/sourcefuse/loopback4-soft-delete/commit/0c7805771fbf39ca827f42a74a831c8ec6e4c764) was commited on January 11, 2023 by [yeshamavani](mailto:83634146+yeshamavani@users.noreply.github.com)
+    
+      - Using Customizable npm package to generate changelog
+      
+      -  GH-115
+      
+  
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/-112) :- [chore(deps): loopback version update ](https://github.com/sourcefuse/loopback4-soft-delete/commit/34f26d147ef8ae6d510e6f2e1b47277ab8bec10f) was commited on January 11, 2023 by [Surbhi Sharma](mailto:98279679+Surbhi-sharma1@users.noreply.github.com)
+    
+      - updated loopback datasource juggler version to latest
+      
+      -  GH-112
+      
+  
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/-110) :- [chore(deps): loopback version updates ](https://github.com/sourcefuse/loopback4-soft-delete/commit/1a6b57cf7bad0993bb05a642ce2fbc341750daa5) was commited on January 11, 2023 by [Surbhi Sharma](mailto:98279679+Surbhi-sharma1@users.noreply.github.com)
+    
+      - Updated version of the lb4 dependencies to the latest
+      
+      -  GH-110
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## [7.0.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.0.1...v7.0.2) (2022-12-05)
 
 ## [7.0.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.0.0...v7.0.1) (2022-12-05)
