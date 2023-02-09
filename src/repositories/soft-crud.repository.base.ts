@@ -175,18 +175,46 @@ export abstract class SoftCrudRepository<
         [pk]: id,
       } as Condition<T>;
     }
-    const finalFilter: Filter<T> = {};
-    Object.assign(finalFilter, filter);
+    let finalFilter: Filter<T> = {};
+    //In case of array of fields, we need to copy the array
+    // by value and not by reference
+    finalFilter = {
+      ...filter,
+      fields:
+        filter?.fields && Array.isArray(filter.fields)
+          ? [...filter.fields]
+          : filter.fields,
+    };
     if (finalFilter.fields) {
-      finalFilter.fields = {
-        ...finalFilter.fields,
-        deleted: true,
-      };
+      if (Array.isArray(finalFilter.fields)) {
+        const fields = finalFilter.fields as Extract<
+          keyof SoftDeleteEntity,
+          string
+        >[];
+        if (!fields.includes('deleted')) {
+          fields.push('deleted');
+        }
+      } else {
+        finalFilter.fields = {
+          ...finalFilter.fields,
+          deleted: true,
+        };
+      }
     }
     const entity = await super.findById(id, finalFilter, options);
     if (entity && !entity.deleted) {
-      if (filter.fields && !(filter.fields as AnyObject).deleted) {
-        delete entity.deleted;
+      if (filter.fields) {
+        if (Array.isArray(filter.fields)) {
+          const temp = filter.fields as Extract<
+            keyof SoftDeleteEntity,
+            string
+          >[];
+          if (!temp.includes('deleted')) {
+            delete entity.deleted;
+          }
+        } else if (!(filter.fields as AnyObject).deleted) {
+          delete entity.deleted;
+        }
       }
       return entity;
     } else {
