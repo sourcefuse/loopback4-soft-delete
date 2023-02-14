@@ -366,6 +366,16 @@ describe('SoftCrudRepository', () => {
         expect(e.message).to.be.equal('EntityNotFound');
       }
     });
+    it('should not return soft deleted entry by id, without using deleted in fields filter(fields fileter is passed as array)', async () => {
+      try {
+        await repo.findById(3, {
+          fields: ['id', 'email'],
+        });
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+    });
     it('should return requested fields only when not using deleted in fields filter', async () => {
       const customer = await repo.findById(4, {
         fields: {
@@ -382,6 +392,18 @@ describe('SoftCrudRepository', () => {
           email: true,
           deleted: true,
         },
+      });
+      expect(customer).to.have.property('deleted');
+    });
+    it('should return requested fields only when not using deleted in fields filter array', async () => {
+      const customer = await repo.findById(4, {
+        fields: ['id', 'email'],
+      });
+      expect(customer).to.not.have.property('deleted');
+    });
+    it('should return requested fields matched with fields filter array', async () => {
+      const customer = await repo.findById(4, {
+        fields: ['id', 'email', 'deleted'],
       });
       expect(customer).to.have.property('deleted');
     });
