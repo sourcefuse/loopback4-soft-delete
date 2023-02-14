@@ -1,3 +1,16 @@
+## Release [v7.1.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.1.0..v7.1.1) February 14, 2023
+Welcome to the February 14, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/-117) :- [fix(repository): added checks for fields passed as an array in case of findbyid ](https://github.com/sourcefuse/loopback4-soft-delete/commit/2a66e5937019c604422fcac399cdd491650ce102) was commited on February 14, 2023 by [Prerna Gupta](mailto:prerna.gupta@sourcefuse.com)
+    
+      - added checks for fields passed as an array in function findById.
+      
+      -  GH-117
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.1.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.0.2..v7.1.0) January 11, 2023
 Welcome to the January 11, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
