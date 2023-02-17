@@ -1,3 +1,31 @@
+## Release [v7.1.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.1.1..v7.1.2) February 17, 2023
+Welcome to the February 17, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [Package Update - loopback4-soft-delete](https://github.com/sourcefuse/loopback4-soft-delete/issues/125) :- [remove all current vulnerability of loopback4-soft-delete ](https://github.com/sourcefuse/loopback4-soft-delete/commit/903404af4803042081bff031063d2924544e428e) was commited on February 17, 2023 by [Sunny Tyagi](mailto:107617248+Tyagi-Sunny@users.noreply.github.com)
+    
+      - * fix(chore): remove all current vulnerability
+      
+      -  remove all current vulnerability
+      
+      -  GH-125
+      
+      - * chore(deps): loopback version update
+      
+      -  loopback version update
+      
+      -  GH-125
+      
+  
+  - [Correction to the changelog format](https://github.com/sourcefuse/loopback4-soft-delete/issues/123) :- [fix(chore): corrected the issue number ](https://github.com/sourcefuse/loopback4-soft-delete/commit/2425a474c2c3f174a5f52dbb89ee328afedeaedf) was commited on February 15, 2023 by [yeshamavani](mailto:83634146+yeshamavani@users.noreply.github.com)
+    
+      - now will show correct issue description as well
+      
+      -  GH-123
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.1.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.1.0..v7.1.1) February 14, 2023
 Welcome to the February 14, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
