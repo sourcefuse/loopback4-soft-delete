@@ -1,6 +1,12 @@
+// DEVELOPMENT NOTE:
+// Please ensure that any modifications made to this file are also applied to the following locations:
+// 1) src/repositories/soft-crud.repository.base.ts
+// 2) src/repositories/default-transaction-soft-crud.repository.base.ts
+
 import {Constructor, Getter} from '@loopback/core';
 import {
   AndClause,
+  AnyObject,
   Condition,
   DataObject,
   DefaultCrudRepository,
@@ -157,13 +163,49 @@ export function SoftCrudRepositoryMixin<
         } as Condition<E>;
       }
 
-      //As parent method findById have filter: FilterExcludingWhere<E>
-      //so we need add check here.
-      const entityToRemove = await super.findOne(filter, options);
+      let finalFilter: Filter<E> = {};
 
-      if (entityToRemove) {
-        // Now call super
-        return super.findById(id, filter, options);
+      // In case of array of fields, we need to copy the array
+      // by value and not by reference
+      finalFilter = {
+        ...filter,
+        fields:
+          filter?.fields && Array.isArray(filter.fields)
+            ? [...filter.fields]
+            : filter.fields,
+      };
+      if (finalFilter.fields) {
+        if (Array.isArray(finalFilter.fields)) {
+          const fields = finalFilter.fields as Extract<
+            keyof SoftDeleteEntity,
+            string
+          >[];
+          if (!fields.includes('deleted')) {
+            fields.push('deleted');
+          }
+        } else {
+          finalFilter.fields = {
+            ...finalFilter.fields,
+            deleted: true,
+          };
+        }
+      }
+      const entity = await super.findById(id, finalFilter, options);
+      if (entity && !entity.deleted) {
+        if (filter.fields) {
+          if (Array.isArray(filter.fields)) {
+            const temp = filter.fields as Extract<
+              keyof SoftDeleteEntity,
+              string
+            >[];
+            if (!temp.includes('deleted')) {
+              delete entity.deleted;
+            }
+          } else if (!(filter.fields as AnyObject).deleted) {
+            delete entity.deleted;
+          }
+        }
+        return entity;
       } else {
         throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
       }

@@ -1,7 +1,7 @@
-// Copyright IBM Corp. 2019. All Rights Reserved.
-// Node module: @loopback/repository
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
+// DEVELOPMENT NOTE:
+// Please ensure that any modifications made to this file are also applied to the following locations:
+// 1) src/__tests__/unit/mixin/soft-crud.mixin.unit.ts
+// 2) src/__tests__/unit/repository/default-transaction-soft-crud.repository.base.ts
 
 import {expect} from '@loopback/testlab';
 
