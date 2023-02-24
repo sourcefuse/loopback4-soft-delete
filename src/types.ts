@@ -7,10 +7,19 @@ import {
   Where,
 } from '@loopback/repository';
 
-// sonarignore:start
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AbstractConstructor<T> = abstract new (...args: any[]) => T;
-// sonarignore:end
+export interface Constructor<T> {
+  prototype: T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...args: any[]): T; // NOSONAR
+}
+
+export interface AbstractConstructor<T> {
+  prototype: T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  new (...args: any[]): T; // NOSONAR
+}
+
+export type MixinBaseClass<T> = Constructor<T> & AbstractConstructor<T>;
 
 export interface IUser {
   id?: number | string;
