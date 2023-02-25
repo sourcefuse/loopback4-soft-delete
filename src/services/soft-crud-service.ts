@@ -25,7 +25,8 @@ export class SoftCrudService {
 
     if (hasAndClause) {
       (filter.where as AndClause<E>).and.push(conditionToEnsure);
-    } else if (hasOrClause) {
+    }
+    if (hasOrClause) {
       filter.where = {
         and: [
           conditionToEnsure,
@@ -34,7 +35,8 @@ export class SoftCrudService {
           },
         ],
       };
-    } else {
+    }
+    if (!(hasAndClause && hasOrClause)) {
       Object.assign(filter.where, conditionToEnsure);
     }
   }

@@ -1,7 +1,6 @@
 // DEVELOPMENT NOTE:
 // Please ensure that any modifications made to this file are also applied to the following locations:
 // 1) src/repositories/default-transaction-soft-crud.repository.base.ts
-// 2) src/mixins/soft-crud.repository.mixin.ts
 
 import {Getter} from '@loopback/core';
 import {

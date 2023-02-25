@@ -1,8 +1,3 @@
-// DEVELOPMENT NOTE:
-// Please ensure that any modifications made to this file are also applied to the following locations:
-// 1) src/repositories/soft-crud.repository.base.ts
-// 2) src/repositories/default-transaction-soft-crud.repository.base.ts
-
 import {DefaultCrudRepository, Entity} from '@loopback/repository';
 
 import {
@@ -12,7 +7,7 @@ import {
   MixinBaseClass,
 } from '../types';
 import {SoftCrudRepository} from '../repositories';
-import {GodMixin} from '../decorators/soft-crud.decorator';
+import {extendPrototype} from '../decorators/soft-crud.decorator';
 
 export function SoftCrudRepositoryMixin<
   E extends Entity & IBaseEntity,
@@ -20,7 +15,9 @@ export function SoftCrudRepositoryMixin<
   T extends MixinBaseClass<DefaultCrudRepository<E, ID, R>>,
   R extends object = {},
 >(base: T): T & Constructor<ISoftCrudRepositoryMixin<E, ID, R>> {
-  @GodMixin(base, SoftCrudRepository)
+  // Using extendPrototype decorator here as Typescript doesn't support multilevel inheritance.
+  // This will result in a class extending `base` class overridden with `SoftCrudRepository`'s methods and properties.
+  @extendPrototype(SoftCrudRepository)
   class SoftCrudRepositoryExtended extends base {}
   return SoftCrudRepositoryExtended as T &
     Constructor<ISoftCrudRepositoryMixin<E, ID, R>>;

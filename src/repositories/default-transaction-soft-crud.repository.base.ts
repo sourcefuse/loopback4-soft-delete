@@ -1,7 +1,6 @@
 // DEVELOPMENT NOTE:
 // Please ensure that any modifications made to this file are also applied to the following locations:
 // 1) src/repositories/soft-crud.repository.base.ts
-// 2) src/mixins/soft-crud.repository.mixin.ts
 
 import {
   Condition,
@@ -26,6 +25,23 @@ import {SoftDeleteEntity} from '../models';
 import {SoftCrudService} from '../services/soft-crud-service';
 import {IUser} from '../types';
 
+/**
+ * Soft Delete Repository for loopback's `DefaultTransactionalRepository`
+ * @deprecated Use the {@link SoftCrudRepositoryMixin} instead.
+ * eg.
+ * ```ts
+ * class CustomerRepository extends SoftCrudRepositoryMixin<
+ *   Customer,
+ *   typeof Customer.prototype.id,
+ *   Constructor<
+ *     DefaultTransactionalRepository<Customer, typeof Customer.prototype.id, {}>
+ *   >,
+ *   {}
+ * >(DefaultTransactionalRepository) {
+ *   // ...
+ * }
+ * ```
+ */
 export abstract class DefaultTransactionSoftCrudRepository<
   E extends SoftDeleteEntity,
   ID,

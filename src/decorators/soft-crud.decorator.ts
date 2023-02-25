@@ -9,9 +9,13 @@ const whereParamIndexes: Record<WhereParamMethod, number> = {
   count: 0,
 };
 
-export function GodMixin(...mixins: unknown & {prototype: unknown}[]) {
+/**
+ * A Class decorator that takes in one or more classes and extends the prototype of a target class with the properties and methods from the provided classes.
+ * @param classes One or more classes whose prototype will be extended onto the target class.
+ */
+export function extendPrototype(...classes: unknown & {prototype: unknown}[]) {
   return function (target: unknown & {prototype: unknown}) {
-    mixins.forEach((mixin) => {
+    classes.forEach((mixin) => {
       Object.getOwnPropertyNames(mixin.prototype).forEach((name) => {
         Object.defineProperty(
           target.prototype,
