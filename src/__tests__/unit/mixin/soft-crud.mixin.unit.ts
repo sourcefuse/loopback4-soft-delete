@@ -1,7 +1,7 @@
-// Copyright IBM Corp. 2019. All Rights Reserved.
-// Node module: @loopback/repository
-// This file is licensed under the MIT License.
-// License text available at https://opensource.org/licenses/MIT
+// DEVELOPMENT NOTE:
+// Please ensure that any modifications made to this file are also applied to the following locations:
+// 1) src/__tests_/unit/repository/default-transaction-soft-crud.repository.base.ts
+// 2) src/__tests_/unit/repository/soft-crud.repository.unit.ts
 
 import {expect} from '@loopback/testlab';
 
@@ -368,6 +368,60 @@ describe('SoftCrudRepositoryMixin', () => {
         expect(e.message).to.be.equal('EntityNotFound');
       }
     });
+    it('should not return soft deleted entry by id, without using deleted in fields filter', async () => {
+      try {
+        await repo.findById(3, {
+          fields: {
+            id: true,
+            email: true,
+          },
+        });
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+    });
+    it('should not return soft deleted entry by id, without using deleted in fields filter(fields fileter is passed as array)', async () => {
+      try {
+        await repo.findById(3, {
+          fields: ['id', 'email'],
+        });
+        fail();
+      } catch (e) {
+        expect(e.message).to.be.equal('EntityNotFound');
+      }
+    });
+    it('should return requested fields only when not using deleted in fields filter', async () => {
+      const customer = await repo.findById(4, {
+        fields: {
+          id: true,
+          email: true,
+        },
+      });
+      expect(customer).to.not.have.property('deleted');
+    });
+    it('should return requested fields matched with fields filter', async () => {
+      const customer = await repo.findById(4, {
+        fields: {
+          id: true,
+          email: true,
+          deleted: true,
+        },
+      });
+      expect(customer).to.have.property('deleted');
+    });
+    it('should return requested fields only when not using deleted in fields filter array', async () => {
+      const customer = await repo.findById(4, {
+        fields: ['id', 'email'],
+      });
+      expect(customer).to.not.have.property('deleted');
+    });
+    it('should return requested fields matched with fields filter array', async () => {
+      const customer = await repo.findById(4, {
+        fields: ['id', 'email', 'deleted'],
+      });
+      expect(customer).to.have.property('deleted');
+    });
   });
 
   describe('findByIdIncludeSoftDelete', () => {
@@ -697,7 +751,7 @@ describe('SoftCrudRepositoryMixin', () => {
       expect(customers).to.have.length(0);
       const afterDeleteAll = await repo.findAll();
       expect(afterDeleteAll).to.have.length(4);
-      afterDeleteAll.forEach((rec) => {
+      afterDeleteAll.forEach(rec => {
         expect(rec).to.have.property('deletedBy').equal(userData.id);
       });
     });
@@ -708,7 +762,7 @@ describe('SoftCrudRepositoryMixin', () => {
       expect(customers).to.have.length(0);
       const afterDeleteAll = await repoWithCustomDeletedByKey.findAll();
       expect(afterDeleteAll).to.have.length(4);
-      afterDeleteAll.forEach((rec) => {
+      afterDeleteAll.forEach(rec => {
         expect(rec).to.have.property('deletedBy').equal(userData2.username);
       });
     });

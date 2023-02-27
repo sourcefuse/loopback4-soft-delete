@@ -22,32 +22,43 @@ npm install loopback4-soft-delete
 
 For a quick starter guide, you can refer to our [loopback 4 starter](https://github.com/sourcefuse/loopback4-starter) application which utilizes this package for soft-deletes in a multi-tenant application.
 
-## Transaction support
-
-With version 3.0.0, transaction repository support has been added. In place of SoftCrudRepository, extend your repository with DefaultTransactionSoftCrudRepository. For further usage guidelines, refer below.
-
 ## Usage
 
-Right now, this extension exports three abstract classes which are actually helping with soft delete operations.
+The package exports following classes and mixins:
 
-- **SoftDeleteEntity** -
-  An abstract base class for all models which require soft delete feature.
-  This class is a wrapper over Entity class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository) adding three attributes to the model class for handling soft-delete, namely, deleted, deletedOn, deletedBy.
-  The column names needed to be there in DB within that table are - 'deleted', 'deleted_on', 'deleted_by'.
-  If you are using auto-migration of loopback 4, then, you may not need to do anything specific to add this column.
-  If not, then please add these columns to the DB table.
-- **SoftCrudRepository** -
-  An abstract base class for all repositories which require soft delete feature.
-  This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses, However if there is a need to query soft deleted entries as well,there is an options to achieve that and you can use findAll() in place of find() , findOneIncludeSoftDelete() in place of findOne() and findByIdIncludeSoftDelete() in place of findById(), these will give you the responses including soft deleted entries.
-  This class is a wrapper over DefaultCrudRepository class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
-- **DefaultTransactionSoftCrudRepository** -
-  An abstract base class for all repositories which require soft delete feature with transaction support.
-  This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses, However if there is a need to query soft deleted entries as well,there is an options to achieve that and you can use findAll() in place of find() , findOneIncludeSoftDelete() in place of findOne() and findByIdIncludeSoftDelete() in place of findById(), these will give you the responses including soft deleted entries.
-  This class is a wrapper over DefaultTransactionalRepository class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
+1. [SoftDeleteEntity](#softdeleteentity) - To add required soft delete props in the model.
+2. [SoftCrudRepository](#softcrudrepository) - Class providing soft crud capabilitiies (to be used in place of `DefaultCrudRepository`).
+3. [SoftCrudRepositoryMixin](#softcrudrepositorymixin) - Mixin accepting any respository that extends the DefaultCrudRepository to add soft delete functionality to. Can be used as a wrapper for `DefaultCrudRepository`, `DefaultTransactionalRepository` etc.
+4. [SoftDeleteEntityMixin](#softdeleteentitymixin)
+5. [DefaultTransactionSoftCrudRepository](#defaulttransactionsoftcrudrepository-deprecated) (Deprecated) - Class providing soft crud capabilitiies. To be used in place of `DefaultTransactionalRepository`.
 
-In order to use this extension in your LB4 application, please follow below steps.
+Following are more details on the usage of above artifcats:
 
-1. Extend models with SoftDeleteEntity class replacing Entity. For example,
+### SoftDeleteEntity
+
+An abstract base class for all models which require soft delete feature.
+This class is a wrapper over Entity class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository) adding three attributes to the model class for handling soft-delete, namely, deleted, deletedOn, deletedBy.
+The column names needed to be there in DB within that table are - 'deleted', 'deleted_on', 'deleted_by'.
+If you are using auto-migration of loopback 4, then, you may not need to do anything specific to add this column.
+If not, then please add these columns to the DB table.
+
+### SoftCrudRepository
+
+An abstract base class for all repositories which require soft delete feature.
+This class is going to be the one which handles soft delete operations and ensures soft deleted entries are not returned in responses, However if there is a need to query soft deleted entries as well, there is an options to achieve that and you can use findAll() in place of find() , findOneIncludeSoftDelete() in place of findOne() and findByIdIncludeSoftDelete() in place of findById(), these will give you the responses including soft deleted entries.
+This class is a wrapper over DefaultCrudRepository class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
+
+### DefaultTransactionSoftCrudRepository (Deprecated)
+
+> Note: `DefaultTransactionSoftCrudRepository` is deprecated in favour of [SoftCrudRepositoryMixin](#softcrudrepositorymixin) and will be removed in future releases.
+
+An abstract base class similar to [SoftCrudRepository](#softcrudrepository) but with transaction support.
+
+This class is a wrapper over `DefaultTransactionalRepository` class from [@loopback/repository](https://github.com/strongloop/loopback-next/tree/master/packages/repository).
+
+In order to use this extension in your application, please follow below steps.
+
+1. Extend models with SoftDeleteEntity class replacing Entity. Like below:
 
 ```ts
 import {model, property} from '@loopback/repository';
@@ -67,7 +78,7 @@ export class User extends SoftDeleteEntity {
 }
 ```
 
-2. Extend repositories with SoftCrudRepository class replacing DefaultCrudRepository. For example,
+2. Extend repositories with SoftCrudRepository class replacing DefaultCrudRepository. Like below:
 
 ```ts
 import {Getter, inject} from '@loopback/core';
@@ -92,7 +103,7 @@ export class UserRepository extends SoftCrudRepository<
 }
 ```
 
-3. For transaction support, extend repositories with DefaultTransactionSoftCrudRepository class replacing DefaultTransactionalRepository. For example,
+3. For transaction support, use the `SoftCrudRepositoryMixin` and wrap it around `DefaultTransactionalRepository`. Like below:
 
 ```ts
 import {Getter, inject} from '@loopback/core';
@@ -102,11 +113,11 @@ import {AuthenticationBindings, IAuthUser} from 'loopback4-authentication';
 import {PgdbDataSource} from '../datasources';
 import {User, UserRelations} from '../models';
 
-export class UserRepository extends DefaultTransactionSoftCrudRepository<
+export class UserRepository extends SoftCrudRepositoryMixin<
   User,
   typeof User.prototype.id,
   UserRelations
-> {
+>(DefaultTransactionalRepository) {
   constructor(
     @inject('datasources.pgdb') dataSource: PgdbDataSource,
     @inject.getter(AuthenticationBindings.CURRENT_USER, {optional: true})
@@ -117,20 +128,17 @@ export class UserRepository extends DefaultTransactionSoftCrudRepository<
 }
 ```
 
+## Mixins Usage
+
 The package also provides the following mixins which can be used for soft delete functionality:
 
-- **SoftDeleteEntityMixin**: This mixin adds the soft delete properties to your model. The properties added are represented by the IBaseEntity interface:
+### SoftDeleteEntityMixin
 
-```ts
-interface IBaseEntity {
-  deleted?: boolean;
-  deletedOn?: Date;
-  deletedBy?: string;
-}
-```
+This mixin adds the soft delete properties to your model. The properties added are represented by the [IBaseEntity](#ibaseentity) interface:
 
-There is also an option to provide config for the @property decorator for all these properties.
-Usage of SoftDeleteEntityMixin is as follows:
+There is also an option to provide config for the `@property` decorator for all these properties.
+
+Usage of `SoftDeleteEntityMixin` is as follows:
 
 ```ts
 class Item extends Entity {
@@ -154,12 +162,29 @@ class Item extends Entity {
 
 @model()
 export class ItemSoftDelete extends SoftDeleteEntityMixin(Item, {
-  deletedBy: {name: 'deleted_by_userid'},
+  deletedBy: {
+    name: 'deleted_by_userid',
+  },
 }) {}
 ```
 
-- **SoftCrudRepositoryMixin**: You can make use of this mixin to get the soft delete functionality for DefaultCrudRepository or any respository that extends the DefaultCrudRepository. You need to extend your repository with this mixin and provide DefaultCrudRepository (or any repository that extends DefaultCrudRepository) as input. This means that this same mixin can also be used to provide soft delete functionality for DefaultTransactionSoftCrudRepository ( as DefaultTransactionSoftCrudRepository extends DefaultCrudRepository).You will have to inject the getter for IAuthUser in the contructor of your repository.
-  Example:
+#### IBaseEntity
+
+The soft deleted properties added by [SoftDeleteEntityMixin](#softdeleteentitymixin) are represented by `IBaseEntity` interface.
+
+```ts
+interface IBaseEntity {
+  deleted?: boolean;
+  deletedOn?: Date;
+  deletedBy?: string;
+}
+```
+
+### SoftCrudRepositoryMixin
+
+You can make use of this mixin to get the soft delete functionality for `DefaultCrudRepository` or any respository that extends the `DefaultCrudRepository`. You need to extend your repository with this mixin and provide DefaultCrudRepository (or any repository that extends DefaultCrudRepository) as input. This means that this same mixin can also be used to provide soft delete functionality for DefaultTransactionSoftCrudRepository (as DefaultTransactionSoftCrudRepository extends DefaultCrudRepository). You will have to inject the getter for IAuthUser in the contructor of your repository.
+
+#### Example:
 
 ```ts
 import {Constructor, Getter, inject} from '@loopback/core';
