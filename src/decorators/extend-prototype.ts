@@ -6,8 +6,8 @@ export default function extendPrototype(
   ...classes: unknown & {prototype: unknown}[]
 ) {
   return function (target: unknown & {prototype: unknown}) {
-    classes.forEach((mixin) => {
-      Object.getOwnPropertyNames(mixin.prototype).forEach((name) => {
+    classes.forEach(mixin => {
+      Object.getOwnPropertyNames(mixin.prototype).forEach(name => {
         Object.defineProperty(
           target.prototype,
           name,

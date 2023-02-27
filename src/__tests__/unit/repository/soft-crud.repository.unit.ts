@@ -737,7 +737,7 @@ describe('SoftCrudRepository', () => {
       expect(customers).to.have.length(0);
       const afterDeleteAll = await repo.findAll();
       expect(afterDeleteAll).to.have.length(4);
-      afterDeleteAll.forEach((rec) => {
+      afterDeleteAll.forEach(rec => {
         expect(rec).to.have.property('deletedBy').equal(userData.id);
       });
     });
@@ -748,7 +748,7 @@ describe('SoftCrudRepository', () => {
       expect(customers).to.have.length(0);
       const afterDeleteAll = await repoWithCustomDeletedByKey.findAll();
       expect(afterDeleteAll).to.have.length(4);
-      afterDeleteAll.forEach((rec) => {
+      afterDeleteAll.forEach(rec => {
         expect(rec).to.have.property('deletedBy').equal(userData2.username);
       });
     });
