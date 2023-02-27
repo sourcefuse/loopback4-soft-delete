@@ -7,7 +7,7 @@ import {
   MixinBaseClass,
 } from '../types';
 import {SoftCrudRepository} from '../repositories';
-import {extendPrototype} from '../decorators/soft-crud.decorator';
+import extendPrototype from '../decorators/extend-prototype';
 
 export function SoftCrudRepositoryMixin<
   E extends Entity & IBaseEntity,

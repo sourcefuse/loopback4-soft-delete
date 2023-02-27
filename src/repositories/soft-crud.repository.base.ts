@@ -4,13 +4,14 @@
 
 import {Getter} from '@loopback/core';
 import {
-  Condition,
   DataObject,
   DefaultCrudRepository,
   Entity,
   Filter,
   juggler,
   Where,
+  Fields,
+  Condition,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
@@ -19,8 +20,8 @@ import {Options} from 'loopback-datasource-juggler';
 
 import {ErrorKeys} from '../error-keys';
 import {SoftDeleteEntity} from '../models';
-import {SoftCrudService} from '../services/soft-crud-service';
 import {IUser} from '../types';
+import {SoftFilterBuilder} from './../utils/soft-filter-builder';
 
 export abstract class SoftCrudRepository<
   E extends SoftDeleteEntity,
@@ -38,10 +39,12 @@ export abstract class SoftCrudRepository<
   }
 
   find(filter?: Filter<E>, options?: Options): Promise<(E & R)[]> {
-    const originalFilter = filter ?? {};
-    const modifiedFilter = cloneDeep(originalFilter);
-    SoftCrudService.modifyWhereFilter(modifiedFilter);
-    SoftCrudService.modifyFieldsFilter<E>(modifiedFilter);
+    const modifiedFilter = new SoftFilterBuilder(filter)
+      .imposeCondition({
+        deleted: false,
+      } as Condition<E>)
+      .fields(filter?.fields ? (['deleted'] as Fields<E>) : [])
+      .build();
 
     return super.find(modifiedFilter, options);
   }
@@ -51,10 +54,12 @@ export abstract class SoftCrudRepository<
   }
 
   findOne(filter?: Filter<E>, options?: Options): Promise<(E & R) | null> {
-    const originalFilter = filter ?? {};
-    const modifiedFilter = cloneDeep(originalFilter);
-    SoftCrudService.modifyWhereFilter(modifiedFilter);
-    SoftCrudService.modifyFieldsFilter<E>(modifiedFilter);
+    const modifiedFilter = new SoftFilterBuilder(filter)
+      .imposeCondition({
+        deleted: false,
+      } as Condition<E>)
+      .fields(filter?.fields ? (['deleted'] as Fields<E>) : [])
+      .build();
 
     return super.findOne(modifiedFilter, options);
   }
@@ -73,23 +78,20 @@ export abstract class SoftCrudRepository<
     options?: Options,
   ): Promise<E & R> {
     const originalFilter = filter ?? {};
-    const modifiedFilter = cloneDeep(originalFilter);
-
     const idProp = this.entityClass.getIdProperties()[0];
 
-    // Ensure that where condition have `{ deleted: false }`
-    SoftCrudService.modifyWhereFilter(modifiedFilter, {
-      deleted: false,
-      [idProp]: id,
-    } as Condition<E>);
-
-    // Ensure `fields` filter contains 'deleted' column while quering
-    SoftCrudService.modifyFieldsFilter<E>(modifiedFilter);
+    const modifiedFilter = new SoftFilterBuilder(cloneDeep(originalFilter))
+      .imposeCondition({
+        deleted: false,
+        [idProp]: id,
+      } as Condition<E>)
+      .fields(originalFilter.fields ? (['deleted'] as Fields<E>) : [])
+      .build();
 
     const entity = await super.findById(id, modifiedFilter, options);
 
     if (entity && !entity.deleted) {
-      SoftCrudService.ensureDataCorrectness<E>(entity, originalFilter);
+      this.removeColumnIfNotRequested(entity, originalFilter);
       return entity;
     } else {
       throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
@@ -119,32 +121,37 @@ export abstract class SoftCrudRepository<
     where?: Where<E>,
     options?: Options,
   ): Promise<Count> {
-    const filter = {where};
-    SoftCrudService.modifyWhereFilter(filter);
+    const filter = new SoftFilterBuilder({where})
+      .imposeCondition({
+        deleted: false,
+      } as Condition<E>)
+      .build();
+
     return super.updateAll(data, filter.where, options);
   }
 
   count(where?: Where<E>, options?: Options): Promise<Count> {
-    const filter = {where};
-    SoftCrudService.modifyWhereFilter(filter);
+    const filter = new SoftFilterBuilder({where})
+      .imposeCondition({
+        deleted: false,
+      } as Condition<E>)
+      .build();
     return super.count(filter.where, options);
   }
 
   // soft delete
   async delete(entity: E, options?: Options): Promise<void> {
-    const deletedBy = await this.getUserId(this.getCurrentUser);
-    Object.assign(entity, SoftCrudService.softDeleteEntity(deletedBy));
-    return super.update(entity, options);
+    return this.deleteById(entity.getId(), options);
   }
 
   async deleteAll(where?: Where<E>, options?: Options): Promise<Count> {
     const deletedBy = await this.getUserId(this.getCurrentUser);
-
-    return super.updateAll(
-      SoftCrudService.softDeleteEntity(deletedBy),
-      where,
-      options,
-    );
+    const dataToUpdate: DataObject<E> = {
+      deleted: true,
+      deletedOn: new Date(),
+      deletedBy,
+    };
+    return super.updateAll(dataToUpdate, where, options);
   }
 
   // soft delete by id
@@ -152,7 +159,11 @@ export abstract class SoftCrudRepository<
     const deletedBy = await this.getUserId(this.getCurrentUser);
     return super.updateById(
       id,
-      SoftCrudService.softDeleteEntity(deletedBy),
+      {
+        deleted: true,
+        deletedOn: new Date(),
+        deletedBy,
+      },
       options,
     );
   }
@@ -198,5 +209,36 @@ export abstract class SoftCrudRepository<
     }
     const userId = currentUser.getIdentifier?.() ?? currentUser.id;
     return userId?.toString();
+  }
+  /**
+   * Strip out columns from entity if not requested in originalFilter
+   * @param entity Data to modify
+   * @param originalFilter Original Filter definition to validate keys with
+   */
+  private removeColumnIfNotRequested(
+    entity: E,
+    originalFilter: Filter<E>,
+    columnsToRemove: Extract<keyof SoftDeleteEntity, string>[] = ['deleted'],
+  ) {
+    if (!originalFilter.fields) {
+      return;
+    }
+    if (Array.isArray(originalFilter.fields)) {
+      const fields = originalFilter.fields as Extract<
+        keyof SoftDeleteEntity,
+        string
+      >[];
+      for (const col of columnsToRemove) {
+        if (!fields.includes(col)) {
+          delete entity[col];
+        }
+      }
+    } else {
+      for (const col of columnsToRemove) {
+        if (!originalFilter.fields[col]) {
+          delete entity[col];
+        }
+      }
+    }
   }
 }
