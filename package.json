@@ -48,7 +48,13 @@
     "@loopback/boot": "^5.0.8",
     "@loopback/context": "^5.0.8",
     "@loopback/repository": "^5.1.3",
-    "loopback-datasource-juggler": "^4.28.1"
+    "loopback-datasource-juggler": "^4.28.1",
+    "loopback4-sequelize": "^2.1.0"
+  },
+  "peerDependenciesMeta": {
+    "loopback4-sequelize": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
@@ -84,6 +90,7 @@
     "semantic-release": "^19.0.3",
     "simple-git": "^3.15.1",
     "source-map-support": "^0.5.21",
+    "sqlite3": "^5.1.4",
     "typescript": "~4.9.4"
   },
   "publishConfig": {
