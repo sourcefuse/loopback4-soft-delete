@@ -1,3 +1,82 @@
+## Release [v7.2.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.1.2..v7.2.0) February 28, 2023
+Welcome to the February 28, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [Add support for Sequelize as base repository from &lt;code&gt;loopback4-sequelize&lt;/code&gt; package](https://github.com/sourcefuse/loopback4-soft-delete/issues/118) :- [feat(sequelize): add sequelize repository support ](https://github.com/sourcefuse/loopback4-soft-delete/commit/424c61171c2b453675e061db6755046b15fc60be) was commited on February 28, 2023 by [Shubham P](mailto:shubham.prajapat@sourcefuse.com)
+    
+      - Export `SequelizeSoftCrudRepository` providing soft-delete capabilities with
+      
+      - sequelize as underlying
+      
+      - repository
+      
+      -  GH-118
+      
+  
+  - [Stale Bot missing in the repository](https://github.com/sourcefuse/loopback4-soft-delete/issues/133) :- [chore(chore): add github stale bot ](https://github.com/sourcefuse/loopback4-soft-delete/commit/aa622abd8d1718c604787ba4f7d9ddb78a398497) was commited on February 27, 2023 by [yeshamavani](mailto:83634146+yeshamavani@users.noreply.github.com)
+    
+      - Added stale.yml file to configure stale options
+      
+      -  GH-133
+      
+  
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/0) :- [refactor(chore): remove duplicate code and deprecate `DefaultTransactionSoftCrudRepository` ](https://github.com/sourcefuse/loopback4-soft-delete/commit/c4b80c4c71031f42ae928ed38fb3e2922926d3c7) was commited on February 27, 2023 by [Shubham P](mailto:shubham.prajapat@sourcefuse.com)
+    
+      - * fix(chore): add #122 changes in mixin and transaction repository
+      
+      -  add development note to ensure future modifications universal
+      
+      - add changes
+      
+      - made in PR #122 in
+      
+      - soft-crud mixin and transaction-soft-crud repository
+      
+      -  GH-129
+      
+      - * refactor(chore): add common service and decorator for filter modification
+      
+      -  created soft crud service file containing common code among artifacts
+      
+      - created softFilter and
+      
+      - excludeSoftDeleted decorator for the common tasks
+      
+      -  GH-128
+      
+      - * refactor(repository): deprecate `DefaultTransactionSoftCrudRepository`
+      
+      -  in favor of SoftCrudRepositoryMixin for improving maintainability
+      
+      -  GH-132
+      
+      - * refactor(repository): replace modify functions with custom soft filter
+      
+      - builder
+      
+      -  removed soft-crud service and used custom soft filter builder class providing
+      
+      - methods like
+      
+      - imposeCondition, fields etc.
+      
+      -  GH-0
+      
+      - * refactor(chore): resolve sonar code smells
+      
+      -  ignore transactional respotory file in sonar as this is deprecated and kept
+      
+      - duplicacy of the code
+      
+      - just for few months of support
+      
+      - add avoid rule for arrowParens in prettier
+      
+      -  GH-0
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.1.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.1.1..v7.1.2) February 17, 2023
 Welcome to the February 17, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
