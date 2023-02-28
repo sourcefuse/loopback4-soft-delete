@@ -12,7 +12,7 @@ import {fail} from 'assert';
 import {SoftDeleteEntity} from '../../../models';
 import {IUser} from '../../../types';
 import {SequelizeDataSource} from 'loopback4-sequelize';
-import {SequelizeSoftCrudRepository} from '../../../repositories/sequelize.soft-crud.repository.base';
+import {SequelizeSoftCrudRepository} from '../../../repositories/sequelize/sequelize.soft-crud.repository.base';
 
 /**
  * A mock up model class
