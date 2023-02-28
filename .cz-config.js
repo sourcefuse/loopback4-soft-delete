@@ -30,6 +30,7 @@ module.exports = {
     {name: 'ci-cd'},
     {name: 'repository'},
     {name: 'entity'},
+    {name: 'sequelize'},
   ],
 
   appendBranchNameToCommitMessage: false,
