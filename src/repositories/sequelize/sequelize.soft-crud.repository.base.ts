@@ -16,10 +16,10 @@ import {
   SequelizeDataSource,
 } from 'loopback4-sequelize';
 
-import {ErrorKeys} from '../error-keys';
-import {SoftDeleteEntity} from '../models';
-import {IUser} from '../types';
-import {SoftFilterBuilder} from '../utils/soft-filter-builder';
+import {ErrorKeys} from '../../error-keys';
+import {SoftDeleteEntity} from '../../models';
+import {IUser} from '../../types';
+import {SoftFilterBuilder} from '../../utils/soft-filter-builder';
 
 export abstract class SequelizeSoftCrudRepository<
   E extends SoftDeleteEntity,

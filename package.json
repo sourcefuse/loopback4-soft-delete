@@ -7,9 +7,24 @@
     "loopback-extension",
     "loopback"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./sequelize": {
+      "types": "./dist/repositories/sequelize/index.d.ts",
+      "default": "./dist/repositories/sequelize/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "sequelize": [
+        "./dist/repositories/sequelize/index.d.ts"
+      ]
+    }
+  },
   "engines": {
-    "node": ">=8.9"
+    "node": ">=14"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -86,6 +101,7 @@
     "husky": "^7.0.4",
     "jsdom": "^21.0.0",
     "loopback-datasource-juggler": "^4.28.1",
+    "loopback4-sequelize": "^2.1.0",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "simple-git": "^3.15.1",

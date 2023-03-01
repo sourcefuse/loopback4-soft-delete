@@ -46,7 +46,7 @@ If not, then please add these columns to the DB table.
 ### SequelizeSoftCrudRepository
 
 An abstract base class providing soft delete capabilities for projects using [loopback4-sequelize](https://www.npmjs.com/package/loopback4-sequelize) package.
-All the other workings are similar to [SoftCrudRepository](#softcrudrepository).
+All the other workings are similar to [SoftCrudRepository](#softcrudrepository). except it's imported using directory import syntax from `loopback4-soft-delete/sequelize`.
 
 ### SoftCrudRepository
 
