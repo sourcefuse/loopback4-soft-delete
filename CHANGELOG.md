@@ -1,3 +1,16 @@
+## Release [v7.2.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.0..v7.2.1) March 1, 2023
+Welcome to the March 1, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [v7.2.0 throws error when loopback4-sequelize is not installed](https://github.com/sourcefuse/loopback4-soft-delete/issues/135) :- [fix(sequelize): remove default export of sequelize repository ](https://github.com/sourcefuse/loopback4-soft-delete/commit/d81d7fee8cd7a4b4c62927f2f4bcec900f806151) was commited on March 1, 2023 by [Shubham P](mailto:shubham.prajapat@sourcefuse.com)
+    
+      - and add directory import syntax when using sequelize
+      
+      -  GH-135
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.2.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.1.2..v7.2.0) February 28, 2023
 Welcome to the February 28, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
