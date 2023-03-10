@@ -1,3 +1,16 @@
+## Release [v7.2.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.1..v7.2.2) March 10, 2023
+Welcome to the March 10, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [loopback version update](https://github.com/sourcefuse/loopback4-soft-delete/issues/137) :- [chore(deps): loopback version update ](https://github.com/sourcefuse/loopback4-soft-delete/commit/054b81ad62a1b05c3faa0701f4b98fb583df774b) was commited on March 10, 2023 by [Gautam Agarwal](mailto:108651274+gautam23-sf@users.noreply.github.com)
+    
+      - loopback version update
+      
+      -  GH-137
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.2.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.0..v7.2.1) March 1, 2023
 Welcome to the March 1, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
