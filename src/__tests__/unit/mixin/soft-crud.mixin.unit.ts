@@ -179,6 +179,21 @@ describe('SoftCrudRepositoryMixin', () => {
       });
       expect(deletedCustomers).to.have.length(0);
     });
+
+    it('should find non soft deleted entries when deleted fields are not included', async () => {
+      const customers = await repo.find({
+        fields: {deleted: false, deletedBy: false, deletedOn: false},
+      });
+      expect(customers).to.have.length(3);
+    });
+
+    it('should find non soft deleted entries when deleted fields are included', async () => {
+      const customers = await repo.find({
+        fields: {deleted: true},
+      });
+      expect(customers).to.have.length(3);
+    });
+
     it('should find non soft deleted entries with or operator', async () => {
       const customers = await repo.find({
         where: {
@@ -200,6 +215,14 @@ describe('SoftCrudRepositoryMixin', () => {
     it('should find all entries, soft deleted and otherwise', async () => {
       await setupTestData();
       const customers = await repo.findAll();
+      expect(customers).to.have.length(4);
+    });
+
+    it('should find all entries when deleted fields are not included', async () => {
+      await setupTestData();
+      const customers = await repo.findAll({
+        fields: {deleted: false, deletedBy: false, deletedOn: false},
+      });
       expect(customers).to.have.length(4);
     });
   });
@@ -276,6 +299,17 @@ describe('SoftCrudRepositoryMixin', () => {
       expect(customer).to.have.property('email').equal('john@example.com');
     });
 
+    it('should find one soft deleted entry even when `deleted` field is not included', async () => {
+      const customer = await repo.findOne({
+        where: {
+          id: 4,
+        },
+        fields: {deleted: false, deletedBy: false, deletedOn: false},
+      });
+
+      expect(customer?.id).to.have.be.eql(4);
+    });
+
     it('shound find none soft deleted entry using or operator', async () => {
       const customer = await repo.findOne({
         where: {
@@ -303,6 +337,7 @@ describe('SoftCrudRepositoryMixin', () => {
           email: 'alice@example.com',
         },
       });
+
       expect(customer).to.have.property('email').equal('alice@example.com');
     });
   });
@@ -368,7 +403,7 @@ describe('SoftCrudRepositoryMixin', () => {
         expect(e.message).to.be.equal('EntityNotFound');
       }
     });
-    it('should not return soft deleted entry by id, without using deleted in fields filter', async () => {
+    it('should not return soft deleted entry by id when using fields filter without including deleted column', async () => {
       try {
         await repo.findById(3, {
           fields: {
@@ -398,7 +433,11 @@ describe('SoftCrudRepositoryMixin', () => {
           email: true,
         },
       });
-      expect(customer).to.not.have.property('deleted');
+      const customer2 = await repo.findById(4, {
+        fields: ['id', 'email'],
+      });
+      expect(customer.deleted).to.be.undefined();
+      expect(customer2.deleted).to.be.undefined();
     });
     it('should return requested fields matched with fields filter', async () => {
       const customer = await repo.findById(4, {
@@ -410,17 +449,38 @@ describe('SoftCrudRepositoryMixin', () => {
       });
       expect(customer).to.have.property('deleted');
     });
+
+    it('should return non soft deleted entry even if deleted column is not included in fields', async () => {
+      const customer = await repo.findById(4, {
+        fields: {
+          deleted: false,
+          deletedBy: false,
+          deletedOn: false,
+        },
+      });
+
+      expect(customer.id).to.be.eql(4);
+      expect(customer.email).to.be.eql('bob@example.com');
+      expect(customer.deleted).to.be.undefined();
+    });
+
     it('should return requested fields only when not using deleted in fields filter array', async () => {
       const customer = await repo.findById(4, {
         fields: ['id', 'email'],
       });
-      expect(customer).to.not.have.property('deleted');
+
+      expect(customer.id).to.be.eql(4);
+      expect(customer.deleted).to.be.undefined();
     });
+
     it('should return requested fields matched with fields filter array', async () => {
       const customer = await repo.findById(4, {
         fields: ['id', 'email', 'deleted'],
       });
-      expect(customer).to.have.property('deleted');
+      expect(customer.id).to.be.eql(4);
+      expect(customer.email).to.be.eql('bob@example.com');
+      expect(customer.deleted).to.be.false();
+      expect(customer.deletedBy).to.be.undefined();
     });
   });
 
@@ -684,6 +744,7 @@ describe('SoftCrudRepositoryMixin', () => {
   describe('delete', () => {
     beforeEach(setupTestData);
     afterEach(clearTestData);
+
     it('should soft delete entries', async () => {
       const entity = await repo.findById(1);
       await repo.delete(entity);

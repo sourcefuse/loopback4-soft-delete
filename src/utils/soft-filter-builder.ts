@@ -1,7 +1,6 @@
 import {
   AndClause,
   Condition,
-  Fields,
   Filter,
   FilterBuilder,
   OrClause,
@@ -15,7 +14,6 @@ import {SoftDeleteEntity} from '../models';
  * ```ts
  * const filterBuilder = new SoftFilterBuilder(originalFilter)
  *    .imposeCondition({ deleted: false })
- *    .fields(["deleted"])
  *    .build();
  * ```
  */
@@ -24,6 +22,13 @@ export class SoftFilterBuilder<E extends SoftDeleteEntity> {
 
   constructor(originalFilter?: Filter<E>) {
     this.filter = originalFilter ?? {};
+  }
+
+  limit(limit: number) {
+    this.filter.limit = new FilterBuilder(this.filter)
+      .limit(limit)
+      .build().limit;
+    return this;
   }
 
   imposeCondition(conditionToEnsure: Condition<E>) {
@@ -49,13 +54,6 @@ export class SoftFilterBuilder<E extends SoftDeleteEntity> {
     if (!(hasAndClause && hasOrClause)) {
       Object.assign(this.filter.where, conditionToEnsure);
     }
-    return this;
-  }
-
-  fields(...f: (Fields<E> | Extract<keyof E, string>)[]) {
-    this.filter.fields = new FilterBuilder(this.filter)
-      .fields(...f)
-      .build().fields;
     return this;
   }
 
