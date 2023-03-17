@@ -1,3 +1,18 @@
+## Release [v7.2.3](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.2..v7.2.3) March 17, 2023
+Welcome to the March 17, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [explicitly setting &lt;code&gt;deleted&lt;/code&gt; column to &lt;code&gt;false&lt;/code&gt; strips out other fields in the response](https://github.com/sourcefuse/loopback4-soft-delete/issues/142) :- [fix(repository): remove imposing behaviour of fields ](https://github.com/sourcefuse/loopback4-soft-delete/commit/c6781894d5d21e7d194cc20809f10add0c074400) was commited on March 17, 2023 by [Shubham P](mailto:shubham.prajapat@sourcefuse.com)
+    
+      - which was setting deleted to true for each soft-delete query
+      
+      - it is not required to run conditions
+      
+      -  GH-142
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.2.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.1..v7.2.2) March 10, 2023
 Welcome to the March 10, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
