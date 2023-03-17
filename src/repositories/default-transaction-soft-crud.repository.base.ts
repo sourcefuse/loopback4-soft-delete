@@ -7,7 +7,6 @@ import {
   DataObject,
   DefaultTransactionalRepository,
   Entity,
-  Fields,
   Filter,
   Getter,
   juggler,
@@ -59,7 +58,6 @@ export abstract class DefaultTransactionSoftCrudRepository<
       .imposeCondition({
         deleted: false,
       } as Condition<E>)
-      .fields(filter?.fields ? (['deleted'] as Fields<E>) : [])
       .build();
 
     return super.find(modifiedFilter, options);
@@ -74,7 +72,6 @@ export abstract class DefaultTransactionSoftCrudRepository<
       .imposeCondition({
         deleted: false,
       } as Condition<E>)
-      .fields(filter?.fields ? (['deleted'] as Fields<E>) : [])
       .build();
 
     return super.findOne(modifiedFilter, options);
@@ -101,14 +98,13 @@ export abstract class DefaultTransactionSoftCrudRepository<
         deleted: false,
         [idProp]: id,
       } as Condition<E>)
-      .fields(originalFilter.fields ? (['deleted'] as Fields<E>) : [])
+      .limit(1)
       .build();
 
-    const entity = await super.findById(id, modifiedFilter, options);
+    const entity = await super.find(modifiedFilter, options);
 
-    if (entity && !entity.deleted) {
-      this.removeColumnIfNotRequested(entity, originalFilter);
-      return entity;
+    if (entity && entity.length > 0) {
+      return entity[0];
     } else {
       throw new HttpErrors.NotFound(ErrorKeys.EntityNotFound);
     }
@@ -225,36 +221,5 @@ export abstract class DefaultTransactionSoftCrudRepository<
     }
     const userId = currentUser.getIdentifier?.() ?? currentUser.id;
     return userId?.toString();
-  }
-  /**
-   * Strip out columns from entity if not requested in originalFilter
-   * @param entity Data to modify
-   * @param originalFilter Original Filter definition to validate keys with
-   */
-  private removeColumnIfNotRequested(
-    entity: E,
-    originalFilter: Filter<E>,
-    columnsToRemove: Extract<keyof SoftDeleteEntity, string>[] = ['deleted'],
-  ) {
-    if (!originalFilter.fields) {
-      return;
-    }
-    if (Array.isArray(originalFilter.fields)) {
-      const fields = originalFilter.fields as Extract<
-        keyof SoftDeleteEntity,
-        string
-      >[];
-      for (const col of columnsToRemove) {
-        if (!fields.includes(col)) {
-          delete entity[col];
-        }
-      }
-    } else {
-      for (const col of columnsToRemove) {
-        if (!originalFilter.fields[col]) {
-          delete entity[col];
-        }
-      }
-    }
   }
 }
