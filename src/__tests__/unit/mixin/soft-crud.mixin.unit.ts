@@ -5,7 +5,7 @@
 
 import {expect} from '@loopback/testlab';
 
-import {Constructor, Getter} from '@loopback/context';
+import {Getter} from '@loopback/context';
 import {
   DefaultCrudRepository,
   DefaultTransactionalRepository,
@@ -17,9 +17,9 @@ import {
   property,
 } from '@loopback/repository';
 import {fail} from 'assert';
-import {SoftCrudRepositoryMixin} from '../../..';
 import {SoftDeleteEntity} from '../../../models';
 import {IUser} from '../../../types';
+import {SoftCrudRepositoryMixin} from '../../../mixins/soft-crud.repository.mixin';
 
 /**
  * A mock up model class
@@ -78,14 +78,9 @@ class UserWithCustomId extends Model implements IUser {
   }
 }
 
-class CustomerCrudRepo extends SoftCrudRepositoryMixin<
-  Customer,
-  typeof Customer.prototype.id,
-  Constructor<
-    DefaultTransactionalRepository<Customer, typeof Customer.prototype.id, {}>
-  >,
-  {}
->(DefaultTransactionalRepository) {
+class CustomerCrudRepo extends SoftCrudRepositoryMixin(
+  DefaultTransactionalRepository<Customer, typeof Customer.prototype.id, {}>,
+) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
@@ -93,18 +88,13 @@ class CustomerCrudRepo extends SoftCrudRepositoryMixin<
     dataSource: juggler.DataSource,
     readonly getCurrentUser: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 
-class Customer2CrudRepo extends SoftCrudRepositoryMixin<
-  Customer,
-  typeof Customer.prototype.id,
-  Constructor<
-    DefaultCrudRepository<Customer, typeof Customer.prototype.id, {}>
-  >,
-  {}
->(DefaultCrudRepository) {
+class Customer2CrudRepo extends SoftCrudRepositoryMixin(
+  DefaultCrudRepository<Customer, typeof Customer.prototype.id, {}>,
+) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
@@ -112,7 +102,7 @@ class Customer2CrudRepo extends SoftCrudRepositoryMixin<
     dataSource: juggler.DataSource,
     readonly getCurrentUser: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 

@@ -1,11 +1,6 @@
 import {expect} from '@loopback/testlab';
 
-import {
-  Constructor,
-  Getter,
-  MetadataInspector,
-  MetadataMap,
-} from '@loopback/context';
+import {Getter, MetadataInspector, MetadataMap} from '@loopback/context';
 import {
   DefaultTransactionalRepository,
   Entity,
@@ -16,8 +11,10 @@ import {
 } from '@loopback/repository';
 
 import {PropertyDefinition} from 'loopback-datasource-juggler';
-import {SoftCrudRepositoryMixin, SoftDeleteEntityMixin} from '../../..';
+import {SoftDeleteEntityMixin} from '../../..';
 import {IUser} from '../../../types';
+import {SoftCrudRepositoryMixin} from '../../../mixins/soft-crud.repository.mixin';
+
 /**
  * A mock up model class
  */
@@ -66,18 +63,13 @@ export class TestDataSource extends juggler.DataSource {
   }
 }
 
-class CustomerCrudRepo extends SoftCrudRepositoryMixin<
-  CustomerSoftDelete,
-  typeof CustomerSoftDelete.prototype.id,
-  Constructor<
-    DefaultTransactionalRepository<
-      CustomerSoftDelete,
-      typeof CustomerSoftDelete.prototype.id,
-      {}
-    >
+class CustomerCrudRepo extends SoftCrudRepositoryMixin(
+  DefaultTransactionalRepository<
+    CustomerSoftDelete,
+    typeof CustomerSoftDelete.prototype.id,
+    {}
   >,
-  {}
->(DefaultTransactionalRepository) {
+) {
   constructor(
     dataSource: juggler.DataSource,
     readonly getCurrentUser: Getter<IUser | undefined>,

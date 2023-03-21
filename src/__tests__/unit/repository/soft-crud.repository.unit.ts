@@ -7,6 +7,7 @@ import {expect} from '@loopback/testlab';
 
 import {Getter} from '@loopback/context';
 import {
+  DefaultCrudRepository,
   Entity,
   EntityNotFoundError,
   juggler,
@@ -16,8 +17,8 @@ import {
 } from '@loopback/repository';
 import {fail} from 'assert';
 import {SoftDeleteEntity} from '../../../models';
-import {SoftCrudRepository} from '../../../repositories';
 import {IUser} from '../../../types';
+import {SoftCrudRepositoryMixin} from '../../../mixins/soft-crud.repository.mixin';
 
 /**
  * A mock up model class
@@ -76,27 +77,31 @@ class UserWithCustomId extends Model implements IUser {
   }
 }
 
-class CustomerCrudRepo extends SoftCrudRepository<Customer, number> {
+class CustomerCrudRepo extends SoftCrudRepositoryMixin(
+  DefaultCrudRepository<Customer, number>,
+) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
     },
     dataSource: juggler.DataSource,
-    protected readonly getCurrentUser?: Getter<IUser | undefined>,
+    readonly getCurrentUser?: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 
-class Customer2CrudRepo extends SoftCrudRepository<Customer2, number> {
+class Customer2CrudRepo extends SoftCrudRepositoryMixin(
+  DefaultCrudRepository<Customer2, number>,
+) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
     },
     dataSource: juggler.DataSource,
-    protected readonly getCurrentUser?: Getter<IUser | undefined>,
+    readonly getCurrentUser?: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 

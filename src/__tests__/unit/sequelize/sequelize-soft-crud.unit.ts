@@ -11,8 +11,11 @@ import {
 import {fail} from 'assert';
 import {SoftDeleteEntity} from '../../../models';
 import {IUser} from '../../../types';
-import {SequelizeDataSource} from 'loopback4-sequelize';
-import {SequelizeSoftCrudRepository} from '../../../repositories/sequelize/sequelize.soft-crud.repository.base';
+import {
+  SequelizeCrudRepository,
+  SequelizeDataSource,
+} from 'loopback4-sequelize';
+import {SoftCrudRepositoryMixin} from '../../../mixins/soft-crud.repository.mixin';
 
 /**
  * A mock up model class
@@ -73,11 +76,9 @@ class UserWithCustomId extends Model implements IUser {
   }
 }
 
-class CustomerCrudRepo extends SequelizeSoftCrudRepository<
-  Customer,
-  typeof Customer.prototype.id,
-  {}
-> {
+class CustomerCrudRepo extends SoftCrudRepositoryMixin(
+  SequelizeCrudRepository<Customer, number>,
+) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
@@ -85,23 +86,21 @@ class CustomerCrudRepo extends SequelizeSoftCrudRepository<
     dataSource: SequelizeDataSource,
     public readonly getCurrentUser: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 
-class Customer2CrudRepo extends SequelizeSoftCrudRepository<
-  Customer2,
-  typeof Customer2.prototype.id,
-  {}
-> {
+class Customer2CrudRepo extends SoftCrudRepositoryMixin(
+  SequelizeCrudRepository<Customer2, number>,
+) {
   constructor(
     entityClass: typeof Entity & {
-      prototype: Customer;
+      prototype: Customer2;
     },
     dataSource: SequelizeDataSource,
     public readonly getCurrentUser: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 

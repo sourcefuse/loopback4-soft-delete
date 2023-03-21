@@ -7,6 +7,7 @@ import {expect} from '@loopback/testlab';
 
 import {Getter} from '@loopback/context';
 import {
+  DefaultTransactionalRepository,
   Entity,
   EntityNotFoundError,
   juggler,
@@ -16,8 +17,8 @@ import {
 } from '@loopback/repository';
 import {fail} from 'assert';
 import {SoftDeleteEntity} from '../../../models';
-import {DefaultTransactionSoftCrudRepository} from '../../../repositories';
 import {IUser} from '../../../types';
+import {SoftCrudRepositoryMixin} from '../../../mixins/soft-crud.repository.mixin';
 
 /**
  * A mock up model class
@@ -76,10 +77,9 @@ class UserWithCustomId extends Model implements IUser {
   }
 }
 
-class CustomerCrudRepo extends DefaultTransactionSoftCrudRepository<
-  Customer,
-  number
-> {
+class CustomerCrudRepo extends SoftCrudRepositoryMixin(
+  DefaultTransactionalRepository<Customer, number, {}>,
+) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer;
@@ -87,14 +87,13 @@ class CustomerCrudRepo extends DefaultTransactionSoftCrudRepository<
     dataSource: juggler.DataSource,
     protected readonly getCurrentUser?: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 
-class Customer2CrudRepo extends DefaultTransactionSoftCrudRepository<
-  Customer2,
-  number
-> {
+class Customer2CrudRepo extends SoftCrudRepositoryMixin(
+  DefaultTransactionalRepository<Customer2, number>,
+) {
   constructor(
     entityClass: typeof Entity & {
       prototype: Customer2;
@@ -102,7 +101,7 @@ class Customer2CrudRepo extends DefaultTransactionSoftCrudRepository<
     dataSource: juggler.DataSource,
     protected readonly getCurrentUser?: Getter<IUser | undefined>,
   ) {
-    super(entityClass, dataSource, getCurrentUser);
+    super(entityClass, dataSource);
   }
 }
 
