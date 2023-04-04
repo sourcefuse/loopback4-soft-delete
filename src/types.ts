@@ -54,4 +54,5 @@ export interface ISoftCrudRepositoryMixin<E extends object, ID, R> {
     options?: Options,
   ): Promise<(E & R) | null>;
   findById(id: ID, filter?: Filter<E>, options?: Options): Promise<E & R>;
+  countAll(where?: Where<E>, options?: Options): Promise<Count>;
 }
