@@ -151,6 +151,10 @@ export abstract class DefaultTransactionSoftCrudRepository<
     return super.count(filter.where, options);
   }
 
+  countAll(where?: Where<E>, options?: Options): Promise<Count> {
+    return super.count(where, options);
+  }
+
   // soft delete
   async delete(entity: E, options?: Options): Promise<void> {
     return this.deleteById(entity.getId(), options);
