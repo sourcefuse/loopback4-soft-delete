@@ -1,3 +1,23 @@
+## Release [v7.3.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.3.0..v7.3.1) April 7, 2023
+Welcome to the April 7, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [Methods like: &lt;code&gt;findAll&lt;/code&gt;, &lt;code&gt;deleteHard&lt;/code&gt;, &lt;code&gt;deleteByIdHard&lt;/code&gt; etc. have no documentation.](https://github.com/sourcefuse/loopback4-soft-delete/issues/148) :- [fix(docs): add details of additional methods provided ](https://github.com/sourcefuse/loopback4-soft-delete/commit/3e6fe391b91147d562bd5731a3527ae960975bb5) was commited on April 7, 2023 by [Shubham P](mailto:shubham.prajapat@sourcefuse.com)
+    
+      - such as for findAll, countAll, deleteHard etc.
+      
+      -  GH-148
+      
+  
+  - [sync test cases across repositories](https://github.com/sourcefuse/loopback4-soft-delete/issues/146) :- [test(repository): add missing test cases for `countAll` ](https://github.com/sourcefuse/loopback4-soft-delete/commit/cfe00981aa54757e2a2041ec1e876ea0f26a3f8d) was commited on April 7, 2023 by [Shubham P](mailto:shubham.prajapat@sourcefuse.com)
+    
+      - adds unit test cases for transactional, soft-crud and sequelize soft crud repo
+      
+      -  GH-146
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.3.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.3..v7.3.0) April 7, 2023
 Welcome to the April 7, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
