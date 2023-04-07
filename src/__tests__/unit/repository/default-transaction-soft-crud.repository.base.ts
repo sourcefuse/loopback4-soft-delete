@@ -681,6 +681,21 @@ describe('DefaultTransactionSoftCrudRepository', () => {
     });
   });
 
+  describe('countAll', () => {
+    beforeEach(setupTestData);
+    afterEach(clearTestData);
+    it('should return total count when no conditions are passed', async () => {
+      const count = await repo.countAll();
+      expect(count.count).to.be.equal(4);
+    });
+    it('should return count for soft deleted entries when conditions specified', async () => {
+      const count = await repo.countAll({
+        email: 'alice@example.com',
+      });
+      expect(count.count).to.be.equal(1);
+    });
+  });
+
   describe('deleteById', () => {
     beforeEach(setupTestData);
     afterEach(clearTestData);
