@@ -222,6 +222,18 @@ export class ItemRepository extends SoftCrudRepositoryMixin<
 }
 ```
 
+## Additional Repository Methods
+
+Following are some additional methods that you can use when working with repositories in your application, either by extending the base repositories provided or by using the [SoftCrudRepositoryMixin](#softcrudrepositorymixin):
+
+1. `findAll` - This method is similar to `find`, but it returns entries including soft deleted ones.
+2. `deleteHard` - This method is used to perform a hard delete on a specified entity.
+3. `deleteByIdHard` - This method is used to perform a hard delete of an entity based on the provided ID.
+4. `findByIdIncludeSoftDelete` - This method is similar to `findById`, but it returns the entity even if it is soft deleted.
+5. `deleteAllHard` - This method is used to perform a hard delete of multiple entities based on a specified condition.
+6. `findOneIncludeSoftDelete` - This method is similar to `findOne`, but it returns a single entity even if it is soft deleted.
+7. `countAll` - This method is similar to `count`, but it returns the total count of all entities including soft deleted ones.
+
 ### deletedBy
 
 Whenever any entry is deleted using deleteById, delete and deleteAll repository methods, it also sets deletedBy column with a value with user id whoever is logged in currently. Hence it uses a Getter function of IUser type. However, if you want to use some other attribute of user model other than id, you can do it by overriding deletedByIdKey. Here is an example.
