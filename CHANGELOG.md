@@ -1,3 +1,20 @@
+## Release [v7.3.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.3..v7.3.0) April 7, 2023
+Welcome to the April 7, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [Add countAll to get count of rows including soft deleted rows like findAll](https://github.com/sourcefuse/loopback4-soft-delete/issues/144) :- [feat(repository): add `countAll` method ](https://github.com/sourcefuse/loopback4-soft-delete/commit/1cc19b950ba1106c89b176fdbaa8c20012f9bc64) was commited on April 6, 2023 by [Shubham P](mailto:shubham.prajapat@sourcefuse.com)
+    
+      - adds countAll function in soft crud base repositories to
+      
+      - support counting all
+      
+      - entries including soft deleted ones
+      
+      -  GH-144
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.3.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.2.3..v7.3.0) April 6, 2023
 Welcome to the April 6, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
