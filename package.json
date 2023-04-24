@@ -60,10 +60,10 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/boot": "^5.0.9",
-    "@loopback/context": "^5.0.9",
-    "@loopback/repository": "^5.1.4",
-    "loopback-datasource-juggler": "^4.28.3",
+    "@loopback/boot": "^5.0.10",
+    "@loopback/context": "^5.0.10",
+    "@loopback/repository": "^5.1.5",
+    "loopback-datasource-juggler": "^4.28.4",
     "loopback4-sequelize": "^2.1.0"
   },
   "peerDependenciesMeta": {
@@ -74,11 +74,11 @@
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@loopback/boot": "^5.0.9",
-    "@loopback/build": "^9.0.9",
-    "@loopback/context": "^5.0.9",
-    "@loopback/repository": "^5.1.4",
-    "@loopback/testlab": "^5.0.9",
+    "@loopback/boot": "^5.0.10",
+    "@loopback/build": "^9.0.10",
+    "@loopback/context": "^5.0.10",
+    "@loopback/repository": "^5.1.5",
+    "@loopback/testlab": "^5.0.10",
     "@loopback/tslint-config": "^2.1.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -86,28 +86,27 @@
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^14.18.36",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
+    "@types/node": "^14.18.42",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.7.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-eslint-plugin": "^5.0.8",
     "eslint-plugin-mocha": "^10.1.0",
-    "fs-extra": "^10.1.0",
     "git-release-notes": "^5.0.0",
     "husky": "^7.0.4",
     "jsdom": "^21.0.0",
-    "loopback-datasource-juggler": "^4.28.1",
+    "loopback-datasource-juggler": "^4.28.4",
     "loopback4-sequelize": "^2.1.0",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "simple-git": "^3.15.1",
     "source-map-support": "^0.5.21",
     "sqlite3": "^5.1.4",
-    "typescript": "~4.9.4"
+    "typescript": "~4.9.5"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -131,8 +130,8 @@
     }
   },
   "dependencies": {
-    "@loopback/core": "^4.0.9",
-    "@loopback/rest": "^12.0.9",
+    "@loopback/core": "^4.0.10",
+    "@loopback/rest": "^12.0.10",
     "lodash": "^4.17.21"
   },
   "config": {
