@@ -1,3 +1,23 @@
+## Release [v7.3.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.3.1..v7.3.2) April 24, 2023
+Welcome to the April 24, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [Loopback versions update](https://github.com/sourcefuse/loopback4-soft-delete/issues/151) :- [chore(deps): loopback version update ](https://github.com/sourcefuse/loopback4-soft-delete/commit/7939e2756e11aa2e382c132d03e4aadb57f5f309) was commited on April 24, 2023 by [RaghavaroraSF](mailto:97958393+RaghavaroraSF@users.noreply.github.com)
+    
+      - loopback version update
+      
+      -  GH-151
+      
+  
+  - [Sonar Quality Gate Fix](https://github.com/sourcefuse/loopback4-soft-delete/issues/128) :- [fix(chore): fix sonar code smells ](https://github.com/sourcefuse/loopback4-soft-delete/commit/940579e0e88d2b3f1a51f1ad1c967c2a92bde52e) was commited on April 19, 2023 by [RaghavaroraSF](mailto:97958393+RaghavaroraSF@users.noreply.github.com)
+    
+      - resolves. sonar code smells to improve quality gate
+      
+      -  GH-128
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.3.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.3.0..v7.3.1) April 7, 2023
 Welcome to the April 7, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
