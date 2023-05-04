@@ -31,6 +31,7 @@ module.exports = {
     {name: 'repository'},
     {name: 'entity'},
     {name: 'sequelize'},
+    {name: 'maintenance'},
   ],
 
   appendBranchNameToCommitMessage: false,
