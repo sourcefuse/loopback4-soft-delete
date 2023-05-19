@@ -11,7 +11,7 @@ import {
 import {fail} from 'assert';
 import {SoftDeleteEntity} from '../../../models';
 import {IUser} from '../../../types';
-import {SequelizeDataSource} from 'loopback4-sequelize';
+import {SequelizeDataSource} from '@loopback/sequelize';
 import {SequelizeSoftCrudRepository} from '../../../repositories/sequelize/sequelize.soft-crud.repository.base';
 
 /**

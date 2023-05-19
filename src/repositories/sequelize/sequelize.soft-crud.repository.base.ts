@@ -13,7 +13,7 @@ import {Options} from 'loopback-datasource-juggler';
 import {
   SequelizeCrudRepository,
   SequelizeDataSource,
-} from 'loopback4-sequelize';
+} from '@loopback/sequelize';
 
 import {ErrorKeys} from '../../error-keys';
 import {SoftDeleteEntity} from '../../models';
