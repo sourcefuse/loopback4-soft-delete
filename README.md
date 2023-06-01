@@ -31,7 +31,7 @@ The package exports following classes and mixins:
 3. [SoftCrudRepositoryMixin](#softcrudrepositorymixin) - Mixin accepting any respository that extends the DefaultCrudRepository to add soft delete functionality to. Can be used as a wrapper for `DefaultCrudRepository`, `DefaultTransactionalRepository` etc.
 4. [SoftDeleteEntityMixin](#softdeleteentitymixin)
 5. [DefaultTransactionSoftCrudRepository](#defaulttransactionsoftcrudrepository-deprecated) (Deprecated) - Class providing soft crud capabilitiies. To be used in place of `DefaultTransactionalRepository`.
-6. [SequelizeSoftCrudRepository](#sequelizesoftcrudrepository) - Class providing soft crud capabilitiies for [loopback4-sequelize](https://www.npmjs.com/package/loopback4-sequelize) package. To be used in place of `SequelizeCrudRepository`.
+6. [SequelizeSoftCrudRepository](#sequelizesoftcrudrepository) - Class providing soft crud capabilitiies for [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) package. To be used in place of `SequelizeCrudRepository`.
 
 Following are more details on the usage of above artifcats:
 
@@ -45,8 +45,8 @@ If not, then please add these columns to the DB table.
 
 ### SequelizeSoftCrudRepository
 
-An abstract base class providing soft delete capabilities for projects using [loopback4-sequelize](https://www.npmjs.com/package/loopback4-sequelize) package.
-All the other workings are similar to [SoftCrudRepository](#softcrudrepository). except it's imported using directory import syntax from `loopback4-soft-delete/sequelize`.
+An abstract base class providing soft delete capabilities for projects using [@loopback/sequelize](https://www.npmjs.com/package/@loopback/sequelize) package.
+All the other workings are similar to [SoftCrudRepository](#softcrudrepository), except it's imported using directory import syntax from `loopback4-soft-delete/sequelize`.
 
 ### SoftCrudRepository
 
