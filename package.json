@@ -1,6 +1,6 @@
 {
   "name": "loopback4-soft-delete",
-  "version": "7.3.2",
+  "version": "8.0.0",
   "author": "Sourcefuse",
   "description": "A loopback-next extension for soft delete feature",
   "keywords": [
@@ -64,7 +64,7 @@
     "@loopback/context": "^6.0.0",
     "@loopback/repository": "^6.0.0",
     "loopback-datasource-juggler": "^4.28.5",
-    "@loopback/sequelize":"^0.3.0"
+    "@loopback/sequelize": "^0.3.0"
   },
   "peerDependenciesMeta": {
     "@loopback/sequelize": {
@@ -100,7 +100,7 @@
     "husky": "^7.0.4",
     "jsdom": "^21.0.0",
     "loopback-datasource-juggler": "^4.28.5",
-    "@loopback/sequelize":"^0.3.0",
+    "@loopback/sequelize": "^0.3.0",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "simple-git": "^3.15.1",
