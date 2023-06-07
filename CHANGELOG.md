@@ -1,3 +1,46 @@
+## Release [v8.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.3.2..v8.0.0) June 7, 2023
+Welcome to the June 7, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [chore(deps): loopback version update ](https://github.com/sourcefuse/loopback4-soft-delete/commit/a06818f131d6fe58a88275b9daf3ddc891be06d8) was commited on June 1, 2023 by [RaghavaroraSF](mailto:97958393+RaghavaroraSF@users.noreply.github.com)
+    
+      - * chore(deps): loopback version update
+      
+      -  Loopback version update
+      
+      -  GH-151
+      
+      - * docs(sequelize): reflect sequelize package change in readme
+      
+      -  from loopback4-sequelize to @loopback/sequelize
+      
+      -  GH-151
+      
+      - ---------
+      
+      -  Co-authored-by: Shubham P &lt;shubham.prajapat@sourcefuse.com&gt;
+      
+  
+  - [Remove support for node v14](https://github.com/sourcefuse/loopback4-soft-delete/issues/155) :- [feat(chore): remove support for node v14 ](https://github.com/sourcefuse/loopback4-soft-delete/commit/566ea02a765d27232dd4141a5057b373d43e56ee) was commited on May 11, 2023 by [RaghavaroraSF](mailto:97958393+RaghavaroraSF@users.noreply.github.com)
+    
+      - Version 14 of Nodejs reaches its end of life
+      
+      -  BREAKING CHANGE:
+      
+      - End of life of Node v14
+      
+      -  GH-155
+      
+  
+  - [License and Copyright Headers’ Year Upgradation](https://github.com/sourcefuse/loopback4-soft-delete/issues/153) :- [chore(maintenance): update license and copyright headers ](https://github.com/sourcefuse/loopback4-soft-delete/commit/941c18c0eaca817596804931fd477a485cdaf81c) was commited on May 4, 2023 by [RaghavaroraSF](mailto:97958393+RaghavaroraSF@users.noreply.github.com)
+    
+      - Update license and copyright headers in all files
+      
+      -  GH-153
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v7.3.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.3.1..v7.3.2) April 24, 2023
 Welcome to the April 24, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
