@@ -63,7 +63,7 @@
     "@loopback/boot": "^6.1.0",
     "@loopback/context": "^6.1.0",
     "@loopback/repository": "^6.1.0",
-    "loopback-datasource-juggler": "^4.28.5",
+    "loopback-datasource-juggler": "^4.28.8",
     "@loopback/sequelize": "^0.4.0"
   },
   "peerDependenciesMeta": {
