@@ -1,3 +1,48 @@
+## Release [v8.0.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v8.0.0..v8.0.1) July 14, 2023
+Welcome to the July 14, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [fix: upgrade loopback-datasource-juggler from 4.28.5 to 4.28.6 ](https://github.com/sourcefuse/loopback4-soft-delete/commit/d8f6f941891dec714e342a89149e0616d52d3009) was commited on July 14, 2023 by [akshatdubeysf](mailto:77672713+akshatdubeysf@users.noreply.github.com)
+    
+      - Snyk has created this PR to upgrade loopback-datasource-juggler from 4.28.5 to
+      
+      - 4.28.6.
+      
+      -  See this package in npm:
+      
+      - https://www.npmjs.com/package/loopback-datasource-juggler
+      
+      -  See this project in Snyk:
+      
+      - https://app.snyk.io/org/ashishkaushik/project/8f38c78d-7c6f-4428-b63a-24296037953a?utm_source=github&amp;utm_medium=referral&amp;page=upgrade-pr
+      
+      -  Co-authored-by: snyk-bot &lt;snyk-bot@snyk.io&gt;
+      
+  
+  - [Add ARC Branding in README](https://github.com/sourcefuse/loopback4-soft-delete/issues/161) :- [docs(chore): add arc branding ](https://github.com/sourcefuse/loopback4-soft-delete/commit/118cfdffa9b8cb17f3265c39b1a7911434897d32) was commited on July 14, 2023 by [Surbhi](mailto:98279679+Surbhi-sharma1@users.noreply.github.com)
+    
+      - add arc branding
+      
+      -  GH-161
+      
+  
+  - [Loopback versions update](https://github.com/sourcefuse/loopback4-soft-delete/issues/151) :- [chore(deps): loopback version update ](https://github.com/sourcefuse/loopback4-soft-delete/commit/38f12be1be8b8cb079fca6b76a2297096e532108) was commited on July 14, 2023 by [Surbhi](mailto:98279679+Surbhi-sharma1@users.noreply.github.com)
+    
+      - * chore(deps): loopback version update
+      
+      -  loopback version update
+      
+      -  GH-151
+      
+      - * chore(deps): loopback version update
+      
+      -  loopback version update
+      
+      -  GH-151
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v8.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v7.3.2..v8.0.0) June 7, 2023
 Welcome to the June 7, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
