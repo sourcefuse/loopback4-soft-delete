@@ -60,11 +60,11 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/boot": "^6.0.0",
-    "@loopback/context": "^6.0.0",
-    "@loopback/repository": "^6.0.0",
-    "loopback-datasource-juggler": "^4.28.5",
-    "@loopback/sequelize": "^0.3.0"
+    "@loopback/boot": "^6.1.0",
+    "@loopback/context": "^6.1.0",
+    "@loopback/repository": "^6.1.0",
+    "loopback-datasource-juggler": "^4.28.8",
+    "@loopback/sequelize": "^0.4.0"
   },
   "peerDependenciesMeta": {
     "@loopback/sequelize": {
@@ -74,11 +74,11 @@
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@loopback/boot": "^6.0.0",
-    "@loopback/build": "^10.0.0",
-    "@loopback/context": "^6.0.0",
-    "@loopback/repository": "^6.0.0",
-    "@loopback/testlab": "^6.0.0",
+    "@loopback/boot": "^6.1.0",
+    "@loopback/build": "^10.1.0",
+    "@loopback/context": "^6.1.0",
+    "@loopback/repository": "^6.1.0",
+    "@loopback/testlab": "^6.1.0",
     "@loopback/tslint-config": "^2.1.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -87,12 +87,12 @@
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/lodash": "^4.14.191",
     "@types/node": "^14.18.47",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
-    "eslint": "^8.40.0",
+    "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-eslint-plugin": "^5.0.8",
     "eslint-plugin-mocha": "^10.1.0",
@@ -100,7 +100,7 @@
     "husky": "^7.0.4",
     "jsdom": "^21.0.0",
     "loopback-datasource-juggler": "^4.28.5",
-    "@loopback/sequelize": "^0.3.0",
+    "@loopback/sequelize": "^0.4.0",
     "minimist": ">=1.2.6",
     "semantic-release": "^19.0.3",
     "simple-git": "^3.15.1",
@@ -130,8 +130,8 @@
     }
   },
   "dependencies": {
-    "@loopback/core": "^5.0.0",
-    "@loopback/rest": "^13.0.0",
+    "@loopback/core": "^5.1.0",
+    "@loopback/rest": "^13.1.0",
     "lodash": "^4.17.21"
   },
   "config": {
