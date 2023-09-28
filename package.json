@@ -76,7 +76,7 @@
     "@commitlint/config-conventional": "^17.3.0",
     "@loopback/boot": "^6.1.0",
     "@loopback/build": "^10.1.0",
-    "@loopback/context": "^6.1.0",
+    "@loopback/context": "^6.1.2",
     "@loopback/repository": "^6.1.0",
     "@loopback/sequelize": "^0.4.0",
     "@loopback/testlab": "^6.1.0",
