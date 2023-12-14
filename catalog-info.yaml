@@ -4,6 +4,7 @@ metadata:
   name: loopback4-soft-delete
   annotations:
     github.com/project-slug: sourcefuse/loopback4-soft-delete
+    backstage.io/techdocs-ref: dir:.
   namespace: arc
   description: A LoopBack 4 Extension for soft delete feature.
   tags:
