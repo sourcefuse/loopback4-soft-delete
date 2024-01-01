@@ -133,6 +133,7 @@ describe('SoftCrudRepository', () => {
       const customers = await repo.find();
       expect(customers).to.have.length(3);
     });
+
     it('should find non soft deleted entries with and operator', async () => {
       const customers = await repo.find({
         where: {
@@ -790,6 +791,80 @@ describe('SoftCrudRepository', () => {
       expect(afterDeleteIncludeSoftDeleted)
         .to.have.property('deletedBy')
         .equal(userData2.username);
+    });
+  });
+
+  describe('undoSoftDelete', () => {
+    beforeEach(setupTestData);
+    afterEach(clearTestData);
+
+    it('should undo soft deleted entry by id', async () => {
+      await repo.undoSoftDeleteById(3);
+      const customer = await repo.findById(3);
+      const customers = await repo.find();
+      expect(customer.deleted).to.false();
+      expect(customers).to.have.length(4);
+    });
+
+    it('should check deletedOn flag is undefined after undo', async () => {
+      const softDeletedCustomer = await repo.findByIdIncludeSoftDelete(3);
+      expect(softDeletedCustomer.deletedOn).to.Date();
+      await repo.undoSoftDeleteById(3);
+      const customer = await repo.findById(3);
+      expect(customer.deletedOn).to.undefined();
+    });
+
+    it('should undo all soft deleted entries', async () => {
+      await repo.deleteAll();
+      await repo.undoSoftDeleteAll();
+      const customers = await repo.find();
+      expect(customers).to.have.length(4);
+    });
+
+    it('should undo soft deleted entries with and operator', async () => {
+      await repo.undoSoftDeleteAll({
+        and: [{email: 'alice@example.com'}, {id: 3}],
+      });
+      const customers = await repo.find({
+        where: {
+          and: [
+            {
+              email: 'alice@example.com',
+            },
+            {
+              id: 3,
+            },
+          ],
+        },
+      });
+      expect(customers).to.have.length(1);
+    });
+
+    it('should undo soft deleted entries with or operator', async () => {
+      await repo.deleteAll({email: 'john@example.com'});
+      await repo.undoSoftDeleteAll({
+        or: [
+          {
+            email: 'john@example.com',
+          },
+          {
+            email: 'alice@example.com',
+          },
+        ],
+      });
+      const customers = await repo.find({
+        where: {
+          or: [
+            {
+              email: 'john@example.com',
+            },
+            {
+              email: 'alice@example.com',
+            },
+          ],
+        },
+      });
+      expect(customers).to.have.length(2);
     });
   });
 
