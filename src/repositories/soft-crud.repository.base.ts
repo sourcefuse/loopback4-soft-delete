@@ -4,13 +4,13 @@
 
 import {Getter} from '@loopback/core';
 import {
+  Condition,
   DataObject,
   DefaultCrudRepository,
   Entity,
   Filter,
-  juggler,
   Where,
-  Condition,
+  juggler,
 } from '@loopback/repository';
 import {Count} from '@loopback/repository/src/common-types';
 import {HttpErrors} from '@loopback/rest';
@@ -164,6 +164,33 @@ export abstract class SoftCrudRepository<
         deletedOn: new Date(),
         deletedBy,
       },
+      options,
+    );
+  }
+
+  /**
+   * Method to perform undo the soft delete by Id.
+   * @param id
+   * @param options
+   */
+  async undoSoftDeleteById(id: ID, options?: Options): Promise<void> {
+    await this.undoSoftDeleteAll({id} as Where<E>, options);
+  }
+
+  /**
+   * Method to perform undo all the soft deletes
+   * @param where
+   * @param options
+   */
+  async undoSoftDeleteAll(where?: Where<E>, options?: Options): Promise<Count> {
+    const filter = new SoftFilterBuilder({where})
+      .imposeCondition({
+        deleted: true,
+      } as Condition<E>)
+      .build();
+    return super.updateAll(
+      {deleted: false, deletedOn: undefined},
+      filter.where,
       options,
     );
   }
