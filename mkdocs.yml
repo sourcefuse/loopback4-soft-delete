@@ -1,0 +1,5 @@
+site_name: loopback4-soft-delete
+site_description: loopback4-soft-delete
+
+plugins:
+  - techdocs-core
