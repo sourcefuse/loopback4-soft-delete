@@ -60,10 +60,10 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/boot": "^6.1.5",
-    "@loopback/context": "^6.1.5",
-    "@loopback/repository": "^6.1.5",
-    "@loopback/sequelize": "^0.5.4",
+    "@loopback/boot": "^7.0.0",
+    "@loopback/context": "^7.0.0",
+    "@loopback/repository": "^7.0.0",
+    "@loopback/sequelize": "^0.6.0",
     "loopback-datasource-juggler": "^5.0.5"
   },
   "peerDependenciesMeta": {
@@ -74,12 +74,12 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
-    "@loopback/boot": "^6.1.5",
-    "@loopback/build": "^10.1.5",
-    "@loopback/context": "^6.1.5",
-    "@loopback/repository": "^6.1.5",
-    "@loopback/sequelize": "^0.5.4",
-    "@loopback/testlab": "^6.1.5",
+    "@loopback/boot": "^7.0.0",
+    "@loopback/build": "^11.0.0",
+    "@loopback/context": "^7.0.0",
+    "@loopback/repository": "^7.0.0",
+    "@loopback/sequelize": "^0.6.0",
+    "@loopback/testlab": "^7.0.0",
     "@loopback/tslint-config": "^2.1.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -88,15 +88,15 @@
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "@typescript-eslint/parser": "^6.8.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
-    "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-eslint-plugin": "^5.1.1",
-    "eslint-plugin-mocha": "^10.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-eslint-plugin": "^5.4.0",
+    "eslint-plugin-mocha": "^10.3.0",
     "git-release-notes": "^5.0.0",
     "husky": "^7.0.4",
     "jsdom": "^21.0.0",
@@ -130,8 +130,8 @@
     }
   },
   "dependencies": {
-    "@loopback/core": "^5.1.5",
-    "@loopback/rest": "^13.1.5",
+    "@loopback/core": "^6.0.0",
+    "@loopback/rest": "^14.0.0",
     "lodash": "^4.17.21"
   },
   "config": {
