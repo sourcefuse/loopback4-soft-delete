@@ -74,7 +74,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
-    "@loopback/boot": "^7.0.0",
+    "@loopback/boot": "^7.0.1",
     "@loopback/build": "^11.0.0",
     "@loopback/context": "^7.0.0",
     "@loopback/repository": "^7.0.0",
