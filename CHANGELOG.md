@@ -1,3 +1,146 @@
+## Release [v10.0.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v10.0.0..v10.0.1) May 15, 2024
+Welcome to the May 15, 2024 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [fix(ci-cd): add step to generate changelog ](https://github.com/sourcefuse/loopback4-soft-delete/commit/71b4cee62adda9a71300b11605651d591e3ca500) was commited on May 15, 2024 by [yeshamavani](mailto:83634146+yeshamavani@users.noreply.github.com)
+    
+      - add the missing ci checks for pr
+      
+      -  GH-211
+      
+      - ## Description
+      
+      -  add step to generate changelog
+      
+      - add the missing ci checks for pr
+      
+      -  Fixes #211 
+      
+      - ## Type of change
+      
+      -  Please delete options that are not relevant.
+      
+      - - [ ] Bug fix (non-breaking change which fixes an issue)
+      
+      - - [ ] New feature (non-breaking change which adds functionality)
+      
+      - - [ ] Breaking change (fix or feature that would cause existing
+      
+      - functionality
+      
+      - to not work as expected)
+      
+      - - [ ] Intermediate change (work in progress)
+      
+      - ## Checklist:
+      
+      - - [ ] Performed a self-review of my own code
+      
+      - - [ ] npm test passes on your machine
+      
+      - - [ ] New tests added or existing tests modified to cover all changes
+      
+      - - [ ] Code conforms with the style guide
+      
+      - - [ ] API Documentation in code was updated
+      
+  
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [docs(chore): copy the Readme to root as well ](https://github.com/sourcefuse/loopback4-soft-delete/commit/426d83fe9506a2c8c7e2e3391346545cc98a755b) was commited on May 13, 2024 by [arpit1503khanna](mailto:108673359+arpit1503khanna@users.noreply.github.com)
+    
+      - GH-209
+      
+      - ## Description
+      
+      -  Copy the Readme to root as well
+      
+      -  Fixes #209 
+      
+      - ## Type of change
+      
+      -  Please delete options that are not relevant.
+      
+      - - [ ] Bug fix (non-breaking change which fixes an issue)
+      
+      - - [ ] New feature (non-breaking change which adds functionality)
+      
+      - - [ ] Breaking change (fix or feature that would cause existing
+      
+      - functionality
+      
+      - to not work as expected)
+      
+      - - [ ] Intermediate change (work in progress)
+      
+      - ## How Has This Been Tested ?
+      
+      -  Please describe the tests that you ran to verify your changes. Provide
+      
+      - instructions so we can reproduce. Please also list any relevant details
+      
+      - for
+      
+      - your test configuration
+      
+      - - [ ] Test A
+      
+      - - [ ] Test B
+      
+      - ## Checklist:
+      
+      - - [ ] Performed a self-review of my own code
+      
+      - - [ ] npm test passes on your machine
+      
+      - - [ ] New tests added or existing tests modified to cover all changes
+      
+      - - [ ] Code conforms with the style guide
+      
+      - - [ ] API Documentation in code was updated
+      
+  
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [chore(ci-cd): update readme path in sync docs action ](https://github.com/sourcefuse/loopback4-soft-delete/commit/6213bf36e69f2a818b4b87622c1a0e6e612359bb) was commited on March 14, 2024 by [yeshamavani](mailto:83634146+yeshamavani@users.noreply.github.com)
+    
+      - since the readme moved to docs folder
+      
+      -  GH-00
+      
+      - ## Description
+      
+      -  update readme path in sync docs action
+      
+      -  Fixes # (issue)
+      
+      - ## Type of change
+      
+      -  Please delete options that are not relevant.
+      
+      - - [ ] Bug fix (non-breaking change which fixes an issue)
+      
+      - - [ ] New feature (non-breaking change which adds functionality)
+      
+      - - [ ] Breaking change (fix or feature that would cause existing
+      
+      - functionality
+      
+      - to not work as expected)
+      
+      - - [ ] Intermediate change (work in progress)
+      
+      - ## Checklist:
+      
+      - - [ ] Performed a self-review of my own code
+      
+      - - [ ] npm test passes on your machine
+      
+      - - [ ] New tests added or existing tests modified to cover all changes
+      
+      - - [ ] Code conforms with the style guide
+      
+      - - [ ] API Documentation in code was updated
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v8.0.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v8.0.0..v8.0.1) July 14, 2023
 Welcome to the July 14, 2023 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
