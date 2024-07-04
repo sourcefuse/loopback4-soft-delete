@@ -77,7 +77,7 @@
     "@loopback/boot": "^7.0.2",
     "@loopback/build": "^11.0.2",
     "@loopback/context": "^7.0.2",
-    "@loopback/repository": "^7.0.2",
+    "@loopback/repository": "^7.0.3",
     "@loopback/sequelize": "^0.6.2",
     "@loopback/testlab": "^7.0.2",
     "@loopback/tslint-config": "^2.1.0",
