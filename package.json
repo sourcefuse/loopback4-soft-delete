@@ -60,10 +60,10 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/boot": "^7.0.2",
-    "@loopback/context": "^7.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/sequelize": "^0.6.2",
+    "@loopback/boot": "^7.0.9",
+    "@loopback/context": "^7.0.9",
+    "@loopback/repository": "^7.0.9",
+    "@loopback/sequelize": "^0.6.9",
     "loopback-datasource-juggler": "^5.0.9"
   },
   "peerDependenciesMeta": {
@@ -74,12 +74,12 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
-    "@loopback/boot": "^7.0.2",
-    "@loopback/build": "^11.0.2",
-    "@loopback/context": "^7.0.2",
-    "@loopback/repository": "^7.0.2",
-    "@loopback/sequelize": "^0.6.2",
-    "@loopback/testlab": "^7.0.2",
+    "@loopback/boot": "^7.0.9",
+    "@loopback/build": "^11.0.8",
+    "@loopback/context": "^7.0.9",
+    "@loopback/repository": "^7.0.9",
+    "@loopback/sequelize": "^0.6.9",
+    "@loopback/testlab": "^7.0.8",
     "@loopback/tslint-config": "^2.1.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -87,9 +87,9 @@
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.8.0",
+    "@types/node": "^16.18.119",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
@@ -130,8 +130,8 @@
     }
   },
   "dependencies": {
-    "@loopback/core": "^6.0.2",
-    "@loopback/rest": "^14.0.2",
+    "@loopback/core": "^6.1.6",
+    "@loopback/rest": "^14.0.9",
     "lodash": "^4.17.21"
   },
   "config": {
