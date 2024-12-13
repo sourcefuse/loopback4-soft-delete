@@ -74,10 +74,10 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
-    "@loopback/boot": "^7.0.2",
+    "@loopback/boot": "^7.0.9",
     "@loopback/build": "^11.0.2",
     "@loopback/context": "^7.0.2",
-    "@loopback/repository": "^7.0.2",
+    "@loopback/repository": "^7.0.9",
     "@loopback/sequelize": "^0.6.2",
     "@loopback/testlab": "^7.0.2",
     "@loopback/tslint-config": "^2.1.0",
@@ -131,7 +131,7 @@
   },
   "dependencies": {
     "@loopback/core": "^6.0.2",
-    "@loopback/rest": "^14.0.2",
+    "@loopback/rest": "^14.0.9",
     "lodash": "^4.17.21"
   },
   "config": {
