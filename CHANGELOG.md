@@ -59,6 +59,67 @@ Welcome to the December 13, 2024 release of loopback4-soft-delete. There are man
 Clink on the above links to understand the changes in detail.
   ___
 
+## Release [v10.0.3](https://github.com/sourcefuse/loopback4-soft-delete/compare/v10.0.2..v10.0.3) December 13, 2024
+Welcome to the December 13, 2024 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [chore(deps): version update ](https://github.com/sourcefuse/loopback4-soft-delete/commit/12eb7a572e6373941552154eb673065aeed1f86d) was commited on December 13, 2024 by [Sunny Tyagi](mailto:107617248+Tyagi-Sunny@users.noreply.github.com)
+    
+      - ## Description
+      
+      - loopback version update
+      
+      -  Fixes # (issue)
+      
+      - ## Type of change
+      
+      -  Please delete options that are not relevant.
+      
+      - - [ ] Bug fix (non-breaking change which fixes an issue)
+      
+      - - [ ] New feature (non-breaking change which adds functionality)
+      
+      - - [ ] Breaking change (fix or feature that would cause existing
+      
+      - functionality
+      
+      - to not work as expected)
+      
+      - - [ ] Intermediate change (work in progress)
+      
+      - ## How Has This Been Tested?
+      
+      -  Please describe the tests that you ran to verify your changes. Provide
+      
+      - instructions so we can reproduce. Please also list any relevant details
+      
+      - for
+      
+      - your test configuration
+      
+      - - [ ] Test A
+      
+      - - [ ] Test B
+      
+      - ## Checklist:
+      
+      - - [ ] Performed a self-review of my own code
+      
+      - - [ ] npm test passes on your machine
+      
+      - - [ ] New tests added or existing tests modified to cover all changes
+      
+      - - [ ] Code conforms with the style guide
+      
+      - - [ ] API Documentation in code was updated
+      
+      - - [ ] Any dependent changes have been merged and published in downstream
+      
+      - modules
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v10.0.2](https://github.com/sourcefuse/loopback4-soft-delete/compare/v10.0.1..v10.0.2) June 4, 2024
 Welcome to the June 4, 2024 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
