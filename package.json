@@ -14,12 +14,19 @@
     "./sequelize": {
       "types": "./dist/repositories/sequelize/index.d.ts",
       "default": "./dist/repositories/sequelize/index.js"
+    },
+    "./aws-s3": {
+      "types": "./dist/aws-s3/index.d.ts",
+      "default": "./dist/aws-s3/index.js"
     }
   },
   "typesVersions": {
     "*": {
       "sequelize": [
         "./dist/repositories/sequelize/index.d.ts"
+      ],
+      "aws-s3": [
+        "./dist/aws-s3/index.d.ts"
       ]
     }
   },
@@ -72,6 +79,7 @@
     }
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.468.0",
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@loopback/boot": "^7.0.9",
@@ -87,10 +95,12 @@
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/lodash": "^4.14.191",
-    "@types/node": "^16.18.119",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
+    "@types/node": "^18.11.9",
+    "aws-sdk": "^2.1692.0",
     "commitizen": "^4.2.4",
+    "csv-parser": "^3.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
     "eslint": "^8.57.0",
@@ -106,6 +116,7 @@
     "simple-git": "^3.15.1",
     "source-map-support": "^0.5.21",
     "sqlite3": "^5.1.4",
+    "stream": "^0.0.3",
     "typescript": "~5.2.2"
   },
   "publishConfig": {
