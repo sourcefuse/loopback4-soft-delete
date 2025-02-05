@@ -130,7 +130,7 @@
     }
   },
   "dependencies": {
-    "@loopback/core": "^6.1.6",
+    "@loopback/core": "^6.1.7",
     "@loopback/rest": "^14.0.9",
     "lodash": "^4.17.21"
   },
