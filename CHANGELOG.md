@@ -1,3 +1,169 @@
+## Release [v11.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v10.0.3..v11.0.0) September 8, 2025
+Welcome to the September 8, 2025 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [refactor(chore): node and loopback packages version upgrade ](https://github.com/sourcefuse/loopback4-soft-delete/commit/0934943a1678308db793d96676a97011811a9720) was commited on September 8, 2025 by [Vaibhav Bhalla](mailto:vaibhav.bhalla@sourcefuse.com)
+    
+      - BREAKING CHANGE: yes
+      
+      - ## Description
+      
+      - node and loopback packages version upgrade
+      
+      - Fixes # (issue)
+      
+      - GH-255
+      
+      - ## Type of change
+      
+      - Please delete options that are not relevant.
+      
+      - - [ ] Bug fix (non-breaking change which fixes an issue)
+      
+      - - [ ] New feature (non-breaking change which adds functionality)
+      
+      - - [x] Breaking change (fix or feature that would cause existing functionality
+      
+      - to not work as expected)
+      
+      - - [ ] Intermediate change (work in progress)
+      
+      - ## How Has This Been Tested ?
+      
+      - Please describe the tests that you ran to verify your changes. Provide 
+      
+      - instructions so we can reproduce. Please also list any relevant details for
+      
+      - your test configuration
+      
+      - - [ ] Test A
+      
+      - - [ ] Test B
+      
+      - ## Checklist:
+      
+      - - [x] Performed a self-review of my own code
+      
+      - - [x] npm test passes on your machine
+      
+      - - [ ] New tests added or existing tests modified to cover all changes
+      
+      - - [ ] Code conforms with the style guide
+      
+      - - [ ] API Documentation in code was updated
+      
+      - Co-authored-by: Vaibhav  Bhalla &lt;vaibhav.bhalla@SFSupports-MacBook-Air.local&gt;
+      
+  
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [[Snyk] Security upgrade loopback-datasource-juggler from 5.0.9 to 5.1.3 ](https://github.com/sourcefuse/loopback4-soft-delete/commit/9c7cb1a7b889104b479a2acb9ae1c6baf09e009c) was commited on December 13, 2024 by [devyaniofficial](mailto:59907368+devyaniofficial@users.noreply.github.com)
+    
+      - ![snyk-top-banner](https://redirect.github.com/andygongea/OWASP-Benchmark/assets/818805/c518c423-16fe-447e-b67f-ad5a49b5d123)
+      
+      - ### Snyk has created this PR to fix 1 vulnerabilities in the npm
+      
+      - dependencies
+      
+      - of this project.
+      
+      - #### Snyk changed the following file(s):
+      
+      - - `package.json`
+      
+      - - `package-lock.json`
+      
+      - #### Vulnerabilities that will be fixed with an upgrade:
+      
+      - |  | Issue | Score | 
+      
+      - :-------------------------:|:-------------------------|:-------------------------
+      
+      - ![medium
+      
+      - severity](https://res.cloudinary.com/snyk/image/upload/w_20,h_20/v1561977819/icon/m.png
+      
+      - &#39;medium severity&#39;) | Improper Input Validation
+      
+      - &lt;br/&gt;[SNYK-JS-NANOID-8492085](https://snyk.io/vuln/SNYK-JS-NANOID-8492085)
+      
+      - | &amp;nbsp;&amp;nbsp;**601**&amp;nbsp;&amp;nbsp;
+      
+      - ---
+      
+      - &gt; [!IMPORTANT]
+      
+      - &gt;
+      
+      - &gt; - Check the changes in this PR to ensure they won&#39;t cause issues with
+      
+      - your
+      
+      - project.
+      
+      - &gt; - Max score is 1000. Note that the real score may have changed since
+      
+      - the PR
+      
+      - was raised.
+      
+      - &gt; - This PR was automatically created by Snyk using the credentials of a
+      
+      - real
+      
+      - user.
+      
+      - ---
+      
+      - **Note:** _You are seeing this because you or someone else with access
+      
+      - to this
+      
+      - repository has authorized Snyk to open fix PRs._
+      
+      -  For more information: &lt;img
+      
+      - src=&#34;https://api.segment.io/v1/pixel/track?data=eyJ3cml0ZUtleSI6InJyWmxZcEdHY2RyTHZsb0lYd0dUcVg4WkFRTnNCOUEwIiwiYW5vbnltb3VzSWQiOiJlZGM5YjY4NS03MWU1LTQ4Y2UtOTRkOC0yZTk2OWM1NjM4ODMiLCJldmVudCI6IlBSIHZpZXdlZCIsInByb3BlcnRpZXMiOnsicHJJZCI6ImVkYzliNjg1LTcxZTUtNDhjZS05NGQ4LTJlOTY5YzU2Mzg4MyJ9fQ==&#34;
+      
+      -  width=&#34;0&#34; height=&#34;0&#34;/&gt;
+      
+      - 🧐 [View latest project
+      
+      - report](https://app.snyk.io/org/ashishkaushik/project/8f38c78d-7c6f-4428-b63a-24296037953a?utm_source&amp;#x3D;github&amp;amp;utm_medium&amp;#x3D;referral&amp;amp;page&amp;#x3D;fix-pr)
+      
+      - 📜 [Customise PR
+      
+      - templates](https://docs.snyk.io/scan-using-snyk/pull-requests/snyk-fix-pull-or-merge-requests/customize-pr-templates?utm_source=github&amp;utm_content=fix-pr-template)
+      
+      - 🛠 [Adjust project
+      
+      - settings](https://app.snyk.io/org/ashishkaushik/project/8f38c78d-7c6f-4428-b63a-24296037953a?utm_source&amp;#x3D;github&amp;amp;utm_medium&amp;#x3D;referral&amp;amp;page&amp;#x3D;fix-pr/settings)
+      
+      - 📚 [Read about Snyk&#39;s upgrade
+      
+      - logic](https://docs.snyk.io/scan-with-snyk/snyk-open-source/manage-vulnerabilities/upgrade-package-versions-to-fix-vulnerabilities?utm_source=github&amp;utm_content=fix-pr-template)
+      
+      - ---
+      
+      - **Learn how to fix vulnerabilities with free interactive lessons:**
+      
+      - 🦉 [Improper Input
+      
+      - Validation](https://learn.snyk.io/lesson/improper-input-validation/?loc&amp;#x3D;fix-pr)
+      
+      - [//]: #
+      
+      - &#39;snyk:metadata:{&#34;customTemplate&#34;:{&#34;variablesUsed&#34;:[],&#34;fieldsUsed&#34;:[]},&#34;dependencies&#34;:[{&#34;name&#34;:&#34;loopback-datasource-juggler&#34;,&#34;from&#34;:&#34;5.0.9&#34;,&#34;to&#34;:&#34;5.1.3&#34;}],&#34;env&#34;:&#34;prod&#34;,&#34;issuesToFix&#34;:[&#34;SNYK-JS-NANOID-8492085&#34;],&#34;prId&#34;:&#34;edc9b685-71e5-48ce-94d8-2e969c563883&#34;,&#34;prPublicId&#34;:&#34;edc9b685-71e5-48ce-94d8-2e969c563883&#34;,&#34;packageManager&#34;:&#34;npm&#34;,&#34;priorityScoreList&#34;:[601],&#34;projectPublicId&#34;:&#34;8f38c78d-7c6f-4428-b63a-24296037953a&#34;,&#34;projectUrl&#34;:&#34;https://app.snyk.io/org/ashishkaushik/project/8f38c78d-7c6f-4428-b63a-24296037953a?utm_source=github&amp;utm_medium=referral&amp;page=fix-pr&#34;,&#34;prType&#34;:&#34;fix&#34;,&#34;templateFieldSources&#34;:{&#34;branchName&#34;:&#34;default&#34;,&#34;commitMessage&#34;:&#34;default&#34;,&#34;description&#34;:&#34;default&#34;,&#34;title&#34;:&#34;default&#34;},&#34;templateVariants&#34;:[&#34;updated-fix-title&#34;,&#34;priorityScore&#34;],&#34;type&#34;:&#34;auto&#34;,&#34;upgrade&#34;:[&#34;SNYK-JS-NANOID-8492085&#34;],&#34;vulns&#34;:[&#34;SNYK-JS-NANOID-8492085&#34;],&#34;patch&#34;:[],&#34;isBreakingChange&#34;:false,&#34;remediationStrategy&#34;:&#34;vuln&#34;}&#39;
+      
+      - ---------
+      
+      -  Co-authored-by: snyk-bot &lt;snyk-bot@snyk.io&gt;
+      
+      - Co-authored-by: Yesha Mavani
+      
+      - &lt;yesha.mavani@sourcefuse.com&gt;
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v10.0.3](https://github.com/sourcefuse/loopback4-soft-delete/compare/v10.0.2..v10.0.3) December 13, 2024
 Welcome to the December 13, 2024 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
