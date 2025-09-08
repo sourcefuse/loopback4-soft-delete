@@ -24,7 +24,7 @@
     }
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "scripts": {
     "build": "npm run clean && lb-tsc",
@@ -60,10 +60,10 @@
     "!*/__tests__"
   ],
   "peerDependencies": {
-    "@loopback/boot": "^7.0.9",
-    "@loopback/context": "^7.0.9",
-    "@loopback/repository": "^7.0.9",
-    "@loopback/sequelize": "^0.6.9",
+    "@loopback/boot": "^8.0.4",
+    "@loopback/context": "^8.0.3",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/sequelize": "^0.8.0",
     "loopback-datasource-juggler": "^5.0.9"
   },
   "peerDependenciesMeta": {
@@ -74,12 +74,12 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
-    "@loopback/boot": "^7.0.9",
-    "@loopback/build": "^11.0.8",
-    "@loopback/context": "^7.0.9",
-    "@loopback/repository": "^7.0.9",
-    "@loopback/sequelize": "^0.6.9",
-    "@loopback/testlab": "^7.0.8",
+    "@loopback/boot": "^8.0.4",
+    "@loopback/build": "^12.0.3",
+    "@loopback/context": "^8.0.3",
+    "@loopback/repository": "^8.0.3",
+    "@loopback/sequelize": "^0.8.0",
+    "@loopback/testlab": "^8.0.3",
     "@loopback/tslint-config": "^2.1.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/commit-analyzer": "^9.0.2",
@@ -130,8 +130,8 @@
     }
   },
   "dependencies": {
-    "@loopback/core": "^6.1.6",
-    "@loopback/rest": "^14.0.9",
+    "@loopback/core": "^7.0.3",
+    "@loopback/rest": "^15.0.4",
     "lodash": "^4.17.21"
   },
   "config": {
