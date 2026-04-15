@@ -100,7 +100,7 @@
     "eslint-plugin-mocha": "^10.4.3",
     "git-release-notes": "^5.0.0",
     "husky": "^9.1.7",
-    "jsdom": "^21.0.0",
+    "jsdom": "^21.1.2",
     "loopback-datasource-juggler": "^6.0.4",
     "minimist": ">=1.2.8",
     "semantic-release": "^25.0.3",
