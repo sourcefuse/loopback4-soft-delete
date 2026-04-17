@@ -44,7 +44,8 @@
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "prepublishOnly": "npm run test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "afterinstall": "npm rebuild sqlite3"
   },
   "repository": {
     "type": "git",
@@ -158,14 +159,13 @@
       ],
       "@semantic-release/release-notes-generator",
       [
-     "@semantic-release/npm",
-     {
-       "npmPublish": true,
-       "pkgRoot": ".",
-       "tarballDir": "dist"
-     }
-   ],
-
+        "@semantic-release/npm",
+        {
+          "npmPublish": true,
+          "pkgRoot": ".",
+          "tarballDir": "dist"
+        }
+      ],
       [
         "@semantic-release/git",
         {
