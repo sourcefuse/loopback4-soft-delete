@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 permissions:
   contents: write
-  id-token: write   # REQUIRED for trusted publishing
+  id-token: write # REQUIRED for trusted publishing
 
 jobs:
   Release:
@@ -21,11 +21,11 @@ jobs:
           token: ${{ secrets.RELEASE_COMMIT_GH_PAT }}
 
       - name: Setup Node
-        uses: actions/setup-node@v4  # UPDATED to v4
+        uses: actions/setup-node@v4 # UPDATED to v4
         with:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
-          always-auth: false  # important for trusted publishing
+          always-auth: false # important for trusted publishing
 
       - name: Configure CI Git User
         run: |
@@ -38,7 +38,10 @@ jobs:
           CONFIG_EMAIL: ${{ vars.RELEASE_COMMIT_EMAIL }}
 
       - name: Install 📌
-        run: npm install --ignore-scripts
+        run: npm ci --ignore-scripts
+
+      - name: afterinstall
+        run: npm run afterinstall
 
       - name: Test 🔧
         run: npm run test
