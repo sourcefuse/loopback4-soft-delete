@@ -1,3 +1,50 @@
+## Release [v12.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v11.1.0..v12.0.0) June 16, 2026
+Welcome to the June 16, 2026 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [refactor(chore): remove Node js 20 support ](https://github.com/sourcefuse/loopback4-soft-delete/commit/93493a0f6d4d833363ef6a910f3c80473efb42d4) was commited on June 16, 2026 by [Sourav](mailto:sourav.kashyap@sourcefuse.com)
+    
+      - remove Node js 20 support
+      
+      - BREAKING CHANGE: yes
+      
+      - GH-296
+      
+      - ## Description
+      
+      - Please include a summary of the change and which issue is fixed. Please also
+      
+      - include relevant motivation and context. List any dependencies that are
+      
+      - required for this change.
+      
+      - Fixes # (issue)
+      
+      - ## Checklist:
+      
+      - - [x] Performed a self-review of my own code
+      
+      - - [x] npm test passes on your machine
+      
+      - ### Build:
+      
+      - &lt;img width=&#34;620&#34; height=&#34;153&#34; alt=&#34;Screenshot 2026-06-11 at 6 06 53 PM&#34; 
+      
+      - src=&#34;https://github.com/user-attachments/assets/bdfa4971-469a-47dd-8915-536e4b6c5873&#34;
+      
+      - /&gt;
+      
+      - ### Test:
+      
+      - &lt;img width=&#34;670&#34; height=&#34;169&#34; alt=&#34;Screenshot 2026-06-11 at 6 07 07 PM&#34; 
+      
+      - src=&#34;https://github.com/user-attachments/assets/0d87de4f-d267-48d7-b9fd-b783d3118326&#34;
+      
+      - /&gt;
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v11.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v10.0.3..v11.0.0) September 8, 2025
 Welcome to the September 8, 2025 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
