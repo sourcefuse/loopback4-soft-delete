@@ -127,7 +127,7 @@
       "ejs": "^3.1.8",
       "yargs": "^17.6.2"
     },
-    "undici": "^6.24.0"
+    "undici": "^6.28.0"
   },
   "dependencies": {
     "@loopback/core": "^7.0.10",
