@@ -1,3 +1,34 @@
+## Release [v12.0.1](https://github.com/sourcefuse/loopback4-soft-delete/compare/v12.0.0..v12.0.1) August 11, 2026
+Welcome to the August 11, 2026 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
+
+  - [](https://github.com/sourcefuse/loopback4-soft-delete/issues/) :- [chore(deps): upgrade undici fixing five security advisories ](https://github.com/sourcefuse/loopback4-soft-delete/commit/fec4d21608705a4990befb189581822c79fbea7e) was commited on August 11, 2026 by [Piyush Singh Gaur](mailto:piyush.singh@sourcefuse.com)
+    
+      - ## Summary This PR upgrades the undici dependency from ^6.24.0 to ^6.28.0 to 
+      
+      - address five known security advisories in the previous version.
+      
+      - ## Issue
+      
+      - [GH-300](https://github.com/sourcefuse/loopback4-soft-delete/issues/300)
+      
+      - ## Changes Bumped undici version in package.json. Updated package-lock.json 
+      
+      - accordingly.
+      
+      - ## Testing
+      
+      - - [x] Verified package-lock.json regenerates cleanly with the new version.
+      
+      - - [x] Verified Build and Test.
+      
+      - - [x] No functional or behavioral changes are expected since this is a 
+      
+      - dependency version bump only.
+      
+  
+Clink on the above links to understand the changes in detail.
+  ___
+
 ## Release [v12.0.0](https://github.com/sourcefuse/loopback4-soft-delete/compare/v11.1.0..v12.0.0) June 16, 2026
 Welcome to the June 16, 2026 release of loopback4-soft-delete. There are many updates in this version that we hope you will like, the key highlights include:
 
